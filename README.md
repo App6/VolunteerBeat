@@ -10,9 +10,9 @@ Doesn't need long term commitment, allows to help one task at a time.
 Required User Stories:
 * [x] App will display the tasks from nearby non profit organizations that need volunteers.
 * [x] User can see the details of each task and the non profit organization thats associated with that task.
-        * the task description.
-        * location on map, with route when applicable.
-        * link to the non profit organization, and its details in a new page.
+       - the task description.
+       - location on map, with route when applicable.
+       - link to the non profit organization, and its details in a new page.
 * [x] User can volunteer for a task by sending a short message.
 * [x] User can see his profile, history of tasks that he volunteered.
 * [x] User can see the description, reviews, photos of non profit organizations
