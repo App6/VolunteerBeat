@@ -1,0 +1,4 @@
+GroupProject
+============
+
+Group project scoping
