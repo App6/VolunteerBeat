@@ -29,3 +29,9 @@ Optional User Stories:
 * [x] Timeline support in user's history (associating event details, photos, date, videos etc)
 * [x] User can search the tasks based on category
 * [x] User can see the list of upcoming tasks that he accepted - user can respond again in case of change in plans.
+
+Wireframe Images:
+![images/task_list_and_task_details.png](images/task_list_and_task_details.png)
+![images/volunteer_dialog.png](images/volunteer_dialog.png)
+![images/user_profile.png](images/user_profile.png)
+![images/org_details.png](images/org_details.png)
