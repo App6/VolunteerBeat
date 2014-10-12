@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:orientation="horizontal" >
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/actionBarLogo"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:longClickable="false"
+        android:src="@drawable/ic_profile"
+        app:border_color="@color/vb_red"
+        app:border_width="1dp"
+        app:shadow="false" />
+
+</RelativeLayout>
