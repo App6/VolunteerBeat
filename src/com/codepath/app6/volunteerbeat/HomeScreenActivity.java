@@ -6,7 +6,7 @@ import com.squareup.picasso.Picasso;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-//import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
+import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -51,7 +51,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 	}
     
     public void showProfile() {
-//   	Intent i = new Intent(this, ProfileActivity.class);
- //   	startActivity(i);  	
+    	Intent i = new Intent(this, ProfileActivity.class);
+    	startActivity(i);  	
     }
 }
