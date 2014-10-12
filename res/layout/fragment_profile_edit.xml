@@ -12,7 +12,18 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:onClick="onPickPhoto"
         android:src="@drawable/default_photo" />
+    <TextView 
+        android:layout_alignLeft="@id/ivProfileImage"
+        android:layout_alignRight="@id/ivProfileImage"
+        android:layout_alignBottom="@id/ivProfileImage"
+        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="#80EF431C"
+		android:text="Change"/>
 
     <EditText
        	android:id="@+id/tvName"

@@ -10,6 +10,8 @@ public class UserProfile {
 	private String	phone;
 	private String	aboutMe;
 	private String	hobbies;
+	private String	photoUri;
+	
 	
 	public String getName() {
 		return name;
@@ -48,6 +50,14 @@ public class UserProfile {
 		this.hobbies = hobbies;
 	}
 	
+	
+	public String getPhotoUri() {
+		return photoUri;
+	}
+	public void setPhotoUri(String photoUri) {
+		this.photoUri = photoUri;
+	}
+	
 	public void readFromPreference(SharedPreferences preference) {
 		this.name = preference.getString("name", "");
 		this.address = preference.getString("address", "");
@@ -55,6 +65,7 @@ public class UserProfile {
 		this.email = preference.getString("email", "");
 		this.aboutMe = preference.getString("aboutme", "");
 		this.hobbies = preference.getString("hobbies", "");		
+		this.photoUri = preference.getString("photouri", "");
 	}
 	
 	public void writeToPreference(SharedPreferences preference) {
@@ -65,6 +76,7 @@ public class UserProfile {
 		editor.putString("email", this.email);
 		editor.putString("aboutme", this.aboutMe);
 		editor.putString("hobbies", this.hobbies);
+		editor.putString("photouri", this.photoUri);
 		editor.commit();
 	}
 }

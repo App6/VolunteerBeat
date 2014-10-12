@@ -1,18 +1,27 @@
 package com.codepath.app6.volunteerbeat.fragments;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 
 public class ProfileEditFragment extends Fragment {
+
+	public final static int PICK_PHOTO_CODE = 1046;
 	
 	private UserProfile profile = new UserProfile();
 	
@@ -22,7 +31,7 @@ public class ProfileEditFragment extends Fragment {
 	private EditText etEmail;
 	private EditText etAboutme;
 	private EditText etHobbies;
-
+	private ImageView	ivProfileImage;
 	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +52,9 @@ public class ProfileEditFragment extends Fragment {
     	etPhone = initTextView(view, R.id.tvPhone, profile.getPhone());
     	etAboutme = initTextView(view, R.id.tvAboutMe, profile.getAboutMe());
     	etHobbies = initTextView(view, R.id.tvHobbies, profile.getHobbies());
+
+    	ivProfileImage = (ImageView)view.findViewById(R.id.ivProfileImage);
+    	ProfileReadonlyFragment.setProfileImage(ivProfileImage, profile.getPhotoUri(), getActivity().getContentResolver());
 
     	return view;
     }
@@ -72,5 +84,10 @@ public class ProfileEditFragment extends Fragment {
 			return etView.getText().toString();
 		}
 		return null;
+	}
+
+	public void updateProfileImage(Uri photoUri) {
+		profile.setPhotoUri(photoUri.toString());
+		ProfileReadonlyFragment.setProfileImage(ivProfileImage, photoUri.toString(), getActivity().getContentResolver());
 	}
 }
