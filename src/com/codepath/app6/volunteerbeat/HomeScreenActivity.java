@@ -1,6 +1,7 @@
 package com.codepath.app6.volunteerbeat;
 
-import com.mikhaellopez.circularimageview.CircularImageView;
+
+import com.codepath.app6.volunteerbeat.utils.CircularImageView;
 import com.squareup.picasso.Picasso;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -30,13 +31,9 @@ public class HomeScreenActivity extends ActionBarActivity {
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
 		/*Replace this with the custom Image location on disk*/
-//		String url = "http://2.gravatar.com/avatar/858dfac47ab8176458c005414d3f0c36?s=256&d=&r=G";
-		String url = "http://a5.files.biography.com/image/upload/c_fill,dpr_1.0,g_face,h_300,q_80,w_300/MTE4MDAzNDEwNzg5ODI4MTEw.jpg";
+		String url = "http://i.forbesimg.com/media/lists/people/lionel-messi_416x416.jpg";
 		CircularImageView ivactionbarLogo = (CircularImageView) actionBar.getCustomView().findViewById(R.id.actionBarLogo);
-/*		ivactionbarLogo.setBorderColor(getResources().getColor(R.color.vb_red));
-		ivactionbarLogo.setBorderWidth(10);
-		ivactionbarLogo.addShadow();
-		*/
+
 		Picasso.with(this)
 				.load(url)
 //				.resize(30, 30)
