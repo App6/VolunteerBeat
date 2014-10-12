@@ -5,7 +5,6 @@
     <item android:id="@+id/action_edit"
         android:orderInCategory="5"
         android:title="Edit"
-        android:onClick="onEditProfile"
         android:icon="@drawable/ic_action_edit_profile"
         android:showAsAction="always" />
 </menu>

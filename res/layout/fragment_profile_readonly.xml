@@ -1,0 +1,139 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/default_photo" />
+
+    <TextView
+       	android:id="@+id/tvName"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/ivProfileImage"
+        android:layout_toRightOf="@id/ivProfileImage"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/profile_default_name" />        
+
+    <TextView
+        android:id="@+id/tvAddrLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@id/ivProfileImage"
+        android:text="Address:" />
+
+    <TextView
+        android:id="@+id/tvAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_alignBottom="@id/tvAddrLabel"
+        android:layout_toRightOf="@id/tvAddrLabel"
+        android:text="@string/profile_default_address" />
+        
+    <TextView
+        android:id="@+id/tvPhoneLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAddrLabel"        
+        android:layout_alignRight="@id/tvAddrLabel"
+		android:layout_marginTop="12dp"
+        android:text="Phone:" />
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tvPhoneLabel"
+        android:layout_alignLeft="@id/tvAddr"
+        android:text="@string/profile_default_phone" />
+    
+    <TextView
+        android:id="@+id/tvEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPhoneLabel"
+        android:layout_alignRight="@id/tvAddrLabel"
+        android:layout_marginTop="12dp"
+        android:text="Email:" />
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tvEmailLabel"
+        android:layout_alignLeft="@id/tvAddr"
+        android:text="@string/profile_default_email" />
+
+    <ImageView
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_below="@id/tvEmailLabel"
+    	android:src="@drawable/dotted" />
+    
+    <TextView
+        android:id="@+id/tvAboutMeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="12dp"
+        android:layout_below="@id/tvEmailLabel"
+       	android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/vbred"
+        android:textStyle="bold"
+        android:shadowRadius="1.5"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:text="About Me" />
+    <TextView
+        android:id="@+id/tvAboutMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_alignLeft="@id/tvAboutMeLabel"
+        android:layout_below="@id/tvAboutMeLabel"
+        android:text="@string/profile_default_aboutme" />
+
+    <ImageView
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_below="@id/tvAboutMe"
+    	android:src="@drawable/dotted" />
+    
+    <TextView
+        android:id="@+id/tvHobbiesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="12dp"
+        android:layout_below="@id/tvAboutMe"
+       	android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/vbred"
+        android:textStyle="bold"
+        android:shadowRadius="1.5"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:text="Hobbies" />
+    <TextView
+        android:id="@+id/tvHobbies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_alignLeft="@id/tvAboutMeLabel"
+        android:layout_below="@id/tvHobbiesLabel"
+        android:text="@string/profile_default_hobbies" />
+    
+</RelativeLayout>
