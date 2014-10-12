@@ -10,7 +10,7 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/vb_red</item>
+        <item name="android:background">@color/vbred</item>
         <item name="android:backgroundStacked">@android:color/white</item>
         <item name="android:titleTextStyle">@style/MyTitleTextStyle</item>
     </style>
@@ -23,8 +23,7 @@
 	<!-- ActionBar tabs text styles -->
     <style name="MyActionBarTabText"
            parent="@android:style/Widget.Holo.ActionBar.TabText">
-        <item name="android:textColor">@color/vb_red</item>
+        <item name="android:textColor">@color/vbred</item>
     </style>
     
- 	<color name="vb_red">#FFEF431C</color>
 </resources>

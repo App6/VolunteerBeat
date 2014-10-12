@@ -28,7 +28,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.action_profile_view);
-		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setDisplayShowCustomEnabled(true);
 		/*Replace this with the custom Image location on disk*/
 		String url = "http://i.forbesimg.com/media/lists/people/lionel-messi_416x416.jpg";
