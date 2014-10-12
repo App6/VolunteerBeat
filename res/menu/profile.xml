@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.codepath.app6.volunteerbeat.activities.ProfileActivity" >
+    <item android:id="@+id/action_edit"
+        android:orderInCategory="5"
+        android:title="Edit"
+        android:onClick="onEditProfile"
+        android:icon="@drawable/ic_action_edit_profile"
+        android:showAsAction="always" />
+</menu>
