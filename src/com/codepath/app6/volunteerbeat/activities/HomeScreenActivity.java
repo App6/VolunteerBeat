@@ -1,4 +1,16 @@
-package com.codepath.app6.volunteerbeat;
+package com.codepath.app6.volunteerbeat.activities;
+
+
+
+import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.R.layout;
+import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+//import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -18,6 +30,7 @@ import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
 import com.codepath.app6.volunteerbeat.utils.CircularImageView;
 import com.squareup.picasso.Picasso;
+
 
 public class HomeScreenActivity extends ActionBarActivity {
 	private ArrayList<TaskItem> tasks;
@@ -50,37 +63,18 @@ public class HomeScreenActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_screen);
 
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setCustomView(R.layout.action_profile_view);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setDisplayShowCustomEnabled(true);
-		/* Replace this with the custom Image location on disk */
-		String url = "http://i.forbesimg.com/media/lists/people/lionel-messi_416x416.jpg";
-		CircularImageView ivactionbarLogo = (CircularImageView) actionBar
-				.getCustomView().findViewById(R.id.actionBarLogo);
-
-		Picasso.with(this).load(url)
-		// .resize(30, 30)
-				.into(ivactionbarLogo);
-
-		ivactionbarLogo.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(HomeScreenActivity.this, "Profile Click",
-						Toast.LENGTH_SHORT).show();
-				showProfile();
-			}
-		});
+		ProfileActionBar aBar = new ProfileActionBar(this);
+		aBar.show();
 
 		setUpRefrences();
 
 		populateData();
+
 	}
 
-	public void showProfile() {
-		Intent i = new Intent(this, ProfileActivity.class);
+	public void onButtonClick(View v) {
+
+		Intent i = new Intent(this, OrganizationActivity.class);
 		startActivity(i);
 	}
 
@@ -154,4 +148,5 @@ public class HomeScreenActivity extends ActionBarActivity {
 		}
 		aTasks.notifyDataSetChanged();
 	}
+
 }
