@@ -1,11 +1,19 @@
 package com.codepath.app6.volunteerbeat.fragments;
 
+import java.net.URI;
+
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.app6.volunteerbeat.R;
@@ -35,6 +43,9 @@ public class ProfileReadonlyFragment extends Fragment {
 		setTextView(view, R.id.tvAboutMe, profile.getAboutMe());
 		setTextView(view, R.id.tvHobbies, profile.getHobbies());
 
+	    ImageView ivProfileImage = (ImageView)view.findViewById(R.id.ivProfileImage);
+    	ProfileReadonlyFragment.setProfileImage(ivProfileImage, profile.getPhotoUri(), getActivity().getContentResolver());
+
 		return view;
     }
 	
@@ -43,5 +54,21 @@ public class ProfileReadonlyFragment extends Fragment {
 		if (text != null && !text.isEmpty()) {
 			((TextView)view.findViewById(id)).setText(text);	
 		}
+	}
+	
+	public static void setProfileImage(ImageView ivPhoto, String uriStr, ContentResolver contentResolver) {
+		if (uriStr == null || uriStr.isEmpty()) {
+			ivPhoto.setImageResource(R.drawable.default_photo);
+		} else {
+			try {
+				Uri photoUri = Uri.parse(uriStr);
+				Bitmap selectedImage = MediaStore.Images.Media.getBitmap(contentResolver, photoUri);
+		        // Load the selected image into a preview
+		        ivPhoto.setImageBitmap(selectedImage);		
+			} catch (Exception e) {
+				ivPhoto.setImageResource(R.drawable.default_photo);			
+			}
+		}
+		
 	}
 }
