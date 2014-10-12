@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    
     package="com.codepath.app6.volunteerbeat"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        android:targetSdkVersion="19" />
 
-   <uses-permission android:name="android.permission.INTERNET" /> 
-   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
- 
+    <permission android:name="com.mbkandra16.apps.volunteerbeattaskdesc.permission.MAPS_RECEIVE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.mbkandra16.apps.volunteerbeattaskdesc.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_vb_white"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAe6BYzl0mGX1fm3jQhVbUFWj8NPMn2wAc" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".HomeScreenActivity"
             android:label="@string/app_name" >
@@ -29,6 +44,10 @@
         <activity
             android:name="com.codepath.app6.volunteerbeat.activities.ProfileActivity"
             android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name="com.codepath.app6.volunteerbeat.activities.TaskDescriptionActivity"
+            android:label="@string/title_activity_task_description" >
         </activity>
     </application>
 

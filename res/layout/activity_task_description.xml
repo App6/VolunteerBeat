@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rbNonProfitRating"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.mbkandra16.apps.volunteerbeattaskdesc.activities.TaskDescriptionActivity" >
+
+    <ImageView
+        android:id="@+id/ivNonProfitOrgLogo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/org_logo_image"
+        android:src="@drawable/ic_chc_logo_colorweb" />
+
+    <TextView
+        android:id="@+id/tvNonProfiOrgName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivNonProfitOrgLogo"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/ivNonProfitOrgLogo"
+        android:text="@string/non_profit_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RatingBar
+        android:id="@+id/rbNonProfitOrgRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvNonProfiOrgName"
+        android:layout_below="@+id/tvNonProfiOrgName"
+        android:clickable="false"
+        android:focusable="false"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="4.5"
+        android:stepSize="0.5" />
+
+    <View
+        android:id="@+id/vDivider1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/ivNonProfitOrgLogo"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ivNonProfitOrgLogo"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tvTaskName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivNonProfitOrgLogo"
+        android:layout_below="@+id/vDivider1"
+        android:layout_marginTop="3dp"
+        android:text="@string/task_name_label"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvTaskDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvTaskName1"
+        android:layout_below="@+id/tvTaskName1"
+        android:text="@string/task_due_date_label" />
+
+    <TextView
+        android:id="@+id/tvTaskDueTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvTaskDueDate"
+        android:layout_alignBottom="@+id/tvTaskDueDate"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:text="@string/task_due_time" />
+
+    <TextView
+        android:id="@+id/tvTaskDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvTaskDueDate"
+        android:layout_alignRight="@+id/tvTaskDueTime"
+        android:layout_below="@+id/tvTaskDueDate"
+        android:layout_marginTop="16dp"
+        android:text="@string/task_description"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bVolunteer"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/tvTaskDescription"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/holo_red_light"
+        android:textColorHighlight="@android:color/holo_green_light"
+        android:textStyle="italic"
+        android:textSize="24sp"
+        android:background="?android:selectableItemBackground"
+        android:text="@string/volunteer_button_label" />
+
+    <TextView
+        android:id="@+id/tvTaskPostedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvTaskDescription"
+        android:layout_below="@+id/bVolunteer"
+        android:layout_marginTop="5dp"
+        android:text="@string/task_posted_date" />
+
+    <View
+        android:id="@+id/vDivider2"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/tvTaskDescription"
+        android:layout_alignRight="@+id/tvTaskPostedDate"
+        android:layout_below="@+id/tvTaskPostedDate"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/darker_gray" />
+
+    <fragment
+        android:id="@+id/fgMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvTaskDescription"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/vDivider2"
+        android:layout_below="@+id/vDivider2"
+        android:layout_marginTop="2dp"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+
+</RelativeLayout>

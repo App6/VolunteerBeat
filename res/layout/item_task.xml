@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivOrgImage"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/non_profit_image_desc"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvNonProfitName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivOrgImage"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/ivOrgImage"
+        android:text="@string/non_profit_name" />
+
+    <TextView
+        android:id="@+id/tvTaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvNonProfitName"
+        android:layout_below="@+id/tvNonProfitName"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp"
+        android:text="@string/task_name_label" />
+
+    <TextView
+        android:id="@+id/tvTaskDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvTaskName"
+        android:layout_below="@+id/tvTaskName"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="6dp"
+        android:text="@string/task_short_desc" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivOrgImage"
+        android:layout_marginTop="14dp"
+        android:text="@string/distance_default_value" />
+
+    <TextView
+        android:id="@+id/tvDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvDistance"
+        android:layout_alignBottom="@+id/tvDistance"
+        android:layout_centerHorizontal="true"
+        android:text="@string/due_date_label" />
+
+    <ImageView
+        android:id="@+id/ivSave"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvDueDate"
+        android:layout_marginRight="23dp"
+        android:contentDescription="@string/save_heart_label"
+        android:src="@drawable/ic_save" />
+
+</RelativeLayout>
