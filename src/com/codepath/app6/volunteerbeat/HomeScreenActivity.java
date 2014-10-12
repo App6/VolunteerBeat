@@ -1,15 +1,27 @@
 package com.codepath.app6.volunteerbeat;
 
+<<<<<<< HEAD
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+=======
+import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+>>>>>>> dcdb7e9e4d163f100e9565a82e1dfb3ca48e5403
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 public class HomeScreenActivity extends ActionBarActivity {
 
 	@Override
@@ -44,3 +56,16 @@ public class HomeScreenActivity extends ActionBarActivity {
 		});
 	}
 }
+=======
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_screen);
+    }
+    
+    public void viewProfile(View v) {
+    	Intent i = new Intent(this, ProfileActivity.class);
+    	startActivity(i);
+    }
+}
+>>>>>>> dcdb7e9e4d163f100e9565a82e1dfb3ca48e5403
