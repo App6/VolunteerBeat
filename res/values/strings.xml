@@ -12,16 +12,19 @@
     <string name="title_activity_profile">Profile</string>
     <string name="profile">Profile</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="non_profit_name">Non Profit Name</string>
-    <string name="task_name_label">Task Name</string>
+    
+    <string name="non_profit_name">Great Non Profits</string>
+    <string name="non_profit_desc">GreatNonprofits is the leading developer of tools that allow people to find, review, and share information about great -- and perhaps not yet great -- nonprofits and charities.</string>
     <string name="non_profit_image_desc">Non Profit Org Image</string>
+    <string name="org_logo_image">Organization Logo</string>
+    
+    <string name="task_name_label">Task Name</string>
     <string name="task_short_desc">Short Description</string>
     <string name="distance_default_value">0.8mi</string>
     <string name="due_date_label">Due: 10/30/2014</string>
     <string name="save_heart_label">Save Task</string>
     <string name="title_activity_task_description">TaskDescriptionActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="org_logo_image">Organization Logo</string>
     <string name="task_due_date_label">Oct. 15, Wednesday</string>
     <string name="task_due_time">2 pm</string>
     <string name="task_description">We have our annual fund raising gala at Westin. We need someone to pick up brochures.</string>
@@ -29,4 +32,7 @@
     <string name="task_share_image_desc">Task Share</string>
     <string name="volunteer_button_label">I can Volunteer</string>
 
+    <string name="lbl_reviews">Reviews</string>
+    <string name="review_text">Years ago I attended an exhibit here and was blown away by the quality of artwork. The museum is small, but the exhibit I saw was truly breath-taking. The people who run this museum are very passionate about what they do, progressive minded and committed to community involvment. </string>
+	<string name="review_date">April 1, 2010</string>
 </resources>
