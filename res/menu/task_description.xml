@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mbkandra16.apps.volunteerbeattaskdesc.activities.TaskDescriptionActivity" >
 
-        <item
+    <item
         android:id="@+id/action_compose"
         android:icon="@drawable/ic_save"
         android:showAsAction="always"
+        android:onClick="onTaskSave"
         android:title="Save"/>
-        
     <item
         android:id="@+id/menu_item_share"
         android:actionProviderClass="android.widget.ShareActionProvider"

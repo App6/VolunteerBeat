@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,9 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RatingBar;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.models.TaskItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -24,11 +28,10 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.codepath.app6.volunteerbeat.R;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
 
 public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
@@ -49,6 +52,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private double gpsLongitude;
 
 	private TaskItem task;
+	private ShareActionProvider miShareAction;
 
 	/*
 	 * Define a request code to send to Google Play services This code is
@@ -63,10 +67,10 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_task_description);
 
 		getActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.rgb(0XEF, 0X43, 0X1C))); 
+				new ColorDrawable(Color.rgb(0XEF, 0X43, 0X1C)));
 		getActionBar().setTitle(
 				Html.fromHtml("<font color='#ffffff'>VB </font>"));
-		
+
 		setupReferences();
 
 		task = getIntent().getParcelableExtra("taskInfo");
@@ -101,6 +105,34 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		mLocationClient = new LocationClient(this, this, this);
 		if (mapFragment != null) {
 			map = mapFragment.getMap();
+
+			map.setOnMapClickListener(new OnMapClickListener() {
+
+				@Override
+				public void onMapClick(LatLng arg0) {
+					// String label = task.getOrgName();
+					// String uriBegin = "geo:" + arg0.latitude + ","
+					// + arg0.longitude;
+					// String query = arg0.latitude + "," + arg0.longitude + "("
+					// + label + ")";
+					// String encodedQuery = Uri.encode(query);
+					// String uriString = uriBegin + "?q=" + encodedQuery
+					// + "&z=16";
+					// Uri uri = Uri.parse(uriString);
+					//
+					// startActivity(new Intent(
+					// android.content.Intent.ACTION_VIEW, uri));
+
+					Intent intent = new Intent(
+							android.content.Intent.ACTION_VIEW, Uri
+									.parse("http://maps.google.com/maps?daddr="
+											+ arg0.latitude + ","
+											+ arg0.longitude));
+					startActivity(intent);
+				}
+
+			});
+
 			if (map != null) {
 				Toast.makeText(this, "Map Fragment was loaded properly!",
 						Toast.LENGTH_SHORT).show();
@@ -121,12 +153,38 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 		// Zoom in, animating the camera.
 		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+	}
+
+	// Gets the image URI and setup the associated share intent to hook into the
+	// provider
+	public void setupShareIntent() {
+		// Create share intent as described above
+		Intent shareIntent = new Intent();
+		shareIntent.setAction(Intent.ACTION_SEND);
+
+		shareIntent.putExtra(
+				Intent.EXTRA_TEXT,
+				task.getOrgName() + "-" + task.getTaskName() + ": "
+						+ task.getTaskShortDesc());
+
+		shareIntent.setType("text/plain");
+
+		// Attach share event to the menu item provider
+		miShareAction.setShareIntent(shareIntent);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.task_description, menu);
+		// Locate MenuItem with ShareActionProvider
+		MenuItem item = menu.findItem(R.id.menu_item_share);
+		// Fetch reference to the share action provider
+		miShareAction = (ShareActionProvider) item.getActionProvider();
+
+		setupShareIntent();
+
 		return true;
 	}
 
@@ -281,6 +339,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 					"Sorry. Location services not available to you",
 					Toast.LENGTH_LONG).show();
 		}
+	}
+
+	public void onTaskSave(MenuItem item) {
+		Toast.makeText(getApplicationContext(), "Store the task for later ...",
+				Toast.LENGTH_LONG).show();
 	}
 
 	// Define a DialogFragment that displays the error dialog
