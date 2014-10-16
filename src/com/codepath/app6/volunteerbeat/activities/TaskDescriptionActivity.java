@@ -14,6 +14,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
@@ -105,35 +106,39 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		mLocationClient = new LocationClient(this, this, this);
 		if (mapFragment != null) {
 			map = mapFragment.getMap();
-
-			map.setOnMapClickListener(new OnMapClickListener() {
-
-				@Override
-				public void onMapClick(LatLng arg0) {
-					// String label = task.getOrgName();
-					// String uriBegin = "geo:" + arg0.latitude + ","
-					// + arg0.longitude;
-					// String query = arg0.latitude + "," + arg0.longitude + "("
-					// + label + ")";
-					// String encodedQuery = Uri.encode(query);
-					// String uriString = uriBegin + "?q=" + encodedQuery
-					// + "&z=16";
-					// Uri uri = Uri.parse(uriString);
-					//
-					// startActivity(new Intent(
-					// android.content.Intent.ACTION_VIEW, uri));
-
-					Intent intent = new Intent(
-							android.content.Intent.ACTION_VIEW, Uri
-									.parse("http://maps.google.com/maps?daddr="
-											+ arg0.latitude + ","
-											+ arg0.longitude));
-					startActivity(intent);
-				}
-
-			});
-
 			if (map != null) {
+				map.setOnMapClickListener(new OnMapClickListener() {
+
+					@Override
+					public void onMapClick(LatLng arg0) {
+						// String label = task.getOrgName();
+						// String uriBegin = "geo:" + arg0.latitude + ","
+						// + arg0.longitude;
+						// String query = arg0.latitude + "," + arg0.longitude +
+						// "("
+						// + label + ")";
+						// String encodedQuery = Uri.encode(query);
+						// String uriString = uriBegin + "?q=" + encodedQuery
+						// + "&z=16";
+						// Uri uri = Uri.parse(uriString);
+						//
+						// startActivity(new Intent(
+						// android.content.Intent.ACTION_VIEW, uri));
+
+						Intent intent = new Intent(
+								android.content.Intent.ACTION_VIEW,
+								Uri.parse("http://maps.google.com/maps?daddr="
+										+ arg0.latitude + "," + arg0.longitude));
+						startActivity(intent);
+					}
+
+				});
+				// Move the camera instantly to hamburg with a zoom of 15.
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
+
+				// Zoom in, animating the camera.
+				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
 				Toast.makeText(this, "Map Fragment was loaded properly!",
 						Toast.LENGTH_SHORT).show();
 				// map.setMyLocationEnabled(true);
@@ -148,11 +153,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 					Toast.LENGTH_SHORT).show();
 		}
 
-		// Move the camera instantly to hamburg with a zoom of 15.
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
-
-		// Zoom in, animating the camera.
-		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
 	}
 
@@ -368,6 +368,12 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return mDialog;
 		}
+	}
+
+	public void showOrg(View v) {
+		Intent i = new Intent(this, OrganizationActivity.class);
+		i.putExtra("organization", task.getOrganization());
+		startActivity(i);
 	}
 
 }

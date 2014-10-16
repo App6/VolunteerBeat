@@ -30,7 +30,7 @@ public class OrganizationActivity extends ActionBarActivity {
 			aBar.show();
 			
 			// Replace this with real organization passed to you.
-			org = new Organization();
+			org = (Organization)getIntent().getParcelableExtra("organization");
 			
 	        HorizontialListView listview = (HorizontialListView) findViewById(R.id.hlvImages);
 
