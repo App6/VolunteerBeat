@@ -35,3 +35,9 @@ Wireframe Images:
 ![images/volunteer_dialog.png](images/volunteer_dialog.png)
 ![images/user_profile.png](images/user_profile.png)
 ![images/org_details.png](images/org_details.png)
+
+Walkthrough of user stories:
+
+![video walkthrough](VolunteerBeatDemo.gif)
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).

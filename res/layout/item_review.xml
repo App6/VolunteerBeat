@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivReviewUserImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_user" />
+
+    <TextView
+        android:id="@+id/tvReviewText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ivReviewUserImg"
+        android:layout_marginTop="17dp"
+        android:text="@string/review_text" />
+
+    <RatingBar
+        android:id="@+id/rbReviewRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivReviewUserImg"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/ivReviewUserImg"
+        android:clickable="false"
+        android:focusable="false"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="4.5"
+        android:stepSize="0.5" />
+
+    <TextView
+        android:id="@+id/tvReviewdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/rbReviewRating"
+        android:text="@string/review_date"
+        android:textColor="@color/vbLighGrey" />
+
+    <TextView
+        android:id="@+id/tvReviewUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rbReviewRating"
+        android:layout_alignLeft="@+id/rbReviewRating"
+        android:layout_marginBottom="5dp"
+        android:text="@string/profile_default_name" />
+
+</RelativeLayout>
