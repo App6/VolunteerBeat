@@ -22,7 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.R;
-import com.codepath.app6.volunteerbeat.fragments.IcanhelpFragment;
+import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
+import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -40,6 +41,9 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener {
 
+	private static final int LOGIN_ACTIVITY_CODE = 200;
+	private boolean mShowApplyTaskDialog = false;
+	
 	// private ImageView ivNonProfitOrgLogo;
 	private TextView tvNonProfiOrgName;
 	private RatingBar rbNonProfitOrgRating;
@@ -108,7 +112,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		mLocationClient = new LocationClient(this, this, this);
 		if (mapFragment != null) {
 			map = mapFragment.getMap();
-			if (map != null) {
+
 			map.setOnMapClickListener(new OnMapClickListener() {
 
 				@Override
@@ -135,8 +139,40 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				}
 				
 			});
-			}
+
 			if (map != null) {
+				map.setOnMapClickListener(new OnMapClickListener() {
+
+					@Override
+					public void onMapClick(LatLng arg0) {
+						// String label = task.getOrgName();
+						// String uriBegin = "geo:" + arg0.latitude + ","
+						// + arg0.longitude;
+						// String query = arg0.latitude + "," + arg0.longitude +
+						// "("
+						// + label + ")";
+						// String encodedQuery = Uri.encode(query);
+						// String uriString = uriBegin + "?q=" + encodedQuery
+						// + "&z=16";
+						// Uri uri = Uri.parse(uriString);
+						//
+						// startActivity(new Intent(
+						// android.content.Intent.ACTION_VIEW, uri));
+
+						Intent intent = new Intent(
+								android.content.Intent.ACTION_VIEW,
+								Uri.parse("http://maps.google.com/maps?daddr="
+										+ arg0.latitude + "," + arg0.longitude));
+						startActivity(intent);
+					}
+
+				});
+				// Move the camera instantly to hamburg with a zoom of 15.
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
+
+				// Zoom in, animating the camera.
+				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
 				Toast.makeText(this, "Map Fragment was loaded properly!",
 						Toast.LENGTH_SHORT).show();
 				// map.setMyLocationEnabled(true);
@@ -150,13 +186,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			Toast.makeText(this, "Error - Map Fragment was null!!",
 					Toast.LENGTH_SHORT).show();
 		}
-if (map != null) {
 		// Move the camera instantly to hamburg with a zoom of 15.
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
 
 		// Zoom in, animating the camera.
 		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-}
 	}
 
 	// Gets the image URI and setup the associated share intent to hook into the
@@ -165,11 +199,11 @@ if (map != null) {
 		// Create share intent as described above
 		Intent shareIntent = new Intent();
 		shareIntent.setAction(Intent.ACTION_SEND);
-
-		shareIntent.putExtra(
-				Intent.EXTRA_TEXT,
-				task.getOrgName() + "-" + task.getTaskName() + ": "
-						+ task.getTaskShortDesc());
+		shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Volunteer");
+		shareIntent.putExtra(Intent.EXTRA_TEXT,
+				task.getOrgName() + " Need Volunteer for task:-" + "\n\n"
+						+ task.getTaskShortDesc() + "\n\n"
+						+ "Due date for this task is: " + task.getDueDate());
 
 		shareIntent.setType("text/plain");
 
@@ -240,7 +274,27 @@ if (map != null) {
 				mLocationClient.connect();
 				break;
 			}
+			break;
+		case LOGIN_ACTIVITY_CODE: 
+			switch (resultCode) {
+			case Activity.RESULT_OK:
+				mShowApplyTaskDialog = true;
+				break;
+			}
+			break;
+		}
+	}
 
+	
+	
+	@Override
+	protected void onResumeFragments() {
+		// TODO Auto-generated method stub
+		super.onResumeFragments();
+		
+		if (mShowApplyTaskDialog) {
+			mShowApplyTaskDialog = false;
+			showApplyTaskDialog();
 		}
 	}
 
@@ -372,14 +426,30 @@ if (map != null) {
 			return mDialog;
 		}
 	}
+	
+	public void showOrg(View v) {
+		Intent i = new Intent(this, OrganizationActivity.class);
+		i.putExtra("organization", task.getOrganization());
+		startActivity(i);
+	}
 
 	
 	public void onClickVolunteer(View view) {
-        IcanhelpFragment icanhelpFragment = new IcanhelpFragment();
+      if (VolunteerBeatClient.hasDoneLogin()) {
+        	showApplyTaskDialog();
+        } else {
+    		Intent i = new Intent(this, LoginActivity.class);
+    		startActivityForResult(i, LOGIN_ACTIVITY_CODE);
+        }
+    }
+	
+	private void showApplyTaskDialog() {
+	    ApplyTaskFragment applyTaskFragment = new ApplyTaskFragment();
+	       
         // Show DialogFragment
         Bundle args = new Bundle();
-        icanhelpFragment.setArguments(args);
-        icanhelpFragment.show((FragmentManager)getSupportFragmentManager(), "Advanced Filters Dialog Fragment");
-
+        applyTaskFragment.setArguments(args);
+        applyTaskFragment.show((FragmentManager)getSupportFragmentManager(), "Advanced Filters Dialog Fragment");	
 	}
+	
 }

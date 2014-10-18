@@ -15,10 +15,10 @@ public class TaskItem implements Parcelable {
 	private String postedDate;
 	private double gpsLatitude;
 	private double gpsLongitude;
-
+	private Organization organization;
 
 	public TaskItem() {
-
+		organization = new Organization();
 	}
 
 	public String getPostedDate() {
@@ -108,6 +108,17 @@ public class TaskItem implements Parcelable {
 	public void setGpsLongitude(double gpsLongitude) {
 		this.gpsLongitude = gpsLongitude;
 	}
+	
+	public void setOrganization(Organization org) {
+		organization = org;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
 
 	@Override
 	public int describeContents() {
@@ -127,6 +138,7 @@ public class TaskItem implements Parcelable {
 		dest.writeString(postedDate);
 		dest.writeDouble(gpsLatitude);
 		dest.writeDouble(gpsLongitude);
+		dest.writeParcelable(organization, flags);
 	}
 
 	public static final Parcelable.Creator<TaskItem> CREATOR = new Parcelable.Creator<TaskItem>() {
@@ -143,7 +155,7 @@ public class TaskItem implements Parcelable {
 			task.setPostedDate(in.readString());
 			task.setGpsLatitude(in.readDouble());
 			task.setGpsLongitude(in.readDouble());
-
+			task.setOrganization((Organization)in.readParcelable(Organization.class.getClassLoader()));
 			return task;
 		}
 

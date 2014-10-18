@@ -3,6 +3,8 @@ package com.codepath.app6.volunteerbeat.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.activities.OrganizationActivity;
+import com.codepath.app6.volunteerbeat.models.Organization;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
 
 public class TasksAdapter extends ArrayAdapter<TaskItem> {
@@ -68,7 +72,18 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 		viewHolder.tvDistance.setText(task.getDistance());
 		viewHolder.tvDueDate.setText(task.getDueDate());
 		
-
+		viewHolder.ivOrgImage.setTag(task);
+		viewHolder.ivOrgImage.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				 TaskItem task = (TaskItem) v.getTag();
+				 Intent i = new Intent(getContext(), OrganizationActivity.class);
+				 i.putExtra("organization", task.getOrganization());
+				 getContext().startActivity(i);
+			}
+		});
 		// Return the view for that data item
 		return convertView;
 	}

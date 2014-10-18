@@ -19,6 +19,7 @@ public class ApiClient {
 
 	private boolean initDone = false;
 	private boolean postDone = false;
+	/*
 	public void createSession(Context context) {
 		try {
 			client = new AsyncHttpClient();
@@ -164,4 +165,5 @@ public class ApiClient {
 			e.printStackTrace();
 		}
 	}
+	*/
 }
