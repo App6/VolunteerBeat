@@ -18,6 +18,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:contentDescription="@string/org_logo_image"
+        android:onClick="showOrg"
         android:src="@drawable/ic_chc_logo_colorweb" />
 
     <TextView
@@ -27,6 +28,8 @@
         android:layout_alignTop="@+id/ivNonProfitOrgLogo"
         android:layout_marginLeft="17dp"
         android:layout_toRightOf="@+id/ivNonProfitOrgLogo"
+        android:clickable="true"
+        android:onClick="showOrg"
         android:text="@string/non_profit_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -101,12 +104,12 @@
         android:layout_height="30dp"
         android:layout_below="@+id/tvTaskDescription"
         android:layout_centerHorizontal="true"
+        android:background="?android:selectableItemBackground"
+        android:text="@string/volunteer_button_label"
         android:textColor="@android:color/holo_red_light"
         android:textColorHighlight="@android:color/holo_green_light"
-        android:textStyle="italic"
         android:textSize="24sp"
-        android:background="?android:selectableItemBackground"
-        android:text="@string/volunteer_button_label" />
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/tvTaskPostedDate"

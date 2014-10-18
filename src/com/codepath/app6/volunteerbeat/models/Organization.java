@@ -1,10 +1,14 @@
 package com.codepath.app6.volunteerbeat.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.codepath.app6.volunteerbeat.R;
 
-public class Organization {
+public class Organization implements Parcelable{
 	private String orgName;
 	private String orgLogoUri;
 	private float	orgRating;
@@ -47,5 +51,44 @@ public class Organization {
 		}		
 	}
 	
+	public Organization(Parcel in) {
+		super();
+		this.orgName = in.readString();
+		this.orgLogoUri = in.readString();
+		this.orgRating = in.readFloat();
+		this.orgDescription = in.readString();
+		orgPicUris = new ArrayList<String>();
+		in.readList(orgPicUris, null);
+		orgReviews = new ArrayList<Review>();
+		in.readTypedList(orgReviews, Review.CREATOR);
+				
+	}
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeString(orgName);
+		dest.writeString(orgLogoUri);
+		dest.writeFloat(orgRating);
+		dest.writeString(orgDescription);
+		dest.writeList(orgPicUris);
+		dest.writeTypedList(orgReviews);
+		
+	}
+
+	public static final Parcelable.Creator<Organization> CREATOR = new Parcelable.Creator<Organization>() {
+		public Organization createFromParcel(Parcel in) {
+			Organization org = new Organization(in);
+			return org;
+		}
+
+		public Organization[] newArray(int size) {
+			return new Organization[size];
+		}
+	};
 	
 }
