@@ -46,6 +46,7 @@ public class ProfileActionBar {
 
 	public void showProfile() {
 		Intent i = new Intent(activity, ProfileActivity.class);
+		i.putExtra("mode", false);
 		activity.startActivity(i);
 	}
 }

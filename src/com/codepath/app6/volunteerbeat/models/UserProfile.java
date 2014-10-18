@@ -11,8 +11,15 @@ public class UserProfile {
 	private String	aboutMe;
 	private String	hobbies;
 	private String	photoUri;
+	private int id;
 	
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

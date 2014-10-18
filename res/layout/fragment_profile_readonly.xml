@@ -136,5 +136,8 @@
         android:layout_alignLeft="@id/tvAboutMeLabel"
         android:layout_below="@id/tvHobbiesLabel"
         android:text="@string/profile_default_hobbies" />
+
+
+
     
 </RelativeLayout>

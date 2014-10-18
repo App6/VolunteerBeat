@@ -162,11 +162,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		// Create share intent as described above
 		Intent shareIntent = new Intent();
 		shareIntent.setAction(Intent.ACTION_SEND);
-
-		shareIntent.putExtra(
-				Intent.EXTRA_TEXT,
-				task.getOrgName() + "-" + task.getTaskName() + ": "
-						+ task.getTaskShortDesc());
+		shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Volunteer");
+		shareIntent.putExtra(Intent.EXTRA_TEXT,
+				task.getOrgName() + " Need Volunteer for task:-" + "\n\n"
+						+ task.getTaskShortDesc() + "\n\n"
+						+ "Due date for this task is: " + task.getDueDate());
 
 		shareIntent.setType("text/plain");
 
