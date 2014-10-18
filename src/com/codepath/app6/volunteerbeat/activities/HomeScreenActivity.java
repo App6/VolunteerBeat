@@ -9,10 +9,16 @@ import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 //import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
 import android.view.View;
 
 import java.util.ArrayList;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +35,9 @@ import com.codepath.app6.volunteerbeat.activities.TaskDescriptionActivity;
 import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
 import com.codepath.app6.volunteerbeat.utils.CircularImageView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 
@@ -36,7 +45,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 	private ArrayList<TaskItem> tasks;
 	private TasksAdapter aTasks;
 	private ListView lvTasks;
-
+/*
 	private String[][] data = new String[][] {
 			// url, orgName, taskName, taskDesc, distance, dueDate, dueTime,
 			// postedDate
@@ -57,7 +66,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 			{ 37.402943, -122.116440 } };
 
 	private float[] orgRatings = new float[] { (float) 4.5, 4 };
-
+*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,8 +104,8 @@ public class HomeScreenActivity extends ActionBarActivity {
 
 				Intent i = new Intent(HomeScreenActivity.this,
 						TaskDescriptionActivity.class);
-
-				TaskItem task = tasks.get(position);
+				Log.d("OnItemClickListner", "Task count : "+ tasks.size());
+			TaskItem task = aTasks.getItem(position);
 
 				Bundle bundle = new Bundle();
 				bundle.putParcelable("taskInfo", task);
@@ -110,43 +119,53 @@ public class HomeScreenActivity extends ActionBarActivity {
 	}
 
 	private void populateData() {
-		// Hard coding for now
-		// First Item
-		for (int i = 0; i < data.length; i++) {
-			TaskItem item = new TaskItem();
-			item.setOrgImageUrl(data[i][0]);
-			item.setOrgName(data[i][1]);
-			item.setRating(orgRatings[i]);
-			item.setTaskName(data[i][2]);
-			item.setTaskShortDesc(data[i][3]);
-			item.setDistance(data[i][4]);
-			item.setDueDate(data[i][5]);
-			item.setDueTime(data[i][6]);
-			item.setPostedDate(data[i][7]);
-			item.setGpsLatitude(gpsCoords[i][0]);
-			item.setGpsLongitude(gpsCoords[i][1]);
+		String tasksUrl = "http://api.volunteerbeat.com/tasks";
+		AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
+        client.addHeader("Content-Type", "application/json");
+		client.get(tasksUrl, new JsonHttpResponseHandler() {
 
-			tasks.add(item);
-		}
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONObject response) {
+				Log.d("onSuccess", "Success");
+				try {
+					aTasks.addAll(TaskItem.fromJsonArray(response.getJSONArray("items")));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				super.onSuccess(statusCode, headers, response);
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					String responseString, Throwable throwable) {
+				Log.d("onFailure", "Failed");
+				throwable.printStackTrace();
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "Failed 1: " + throwable.toString(), Toast.LENGTH_SHORT).show();
 
-		// Some some more default data
-		for (int i = 0; i < 5; i++) {
-			TaskItem item = new TaskItem();
-			item.setOrgImageUrl("www.chconline.org");
-			item.setOrgName("Children’s Health Council");
-			item.setRating((float) 4.5);
-			item.setTaskName("Task Name");
-			item.setTaskShortDesc("We have our annual fund raising gala at San Carlos. We need someone to pick up brochures");
-			item.setDistance("4mi");
-			item.setDueDate("10/20/2014");
-			item.setDueTime("11am");
-			item.setPostedDate("10/01/2014");
-			item.setGpsLatitude(37.404661);
-			item.setGpsLongitude(-121.975432);
+				super.onFailure(statusCode, headers, responseString, throwable);
+			}
+			
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+				throwable.printStackTrace();
+				Toast.makeText(getApplicationContext(), "Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT).show();
 
-			tasks.add(item);
-		}
-		aTasks.notifyDataSetChanged();
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+			
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONArray errorResponse) {
+				throwable.printStackTrace();
+				Toast.makeText(getApplicationContext(), "Failed 3: " + throwable.toString(), Toast.LENGTH_SHORT).show();
+
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+		});
+		
 	}
 
 }

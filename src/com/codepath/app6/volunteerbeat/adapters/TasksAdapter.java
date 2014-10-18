@@ -66,7 +66,7 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 		}
 
 		// populate the subviews (textfiled, imageview) with the correct data
-		viewHolder.tvNonProfitName.setText(task.getOrgName());
+		viewHolder.tvNonProfitName.setText(task.getOrganization().getOrgName());
 		viewHolder.tvTaskName.setText(task.getTaskName());
 		viewHolder.tvTaskDesc.setText(task.getTaskShortDesc());
 		viewHolder.tvDistance.setText(task.getDistance());

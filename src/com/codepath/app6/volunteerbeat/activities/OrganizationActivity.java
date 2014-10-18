@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 public class OrganizationActivity extends ActionBarActivity {
 		
@@ -32,6 +34,14 @@ public class OrganizationActivity extends ActionBarActivity {
 			// Replace this with real organization passed to you.
 			org = (Organization)getIntent().getParcelableExtra("organization");
 			
+			TextView tvOrgName = (TextView) findViewById(R.id.tvOrgActOrgName);
+			TextView tvOrgDesc = (TextView) findViewById(R.id.tvOrgActOrgDescription);
+			RatingBar rbOrgRating = (RatingBar) findViewById(R.id.rbOrgActNonProfitOrgRating);
+			
+			tvOrgName.setText(org.getOrgName());
+			tvOrgDesc.setText(org.getOrgDescription());
+			rbOrgRating.setRating(org.getOrgRating());
+
 	        HorizontialListView listview = (HorizontialListView) findViewById(R.id.hlvImages);
 
 	        mAdapter = new ImageListAdapter(this, org.getOrgPicUris());

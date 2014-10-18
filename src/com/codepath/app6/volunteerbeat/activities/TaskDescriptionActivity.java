@@ -77,8 +77,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		task = getIntent().getParcelableExtra("taskInfo");
 
 		if (task != null) {
-			tvNonProfiOrgName.setText(task.getOrgName());
-			rbNonProfitOrgRating.setRating(task.getRating());
+			tvNonProfiOrgName.setText(task.getOrganization().getOrgName());
+			rbNonProfitOrgRating.setRating(task.getOrganization().getOrgRating());
 			tvTaskName1.setText(task.getTaskName());
 			tvTaskDueDate.setText("Due: " + task.getDueDate());
 			tvTaskDueTime.setText(task.getDueTime());
@@ -165,7 +165,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 		shareIntent.putExtra(
 				Intent.EXTRA_TEXT,
-				task.getOrgName() + "-" + task.getTaskName() + ": "
+				task.getOrganization().getOrgName() + "-" + task.getTaskName() + ": "
 						+ task.getTaskShortDesc());
 
 		shareIntent.setType("text/plain");
@@ -279,7 +279,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		// LatLng latLng = new LatLng(SANJOSE.latitude, SANJOSE.longitude);
 		LatLng latLng = new LatLng(gpsLatitude, gpsLongitude);
 		map.addMarker(new MarkerOptions().position(latLng).title(
-				task.getOrgName()));
+				task.getOrganization().getOrgName()));
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,
 				17);
 		map.animateCamera(cameraUpdate);
