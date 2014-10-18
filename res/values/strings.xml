@@ -35,4 +35,6 @@
     <string name="lbl_reviews">Reviews</string>
     <string name="review_text">Years ago I attended an exhibit here and was blown away by the quality of artwork. The museum is small, but the exhibit I saw was truly breath-taking. The people who run this museum are very passionate about what they do, progressive minded and committed to community involvment. </string>
 	<string name="review_date">April 1, 2010</string>
+	
+	<string name="default_message">I can help.</string>
 </resources>

@@ -105,6 +105,7 @@
         android:textColorHighlight="@android:color/holo_green_light"
         android:textStyle="italic"
         android:textSize="24sp"
+        android:onClick="onClickVolunteer"
         android:background="?android:selectableItemBackground"
         android:text="@string/volunteer_button_label" />
 

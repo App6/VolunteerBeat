@@ -10,16 +10,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.fragments.IcanhelpFragment;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -105,7 +108,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		mLocationClient = new LocationClient(this, this, this);
 		if (mapFragment != null) {
 			map = mapFragment.getMap();
-
+			if (map != null) {
 			map.setOnMapClickListener(new OnMapClickListener() {
 
 				@Override
@@ -130,9 +133,9 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 											+ arg0.longitude));
 					startActivity(intent);
 				}
-
+				
 			});
-
+			}
 			if (map != null) {
 				Toast.makeText(this, "Map Fragment was loaded properly!",
 						Toast.LENGTH_SHORT).show();
@@ -147,13 +150,13 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			Toast.makeText(this, "Error - Map Fragment was null!!",
 					Toast.LENGTH_SHORT).show();
 		}
-
+if (map != null) {
 		// Move the camera instantly to hamburg with a zoom of 15.
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
 
 		// Zoom in, animating the camera.
 		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
+}
 	}
 
 	// Gets the image URI and setup the associated share intent to hook into the
@@ -370,4 +373,13 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		}
 	}
 
+	
+	public void onClickVolunteer(View view) {
+        IcanhelpFragment icanhelpFragment = new IcanhelpFragment();
+        // Show DialogFragment
+        Bundle args = new Bundle();
+        icanhelpFragment.setArguments(args);
+        icanhelpFragment.show((FragmentManager)getSupportFragmentManager(), "Advanced Filters Dialog Fragment");
+
+	}
 }
