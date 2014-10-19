@@ -12,14 +12,14 @@ import android.os.Parcelable;
 public class Task implements Parcelable {
 
 	private String taskName;
-	private int taskId;
+	private long taskId;
 	private String taskStatus;
 	private int peopleNeeded;
 	private String taskShortDesc;
 	private int duration;
 
 	// Todo : Add category.
-	
+
 	private String distance;
 	private String dueDate;
 	private String dueTime;
@@ -30,6 +30,22 @@ public class Task implements Parcelable {
 
 	public Task() {
 		organization = new Organization();
+	}
+
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
+	}
+
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+
+	public void setPeopleNeeded(int peopleNeeded) {
+		this.peopleNeeded = peopleNeeded;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 	public String getPostedDate() {
@@ -95,7 +111,7 @@ public class Task implements Parcelable {
 	public void setGpsLongitude(double gpsLongitude) {
 		this.gpsLongitude = gpsLongitude;
 	}
-	
+
 	public void setOrganization(Organization org) {
 		organization = org;
 	}
@@ -115,7 +131,7 @@ public class Task implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(taskName);
-		dest.writeInt(taskId);
+		dest.writeLong(taskId);
 		dest.writeString(taskStatus);
 		dest.writeInt(peopleNeeded);
 		dest.writeString(taskShortDesc);
@@ -140,24 +156,26 @@ public class Task implements Parcelable {
 			return new Task[size];
 		}
 	};
-	
-	public Task(Parcel in){
+
+	public Task(Parcel in) {
 		setTaskName(in.readString());
-		taskId = in.readInt();
+		taskId = in.readLong();
 		taskStatus = in.readString();
 		peopleNeeded = in.readInt();
 		setTaskShortDesc(in.readString());
 		duration = in.readInt();
-		
+
 		setDistance(in.readString());
 		setDueDate(in.readString());
 		setDueTime(in.readString());
 		setPostedDate(in.readString());
 		setGpsLatitude(in.readDouble());
 		setGpsLongitude(in.readDouble());
-		setOrganization((Organization)in.readParcelable(Organization.class.getClassLoader()));	
+		setOrganization((Organization) in.readParcelable(Organization.class
+				.getClassLoader()));
 	}
-	public int getTaskId() {
+
+	public long getTaskId() {
 		return taskId;
 	}
 
@@ -173,26 +191,26 @@ public class Task implements Parcelable {
 		return duration;
 	}
 
-	
 	public Task(JSONObject json) {
 		super();
 		try {
 			this.taskName = json.getJSONObject("category").getString("name");
+			this.taskId = json.getLong("id");
 
-		this.taskId = json.getInt("id");
-		this.taskStatus = json.getString("status");
-		this.peopleNeeded = json.getInt("people_needed");
-		this.taskShortDesc = json.getString("description");
-		this.duration = json.getInt("duration");
-		this.distance = "0";
-		String due = json.getString("starts_at");
-		;
-		this.dueDate = due.split("T")[0];
-		this.dueTime = due.split("T")[1].replace("Z", "");
-		this.postedDate = "--";
-		this.gpsLatitude = Double.valueOf(json.getString("latitude"));
-		this.gpsLongitude = Double.valueOf(json.getString("longitude"));
-		this.organization = new Organization(json.getJSONObject("organization"));
+			this.taskStatus = json.getString("status");
+			this.peopleNeeded = json.getInt("people_needed");
+			this.taskShortDesc = json.getString("description");
+			this.duration = json.getInt("duration");
+			this.distance = "0";
+			String due = json.getString("starts_at");
+			;
+			this.dueDate = due.split("T")[0];
+			this.dueTime = due.split("T")[1].replace("Z", "");
+			this.postedDate = "--";
+			this.gpsLatitude = Double.valueOf(json.getString("latitude"));
+			this.gpsLongitude = Double.valueOf(json.getString("longitude"));
+			this.organization = new Organization(
+					json.getJSONObject("organization"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -201,7 +219,7 @@ public class Task implements Parcelable {
 
 	public static ArrayList<Task> fromJsonArray(JSONArray jarray) {
 		ArrayList<Task> atasks = new ArrayList<Task>();
-		for (int i = 0; i< jarray.length(); i++){
+		for (int i = 0; i < jarray.length(); i++) {
 			try {
 				Task t = new Task(jarray.getJSONObject(i));
 				atasks.add(t);
