@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b0e0e6"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <EditText
+        android:id="@+id/etUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_bg"
+        android:ems="10"
+        android:hint="@string/et_name_hint"
+        android:inputType="textPersonName"
+        android:paddingLeft="3dp" />
+
+    <EditText
+        android:id="@+id/etEmailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/etUserName"
+        android:layout_alignRight="@+id/etUserName"
+        android:layout_below="@+id/etUserName"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_bg"
+        android:ems="10"
+        android:hint="@string/et_email_address_hint"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="3dp" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/etEmailAddress"
+        android:layout_alignRight="@+id/etEmailAddress"
+        android:layout_below="@+id/etEmailAddress"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_bg"
+        android:ems="10"
+        android:hint="@string/et_password_hint"
+        android:inputType="textPassword"
+        android:paddingLeft="3dp" />
+
+    <Button
+        android:id="@+id/bRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etPassword"
+        android:layout_alignRight="@+id/etPassword"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/b_signin_gradient"
+        android:text="@string/b_create_acnt"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tvAlreadyHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bRegister"
+        android:layout_alignRight="@+id/bRegister"
+        android:layout_below="@+id/bRegister"
+        android:layout_marginTop="82dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tv_already_has_account"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bGotoSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvAlreadyHaveAccount"
+        android:layout_alignRight="@+id/tvAlreadyHaveAccount"
+        android:layout_below="@+id/tvAlreadyHaveAccount"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_create_account_gradient"
+        android:text="@string/b_sign_in"
+        android:textColor="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher" />
+
+</RelativeLayout>

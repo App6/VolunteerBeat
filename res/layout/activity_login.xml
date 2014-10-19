@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" 
+    android:background="#b0e0e6">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher" />
+
+    <EditText
+        android:id="@+id/etEmailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="3dp"
+        android:background="@drawable/edittext_bg"
+        android:ems="10"
+        android:hint="@string/et_email_address_hint"
+        android:inputType="textEmailAddress" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/etEmailAddress"
+        android:layout_alignRight="@+id/etEmailAddress"
+        android:layout_below="@+id/etEmailAddress"
+        android:background="@drawable/edittext_bg"
+        android:paddingLeft="3dp"
+        android:ems="10"
+        android:hint="@string/et_password_hint"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/bSignIn"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etPassword"
+        android:layout_alignRight="@+id/etPassword"
+        android:layout_centerVertical="true"
+        android:background="@drawable/b_signin_gradient"
+        android:text="@string/b_signin_text"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tvAlreadyHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bSignIn"
+        android:layout_alignRight="@+id/bSignIn"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/bSignIn"
+        android:layout_marginTop="82dp"
+        android:text="@string/tv_new_to_vb"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bGotoCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvAlreadyHaveAccount"
+        android:layout_alignRight="@+id/tvAlreadyHaveAccount"
+        android:layout_below="@+id/tvAlreadyHaveAccount"
+        android:layout_marginTop="10dp"
+        android:text="@string/b_create_account"
+        android:background="@drawable/button_create_account_gradient"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>

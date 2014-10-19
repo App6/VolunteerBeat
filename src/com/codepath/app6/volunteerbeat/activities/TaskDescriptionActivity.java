@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
+import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -40,6 +43,9 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener {
 
+	private static final int LOGIN_ACTIVITY_CODE = 200;
+	private boolean mShowApplyTaskDialog = false;
+	
 	// private ImageView ivNonProfitOrgLogo;
 	private TextView tvNonProfiOrgName;
 	private RatingBar rbNonProfitOrgRating;
@@ -111,6 +117,34 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		mLocationClient = new LocationClient(this, this, this);
 		if (mapFragment != null) {
 			map = mapFragment.getMap();
+
+			map.setOnMapClickListener(new OnMapClickListener() {
+
+				@Override
+				public void onMapClick(LatLng arg0) {
+					// String label = task.getOrgName();
+					// String uriBegin = "geo:" + arg0.latitude + ","
+					// + arg0.longitude;
+					// String query = arg0.latitude + "," + arg0.longitude + "("
+					// + label + ")";
+					// String encodedQuery = Uri.encode(query);
+					// String uriString = uriBegin + "?q=" + encodedQuery
+					// + "&z=16";
+					// Uri uri = Uri.parse(uriString);
+					//
+					// startActivity(new Intent(
+					// android.content.Intent.ACTION_VIEW, uri));
+
+					Intent intent = new Intent(
+							android.content.Intent.ACTION_VIEW, Uri
+									.parse("http://maps.google.com/maps?daddr="
+											+ arg0.latitude + ","
+											+ arg0.longitude));
+					startActivity(intent);
+				}
+				
+			});
+
 			if (map != null) {
 				map.setOnMapClickListener(new OnMapClickListener() {
 
@@ -157,8 +191,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			Toast.makeText(this, "Error - Map Fragment was null!!",
 					Toast.LENGTH_SHORT).show();
 		}
+		// Move the camera instantly to hamburg with a zoom of 15.
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
 
-
+		// Zoom in, animating the camera.
+		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 	}
 
 	// Gets the image URI and setup the associated share intent to hook into the
@@ -168,10 +205,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		Intent shareIntent = new Intent();
 		shareIntent.setAction(Intent.ACTION_SEND);
 
-		shareIntent.putExtra(
-				Intent.EXTRA_TEXT,
-				task.getOrganization().getOrgName() + "-" + task.getTaskName() + ": "
-						+ task.getTaskShortDesc());
+		shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Volunteer");
+		shareIntent.putExtra(Intent.EXTRA_TEXT,
+				task.getOrganization().getOrgName() + " Need Volunteer for task:-" + "\n\n"
+						+ task.getTaskShortDesc() + "\n\n"
+						+ "Due date for this task is: " + task.getDueDate());
 
 		shareIntent.setType("text/plain");
 
@@ -242,7 +280,27 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				mLocationClient.connect();
 				break;
 			}
+			break;
+		case LOGIN_ACTIVITY_CODE: 
+			switch (resultCode) {
+			case Activity.RESULT_OK:
+				mShowApplyTaskDialog = true;
+				break;
+			}
+			break;
+		}
+	}
 
+	
+	
+	@Override
+	protected void onResumeFragments() {
+		// TODO Auto-generated method stub
+		super.onResumeFragments();
+		
+		if (mShowApplyTaskDialog) {
+			mShowApplyTaskDialog = false;
+			showApplyTaskDialog();
 		}
 	}
 
@@ -374,11 +432,30 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			return mDialog;
 		}
 	}
-
+	
 	public void showOrg(View v) {
 		Intent i = new Intent(this, OrganizationActivity.class);
 		i.putExtra("organization", task.getOrganization());
 		startActivity(i);
 	}
 
+	
+	public void onClickVolunteer(View view) {
+      if (VolunteerBeatClient.hasDoneLogin()) {
+        	showApplyTaskDialog();
+        } else {
+    		Intent i = new Intent(this, LoginActivity.class);
+    		startActivityForResult(i, LOGIN_ACTIVITY_CODE);
+        }
+    }
+	
+	private void showApplyTaskDialog() {
+	    ApplyTaskFragment applyTaskFragment = new ApplyTaskFragment();
+	       
+        // Show DialogFragment
+        Bundle args = new Bundle();
+        applyTaskFragment.setArguments(args);
+        applyTaskFragment.show((FragmentManager)getSupportFragmentManager(), "Advanced Filters Dialog Fragment");	
+	}
+	
 }

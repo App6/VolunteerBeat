@@ -152,5 +152,31 @@
         android:layout_below="@id/tvHobbiesLabel"
         android:hint="@string/profile_default_hobbies" />
 
+        <Button
+            android:id="@+id/bRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:onClick="onRegisterClick"
+            android:layout_alignParentLeft="true"
+            android:text="@string/register_button_label" />
+
+        <Button
+            android:id="@+id/bLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/tvCheckForRegistered"
+            android:onClick="onLoginClick"
+            android:text="@string/login_button_label" />
+
+        <TextView
+            android:id="@+id/tvCheckForRegistered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bLogin"
+            android:layout_alignBottom="@+id/bLogin"
+            android:layout_centerHorizontal="true"
+            android:text="@string/registered_login_label" />
     
 </RelativeLayout>
