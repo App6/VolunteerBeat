@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class TaskItem implements Parcelable {
+public class Task implements Parcelable {
 
 	private String taskName;
 	private int taskId;
@@ -28,7 +28,7 @@ public class TaskItem implements Parcelable {
 	private double gpsLongitude;
 	private Organization organization;
 
-	public TaskItem() {
+	public Task() {
 		organization = new Organization();
 	}
 
@@ -130,18 +130,18 @@ public class TaskItem implements Parcelable {
 		dest.writeParcelable(organization, flags);
 	}
 
-	public static final Parcelable.Creator<TaskItem> CREATOR = new Parcelable.Creator<TaskItem>() {
-		public TaskItem createFromParcel(Parcel in) {
-			TaskItem task = new TaskItem(in);
+	public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
+		public Task createFromParcel(Parcel in) {
+			Task task = new Task(in);
 			return task;
 		}
 
-		public TaskItem[] newArray(int size) {
-			return new TaskItem[size];
+		public Task[] newArray(int size) {
+			return new Task[size];
 		}
 	};
 	
-	public TaskItem(Parcel in){
+	public Task(Parcel in){
 		setTaskName(in.readString());
 		taskId = in.readInt();
 		taskStatus = in.readString();
@@ -174,7 +174,7 @@ public class TaskItem implements Parcelable {
 	}
 
 	
-	public TaskItem(JSONObject json) {
+	public Task(JSONObject json) {
 		super();
 		try {
 			this.taskName = json.getJSONObject("category").getString("name");
@@ -199,11 +199,11 @@ public class TaskItem implements Parcelable {
 		}
 	}
 
-	public static ArrayList<TaskItem> fromJsonArray(JSONArray jarray) {
-		ArrayList<TaskItem> atasks = new ArrayList<TaskItem>();
+	public static ArrayList<Task> fromJsonArray(JSONArray jarray) {
+		ArrayList<Task> atasks = new ArrayList<Task>();
 		for (int i = 0; i< jarray.length(); i++){
 			try {
-				TaskItem t = new TaskItem(jarray.getJSONObject(i));
+				Task t = new Task(jarray.getJSONObject(i));
 				atasks.add(t);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

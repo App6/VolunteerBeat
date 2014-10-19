@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -62,7 +62,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private double gpsLatitude;
 	private double gpsLongitude;
 
-	private TaskItem task;
+	private Task task;
 	private ShareActionProvider miShareAction;
 
 	/*

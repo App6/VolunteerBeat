@@ -15,13 +15,13 @@ import android.widget.TextView;
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.activities.OrganizationActivity;
 import com.codepath.app6.volunteerbeat.models.Organization;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.codepath.app6.volunteerbeat.models.Task;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
-public class TasksAdapter extends ArrayAdapter<TaskItem> {
+public class TasksAdapter extends ArrayAdapter<Task> {
 
-	public TasksAdapter(Context context, List<TaskItem> tasks) {
+	public TasksAdapter(Context context, List<Task> tasks) {
 		super(context, android.R.layout.simple_list_item_1, tasks);
 	}
 
@@ -40,7 +40,7 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Take the data source at position
 		// Get the data item
-		TaskItem task = getItem(position);
+		Task task = getItem(position);
 		// Check if we are using a recycled view
 		final ViewHolder viewHolder;
 		if (convertView == null) {
@@ -83,7 +83,7 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				 TaskItem task = (TaskItem) v.getTag();
+				 Task task = (Task) v.getTag();
 				 Intent i = new Intent(getContext(), OrganizationActivity.class);
 				 i.putExtra("organization", task.getOrganization());
 				 getContext().startActivity(i);
