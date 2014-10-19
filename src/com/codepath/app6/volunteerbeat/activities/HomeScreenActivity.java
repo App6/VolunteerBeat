@@ -1,49 +1,23 @@
 package com.codepath.app6.volunteerbeat.activities;
 
-import com.codepath.app6.volunteerbeat.R;
-import com.codepath.app6.volunteerbeat.R.layout;
-import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
-
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.view.View;
+
+import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.fragments.NewTasksFragment;
+import com.codepath.app6.volunteerbeat.fragments.SaveTasksFragment;
+import com.codepath.app6.volunteerbeat.fragments.TimelineTasksFragment;
+import com.codepath.app6.volunteerbeat.listeners.FragmentTabListener;
+import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
+
 //import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
-import android.view.View;
-
-import java.util.ArrayList;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
-import com.codepath.app6.volunteerbeat.activities.TaskDescriptionActivity;
-import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
-import com.codepath.app6.volunteerbeat.utils.CircularImageView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import com.squareup.picasso.Picasso;
 
 public class HomeScreenActivity extends ActionBarActivity {
-	private ArrayList<TaskItem> tasks;
-	private TasksAdapter aTasks;
-	private ListView lvTasks;
 
 	/*
 	 * private String[][] data = new String[][] { // url, orgName, taskName,
@@ -68,10 +42,50 @@ public class HomeScreenActivity extends ActionBarActivity {
 		ProfileActionBar aBar = new ProfileActionBar(this);
 		aBar.show();
 
-		setUpRefrences();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-		populateData();
+		setupTabs();
 
+	}
+
+	private void setupTabs() {
+		ActionBar actionBar = getActionBar();
+
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(true);
+
+		Tab tab1 = actionBar.newTab()
+				.setText("New")
+				// .setIcon(R.drawable.ic_home)
+				.setTag("NewTasks")
+				.setTabListener(
+						new FragmentTabListener<NewTasksFragment>(
+								R.id.flContainer, this, "new",
+								NewTasksFragment.class));
+		actionBar.addTab(tab1);
+		actionBar.selectTab(tab1);
+
+		Tab tab2 = actionBar.newTab()
+				.setText("Save")
+				// .setIcon(R.drawable.ic_mentions)
+				.setTag("SaveTasks")
+				.setTabListener(
+						new FragmentTabListener<SaveTasksFragment>(
+								R.id.flContainer, this, "save",
+								SaveTasksFragment.class));
+
+		actionBar.addTab(tab2);
+
+		Tab tab3 = actionBar.newTab()
+				.setText("Timeline")
+				// .setIcon(R.drawable.ic_mentions)
+				.setTag("TimelineTasks")
+				.setTabListener(
+						new FragmentTabListener<TimelineTasksFragment>(
+								R.id.flContainer, this, "timeline",
+								TimelineTasksFragment.class));
+
+		actionBar.addTab(tab3);
 	}
 
 	public void onButtonClick(View v) {
@@ -80,97 +94,6 @@ public class HomeScreenActivity extends ActionBarActivity {
 		startActivity(i);
 	}
 
-	private void setUpRefrences() {
-		tasks = new ArrayList<TaskItem>();
-
-		aTasks = new TasksAdapter(this, tasks);
-
-		lvTasks = (ListView) findViewById(R.id.lvTasks);
-
-		lvTasks.setAdapter(aTasks);
-
-		lvTasks.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				Intent i = new Intent(HomeScreenActivity.this,
-						TaskDescriptionActivity.class);
-				Log.d("OnItemClickListner", "Task count : " + tasks.size());
-				TaskItem task = aTasks.getItem(position);
-
-				Bundle bundle = new Bundle();
-				bundle.putParcelable("taskInfo", task);
-				i.putExtras(bundle);
-
-				startActivity(i);
-			}
-
-		});
-
-	}
-
-	private void populateData() {
-		String tasksUrl = "http://api.volunteerbeat.com/tasks";
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
-		client.addHeader("Content-Type", "application/json");
-		
-		client.get(tasksUrl, new JsonHttpResponseHandler() {
-
-			@Override
-			public void onSuccess(int statusCode, 
-					JSONObject response) {
-				Log.d("onSuccess", "Success");
-				try {
-					aTasks.addAll(TaskItem.fromJsonArray(response
-							.getJSONArray("items")));
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				super.onSuccess(statusCode, response);
-			}
-/*
-			@Override
-			public void onFailure(
-					String responseString, Throwable throwable) {
-				Log.d("onFailure", "Failed");
-				throwable.printStackTrace();
-				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(),
-						"Failed 1: " + throwable.toString(), Toast.LENGTH_SHORT)
-						.show();
-
-				super.onFailure(statusCode, headers, responseString, throwable);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers,
-					Throwable throwable, JSONObject errorResponse) {
-				throwable.printStackTrace();
-				Toast.makeText(getApplicationContext(),
-						"Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT)
-						.show();
-
-				super.onFailure(statusCode, headers, throwable, errorResponse);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers,
-					Throwable throwable, JSONArray errorResponse) {
-				throwable.printStackTrace();
-				Toast.makeText(getApplicationContext(),
-						"Failed 3: " + throwable.toString(), Toast.LENGTH_SHORT)
-						.show();
-
-				super.onFailure(statusCode, headers, throwable, errorResponse);
-			}
-*/
-		});
-
-	}
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Decide what to do based on the original request code

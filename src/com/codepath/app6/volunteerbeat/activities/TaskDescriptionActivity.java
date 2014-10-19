@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
@@ -25,7 +26,8 @@ import android.widget.Toast;
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment.ApplyDialogListener;
+import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -42,7 +44,8 @@ import com.squareup.picasso.Picasso;
 
 public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+		GooglePlayServicesClient.OnConnectionFailedListener,
+		ApplyDialogListener{
 
 	private static final int LOGIN_ACTIVITY_CODE = 200;
 	private boolean mShowApplyTaskDialog = false;
@@ -62,7 +65,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private double gpsLatitude;
 	private double gpsLongitude;
 
-	private TaskItem task;
+	private Task task;
 	private ShareActionProvider miShareAction;
 
 	/*
@@ -75,6 +78,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_task_description);
 
 		setupReferences();
@@ -90,6 +94,10 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvTaskDueTime.setText(task.getDueTime());
 			tvTaskDescription.setText(task.getTaskShortDesc());
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
+			boolean volunteered = UserProfile.getCurrentUser(getApplicationContext()).isVolunteeredTask(task.getTaskId());
+			if(volunteered) {
+				displayVolunteered();
+			}
 			Picasso.with(getApplicationContext())
 					.load(task.getOrganization().getOrgLogoUri())
 					.into(ivNonProfitOrgLogo);
@@ -99,6 +107,14 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 	}
 
+	private void displayVolunteered() {
+		Button b = (Button)findViewById(R.id.bVolunteer);
+		b.setText("Thanks for Volunteering");
+		b.setTextColor(Color.GREEN);
+		b.setTextSize(14);
+		b.setClickable(false);
+	}
+	
 	private void setupReferences() {
 		// ivNonProfitOrgLogo = (ImageView)
 		// findViewById(R.id.ivNonProfitOrgLogo);
@@ -176,8 +192,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				// Zoom in, animating the camera.
 				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
-				Toast.makeText(this, "Map Fragment was loaded properly!",
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this, "Map Fragment was loaded properly!",
+//						Toast.LENGTH_SHORT).show();
 				// map.setMyLocationEnabled(true);
 				// Marker sanJose = map.addMarker(new MarkerOptions().position(
 				// SANJOSE).title("San Jose"));
@@ -300,7 +316,10 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		if (mShowApplyTaskDialog) {
 			mShowApplyTaskDialog = false;
 			showApplyTaskDialog();
-		}
+		} else if(UserProfile.getCurrentUser(getApplicationContext()).isVolunteeredTask(task.getTaskId())) {
+				Button b = (Button)findViewById(R.id.bVolunteer);
+				b.setClickable(false);
+		}		
 	}
 
 	private boolean isGooglePlayServicesAvailable() {
@@ -450,12 +469,21 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 	private void showApplyTaskDialog() {
 		ApplyTaskFragment applyTaskFragment = new ApplyTaskFragment();
-
 		// Show DialogFragment
 		Bundle args = new Bundle();
+		args.putString("taskId", String.valueOf(task.getTaskId()));
 		applyTaskFragment.setArguments(args);
 		applyTaskFragment.show((FragmentManager) getSupportFragmentManager(),
 				"Advanced Filters Dialog Fragment");
+	}
+
+	@Override
+	public void onFinishEditDialog(boolean applied) {
+		if (applied) {
+			displayVolunteered();
+		}
+		// TODO Auto-generated method stub
+		
 	}
 
 }

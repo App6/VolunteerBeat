@@ -27,6 +27,7 @@ public class ProfileActionBar {
 		actionBar.setCustomView(R.layout.actionbar_profile_view);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
+		
 		/* Replace this with the custom Image location on disk */
 		String url = "http://i.forbesimg.com/media/lists/people/lionel-messi_416x416.jpg";
 		CircularImageView ivactionbarLogo = (CircularImageView) actionBar
