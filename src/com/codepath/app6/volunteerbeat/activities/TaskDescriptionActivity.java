@@ -94,7 +94,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvTaskDueTime.setText(task.getDueTime());
 			tvTaskDescription.setText(task.getTaskShortDesc());
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
-			boolean volunteered = UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId());
+			boolean volunteered = UserProfile.getInstance(getApplicationContext()).isVolunteeredTask(task.getTaskId());
 			if(volunteered) {
 				displayVolunteered();
 			}
@@ -192,8 +192,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				// Zoom in, animating the camera.
 				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
-				Toast.makeText(this, "Map Fragment was loaded properly!",
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this, "Map Fragment was loaded properly!",
+//						Toast.LENGTH_SHORT).show();
 				// map.setMyLocationEnabled(true);
 				// Marker sanJose = map.addMarker(new MarkerOptions().position(
 				// SANJOSE).title("San Jose"));
@@ -316,7 +316,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		if (mShowApplyTaskDialog) {
 			mShowApplyTaskDialog = false;
 			showApplyTaskDialog();
-		} else if(UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId())) {
+		} else if(UserProfile.getInstance(getApplicationContext()).isVolunteeredTask(task.getTaskId())) {
 				Button b = (Button)findViewById(R.id.bVolunteer);
 				b.setClickable(false);
 		}		

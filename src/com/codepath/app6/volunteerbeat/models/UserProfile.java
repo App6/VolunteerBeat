@@ -126,8 +126,9 @@ public class UserProfile {
 		return found;
 	}
 
-	public boolean isVolunteerdTask(long l) {
-		return isVolunteeredTask(String.valueOf(l));
+
+	public boolean isVolunteeredTask(long taskId) {
+		return isVolunteeredTask(String.valueOf(taskId));
 	}
 
 	public boolean isLoggedIn() {
