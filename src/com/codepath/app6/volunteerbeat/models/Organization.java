@@ -80,8 +80,8 @@ public class Organization implements Parcelable {
 		try {
 			this.orgName = json.getString("title");
 
-			this.orgLogoUri = json.getJSONObject("displayImage").getString(
-					"thumb");
+			this.orgLogoUri = "http://cdn.greatnonprofits.org"
+					+ json.getJSONObject("displayImage").getString("thumb");
 			this.orgRating = (float) json.getJSONObject("reviews").getDouble(
 					"reviewAverage");
 			this.orgDescription = json.getJSONObject("details").getString(
@@ -90,7 +90,8 @@ public class Organization implements Parcelable {
 			JSONArray picsjson = json.getJSONObject("details")
 					.getJSONObject("media").getJSONArray("images");
 			for (int i = 0; i < picsjson.length(); i++) {
-				orgPicUris.add(picsjson.getJSONObject(i).getString("image"));
+				orgPicUris.add("http://cdn.greatnonprofits.org"
+						+ picsjson.getJSONObject(i).getString("image"));
 			}
 
 			orgReviews = Review.fromJSONArray(json.getJSONObject("reviews")

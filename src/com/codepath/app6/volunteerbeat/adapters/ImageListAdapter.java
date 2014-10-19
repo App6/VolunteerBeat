@@ -33,7 +33,6 @@ public class ImageListAdapter extends ArrayAdapter {
 		ivImage = (ImageView) convertView.getTag();
 		String url = (String) getItem(position);
 		Picasso.with(getContext()).load(url).into(ivImage);
-		Toast.makeText(getContext(), "Loaded Messi", Toast.LENGTH_SHORT).show();
 		return convertView;
 	}
 

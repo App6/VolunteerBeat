@@ -10,10 +10,13 @@ import com.codepath.app6.volunteerbeat.adapters.ReviewListAdapter;
 import com.codepath.app6.volunteerbeat.models.Organization;
 import com.codepath.app6.volunteerbeat.utils.HorizontialListView;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
+import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -37,7 +40,8 @@ public class OrganizationActivity extends ActionBarActivity {
 			TextView tvOrgName = (TextView) findViewById(R.id.tvOrgActOrgName);
 			TextView tvOrgDesc = (TextView) findViewById(R.id.tvOrgActOrgDescription);
 			RatingBar rbOrgRating = (RatingBar) findViewById(R.id.rbOrgActNonProfitOrgRating);
-			
+			ImageView ivOrgLogo = (ImageView) findViewById(R.id.ivOrgActOrgLogo);
+			Picasso.with(getApplicationContext()).load(org.getOrgLogoUri()).into(ivOrgLogo);
 			tvOrgName.setText(org.getOrgName());
 			tvOrgDesc.setText(org.getOrgDescription());
 			rbOrgRating.setRating(org.getOrgRating());

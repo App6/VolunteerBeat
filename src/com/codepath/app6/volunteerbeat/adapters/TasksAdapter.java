@@ -16,6 +16,8 @@ import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.activities.OrganizationActivity;
 import com.codepath.app6.volunteerbeat.models.Organization;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
 public class TasksAdapter extends ArrayAdapter<TaskItem> {
 
@@ -72,6 +74,9 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 		viewHolder.tvDistance.setText(task.getDistance());
 		viewHolder.tvDueDate.setText(task.getDueDate());
 		
+		Picasso.with(getContext()).load(task.getOrganization().getOrgLogoUri()).error(R.drawable.ic_launcher_vb_white).resize(75, 75).into(viewHolder.ivOrgImage);	
+
+
 		viewHolder.ivOrgImage.setTag(task);
 		viewHolder.ivOrgImage.setOnClickListener(new View.OnClickListener() {
 			

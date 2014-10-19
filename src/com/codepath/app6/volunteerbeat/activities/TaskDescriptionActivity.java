@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
@@ -46,6 +48,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private TextView tvTaskDueTime;
 	private TextView tvTaskDescription;
 	private TextView tvTaskPostedDate;
+	private ImageView ivNonProfitOrgLogo;
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
 	private LocationClient mLocationClient;
@@ -84,6 +87,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvTaskDueTime.setText(task.getDueTime());
 			tvTaskDescription.setText(task.getTaskShortDesc());
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
+			Picasso.with(getApplicationContext()).load(task.getOrganization().getOrgLogoUri()).into(ivNonProfitOrgLogo);
 			gpsLatitude = task.getGpsLatitude();
 			gpsLongitude = task.getGpsLongitude();
 		}
@@ -100,6 +104,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		tvTaskDueTime = (TextView) findViewById(R.id.tvTaskDueTime);
 		tvTaskDescription = (TextView) findViewById(R.id.tvTaskDescription);
 		tvTaskPostedDate = (TextView) findViewById(R.id.tvTaskPostedDate);
+		ivNonProfitOrgLogo = (ImageView) findViewById(R.id.ivNonProfitOrgLogo);
 		mapFragment = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.fgMap));
 

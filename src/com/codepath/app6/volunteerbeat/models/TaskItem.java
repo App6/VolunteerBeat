@@ -185,9 +185,11 @@ public class TaskItem implements Parcelable {
 		this.taskShortDesc = json.getString("description");
 		this.duration = json.getInt("duration");
 		this.distance = "0";
-		this.dueDate = json.getString("starts_at");
-		this.dueTime = json.getString("starts_at");
-		this.postedDate = "-----";
+		String due = json.getString("starts_at");
+		;
+		this.dueDate = due.split("T")[0];
+		this.dueTime = due.split("T")[1].replace("Z", "");
+		this.postedDate = "--";
 		this.gpsLatitude = Double.valueOf(json.getString("latitude"));
 		this.gpsLongitude = Double.valueOf(json.getString("longitude"));
 		this.organization = new Organization(json.getJSONObject("organization"));
