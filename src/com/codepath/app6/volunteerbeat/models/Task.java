@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -17,7 +16,7 @@ import android.os.Parcelable;
 public class Task implements Parcelable {
 
 	private String taskName;
-	private int taskId;
+	private long taskId;
 	private String taskStatus;
 	private int peopleNeeded;
 	private String taskShortDesc;
@@ -35,6 +34,22 @@ public class Task implements Parcelable {
 
 	public Task() {
 		organization = new Organization();
+	}
+
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
+	}
+
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+
+	public void setPeopleNeeded(int peopleNeeded) {
+		this.peopleNeeded = peopleNeeded;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 	public String getPostedDate() {
@@ -120,7 +135,7 @@ public class Task implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(taskName);
-		dest.writeInt(taskId);
+		dest.writeLong(taskId);
 		dest.writeString(taskStatus);
 		dest.writeInt(peopleNeeded);
 		dest.writeString(taskShortDesc);
@@ -148,7 +163,7 @@ public class Task implements Parcelable {
 
 	public Task(Parcel in) {
 		setTaskName(in.readString());
-		taskId = in.readInt();
+		taskId = in.readLong();
 		taskStatus = in.readString();
 		peopleNeeded = in.readInt();
 		setTaskShortDesc(in.readString());
@@ -164,7 +179,7 @@ public class Task implements Parcelable {
 				.getClassLoader()));
 	}
 
-	public int getTaskId() {
+	public long getTaskId() {
 		return taskId;
 	}
 
@@ -185,7 +200,8 @@ public class Task implements Parcelable {
 		try {
 			this.taskName = json.getJSONObject("category").getString("name");
 
-			this.taskId = json.getInt("id");
+			this.taskId = json.getLong("id");
+
 			this.taskStatus = json.getString("status");
 			this.peopleNeeded = json.getInt("people_needed");
 			this.taskShortDesc = json.getString("description");
