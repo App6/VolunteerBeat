@@ -11,8 +11,8 @@
         android:scaleType="centerCrop"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/default_photo" />
 
     <TextView
@@ -30,7 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_below="@id/ivProfileImage"
         android:text="To: non profit org" />
     
@@ -38,10 +39,9 @@
         android:id="@+id/tvMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
         android:layout_alignLeft="@id/tvOrgName"
         android:layout_below="@id/tvOrgName"
+        android:layout_marginRight="20dp"
         android:hint="@string/default_message" />
         
     <Button
@@ -51,7 +51,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/tvMessage"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Cancel" />
 
     <Button

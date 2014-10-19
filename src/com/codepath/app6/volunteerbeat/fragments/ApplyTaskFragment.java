@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class ApplyTaskFragment extends DialogFragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		
         taskId = getArguments().getString("taskId");
     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
 		profile = UserProfile.getCurrentUser(getActivity());
@@ -56,6 +59,11 @@ public class ApplyTaskFragment extends DialogFragment {
 	    ImageView ivProfileImage = (ImageView)view.findViewById(R.id.ivProfileImage);
     	ApplyTaskFragment.setProfileImage(ivProfileImage, profile.getPhotoUri(), getActivity().getContentResolver());
 
+    	String orgName = getArguments().getString("orgName");
+    	if (orgName != null) {
+    		((TextView)view.findViewById(R.id.tvOrgName)).setText("To: "+orgName);
+    	}
+    	
     	Button  btnSend = (Button)view.findViewById(R.id.btnSend);
     	btnSend.setOnClickListener(new OnClickListener() {
     		@Override

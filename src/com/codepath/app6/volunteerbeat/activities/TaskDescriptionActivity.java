@@ -472,6 +472,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		// Show DialogFragment
 		Bundle args = new Bundle();
 		args.putString("taskId", String.valueOf(task.getTaskId()));
+		args.putString("orgName", task.getOrganization().getOrgName());
 		applyTaskFragment.setArguments(args);
 		applyTaskFragment.show((FragmentManager) getSupportFragmentManager(),
 				"Advanced Filters Dialog Fragment");
