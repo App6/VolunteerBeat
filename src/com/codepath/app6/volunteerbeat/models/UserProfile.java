@@ -126,7 +126,7 @@ public class UserProfile {
 		return found;
 	}
 
-	public boolean isVolunteerdTask(int taskId) {
+	public boolean isVolunteeredTask(long taskId) {
 		return isVolunteeredTask(String.valueOf(taskId));
 	}
 

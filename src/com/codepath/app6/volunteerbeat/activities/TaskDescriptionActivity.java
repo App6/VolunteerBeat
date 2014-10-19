@@ -93,7 +93,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvTaskDueTime.setText(task.getDueTime());
 			tvTaskDescription.setText(task.getTaskShortDesc());
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
-			boolean volunteered = UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId());
+			boolean volunteered = UserProfile.getInstance(getApplicationContext()).isVolunteeredTask(task.getTaskId());
 			if(volunteered) {
 				displayVolunteered();
 			}
@@ -315,7 +315,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		if (mShowApplyTaskDialog) {
 			mShowApplyTaskDialog = false;
 			showApplyTaskDialog();
-		} else if(UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId())) {
+		} else if(UserProfile.getInstance(getApplicationContext()).isVolunteeredTask(task.getTaskId())) {
 				Button b = (Button)findViewById(R.id.bVolunteer);
 				b.setClickable(false);
 		}		
