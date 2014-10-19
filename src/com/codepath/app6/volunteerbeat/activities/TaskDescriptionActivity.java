@@ -191,8 +191,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				// Zoom in, animating the camera.
 				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
-				Toast.makeText(this, "Map Fragment was loaded properly!",
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this, "Map Fragment was loaded properly!",
+//						Toast.LENGTH_SHORT).show();
 				// map.setMyLocationEnabled(true);
 				// Marker sanJose = map.addMarker(new MarkerOptions().position(
 				// SANJOSE).title("San Jose"));

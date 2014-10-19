@@ -108,6 +108,8 @@ public class UserProfile {
 		if (volunteeredTasks == null) {
 			volunteeredTasks = new HashSet<String>();
 			volunteeredTasks.add(taskId);
+		} else {
+			volunteeredTasks.add(taskId);
 		}
 	}
 
