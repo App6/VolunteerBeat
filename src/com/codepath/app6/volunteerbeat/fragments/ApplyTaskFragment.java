@@ -32,6 +32,9 @@ public class ApplyTaskFragment extends DialogFragment {
 	private UserProfile profile = null;
 	private TextView tvMessage;
 	
+    public interface ApplyDialogListener {
+        void onFinishEditDialog(boolean applied);
+    }
 	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -117,6 +120,8 @@ public class ApplyTaskFragment extends DialogFragment {
 								.show();
 						profile.addVolunteeredTasks(taskId);
 						profile.writeToPreference(PreferenceManager.getDefaultSharedPreferences(getActivity()));
+						ApplyDialogListener listner = (ApplyDialogListener)getActivity();
+						listner.onFinishEditDialog(true);
 						getDialog().dismiss();
 					}
 

@@ -1,6 +1,11 @@
 package com.codepath.app6.volunteerbeat.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +24,7 @@ public class Task implements Parcelable {
 	private int duration;
 
 	// Todo : Add category.
-	
+
 	private String distance;
 	private String dueDate;
 	private String dueTime;
@@ -95,7 +100,7 @@ public class Task implements Parcelable {
 	public void setGpsLongitude(double gpsLongitude) {
 		this.gpsLongitude = gpsLongitude;
 	}
-	
+
 	public void setOrganization(Organization org) {
 		organization = org;
 	}
@@ -140,23 +145,25 @@ public class Task implements Parcelable {
 			return new Task[size];
 		}
 	};
-	
-	public Task(Parcel in){
+
+	public Task(Parcel in) {
 		setTaskName(in.readString());
 		taskId = in.readInt();
 		taskStatus = in.readString();
 		peopleNeeded = in.readInt();
 		setTaskShortDesc(in.readString());
 		duration = in.readInt();
-		
+
 		setDistance(in.readString());
 		setDueDate(in.readString());
 		setDueTime(in.readString());
 		setPostedDate(in.readString());
 		setGpsLatitude(in.readDouble());
 		setGpsLongitude(in.readDouble());
-		setOrganization((Organization)in.readParcelable(Organization.class.getClassLoader()));	
+		setOrganization((Organization) in.readParcelable(Organization.class
+				.getClassLoader()));
 	}
+
 	public int getTaskId() {
 		return taskId;
 	}
@@ -173,26 +180,44 @@ public class Task implements Parcelable {
 		return duration;
 	}
 
-	
 	public Task(JSONObject json) {
 		super();
 		try {
 			this.taskName = json.getJSONObject("category").getString("name");
 
-		this.taskId = json.getInt("id");
-		this.taskStatus = json.getString("status");
-		this.peopleNeeded = json.getInt("people_needed");
-		this.taskShortDesc = json.getString("description");
-		this.duration = json.getInt("duration");
-		this.distance = "0";
-		String due = json.getString("starts_at");
-		;
-		this.dueDate = due.split("T")[0];
-		this.dueTime = due.split("T")[1].replace("Z", "");
-		this.postedDate = "--";
-		this.gpsLatitude = Double.valueOf(json.getString("latitude"));
-		this.gpsLongitude = Double.valueOf(json.getString("longitude"));
-		this.organization = new Organization(json.getJSONObject("organization"));
+			this.taskId = json.getInt("id");
+			this.taskStatus = json.getString("status");
+			this.peopleNeeded = json.getInt("people_needed");
+			this.taskShortDesc = json.getString("description");
+			this.duration = json.getInt("duration");
+			this.distance = "0";
+			String due = json.getString("starts_at");
+			due = due.replace("T", " ");
+			due = due.replace("Z", "");
+			Date d;
+			try {
+				d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(due);
+				d.setMonth(11);
+			} catch (ParseException e) {
+				d = new Date();
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+			this.dueDate = dateFormat.format(d);
+
+			DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+
+			this.dueTime = timeFormat.format(d);
+
+			Date date = new Date();
+			this.postedDate = dateFormat.format(date);
+
+			this.gpsLatitude = Double.valueOf(json.getString("latitude"));
+			this.gpsLongitude = Double.valueOf(json.getString("longitude"));
+			this.organization = new Organization(
+					json.getJSONObject("organization"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -201,7 +226,7 @@ public class Task implements Parcelable {
 
 	public static ArrayList<Task> fromJsonArray(JSONArray jarray) {
 		ArrayList<Task> atasks = new ArrayList<Task>();
-		for (int i = 0; i< jarray.length(); i++){
+		for (int i = 0; i < jarray.length(); i++) {
 			try {
 				Task t = new Task(jarray.getJSONObject(i));
 				atasks.add(t);

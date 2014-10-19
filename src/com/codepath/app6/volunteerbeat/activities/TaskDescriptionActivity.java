@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
+import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment.ApplyDialogListener;
 import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.google.android.gms.common.ConnectionResult;
@@ -43,7 +44,8 @@ import com.squareup.picasso.Picasso;
 
 public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+		GooglePlayServicesClient.OnConnectionFailedListener,
+		ApplyDialogListener{
 
 	private static final int LOGIN_ACTIVITY_CODE = 200;
 	private boolean mShowApplyTaskDialog = false;
@@ -93,11 +95,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
 			boolean volunteered = UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId());
 			if(volunteered) {
-				Button b = (Button)findViewById(R.id.bVolunteer);
-				b.setText("Thanks for Volunteering");
-				b.setTextColor(Color.GREEN);
-				b.setTextSize(14);
-				b.setClickable(false);
+				displayVolunteered();
 			}
 			Picasso.with(getApplicationContext())
 					.load(task.getOrganization().getOrgLogoUri())
@@ -108,6 +106,14 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 	}
 
+	private void displayVolunteered() {
+		Button b = (Button)findViewById(R.id.bVolunteer);
+		b.setText("Thanks for Volunteering");
+		b.setTextColor(Color.GREEN);
+		b.setTextSize(14);
+		b.setClickable(false);
+	}
+	
 	private void setupReferences() {
 		// ivNonProfitOrgLogo = (ImageView)
 		// findViewById(R.id.ivNonProfitOrgLogo);
@@ -468,6 +474,15 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		applyTaskFragment.setArguments(args);
 		applyTaskFragment.show((FragmentManager) getSupportFragmentManager(),
 				"Advanced Filters Dialog Fragment");
+	}
+
+	@Override
+	public void onFinishEditDialog(boolean applied) {
+		if (applied) {
+			displayVolunteered();
+		}
+		// TODO Auto-generated method stub
+		
 	}
 
 }
