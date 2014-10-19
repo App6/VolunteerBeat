@@ -2,7 +2,9 @@ package com.codepath.app6.volunteerbeat.utils;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.activities.HomeScreenActivity;
+import com.codepath.app6.volunteerbeat.activities.LoginActivity;
 import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
+import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.squareup.picasso.Picasso;
 
 import android.content.Intent;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.Toast;
 
 public class ProfileActionBar {
+	public static final int ACTIONBAR_LOGIN_ACTIVITY_CODE =300;
+	
 	private ActionBarActivity activity;
 
 	public ProfileActionBar(ActionBarActivity a) {
@@ -28,9 +32,8 @@ public class ProfileActionBar {
 		CircularImageView ivactionbarLogo = (CircularImageView) actionBar
 				.getCustomView().findViewById(R.id.actionBarLogo);
 
-		Picasso.with(activity).load(url)
-		// .resize(30, 30)
-				.into(ivactionbarLogo);
+
+		UserProfileHelper.setProfileImage(ivactionbarLogo, activity);
 
 		ivactionbarLogo.setOnClickListener(new View.OnClickListener() {
 
@@ -45,8 +48,14 @@ public class ProfileActionBar {
 	}
 
 	public void showProfile() {
-		Intent i = new Intent(activity, ProfileActivity.class);
-		i.putExtra("mode", false);
-		activity.startActivity(i);
+		UserProfile profile = UserProfile.getInstance(activity);
+		if (profile.isLoggedIn()) {
+			Intent i = new Intent(activity, ProfileActivity.class);
+			i.putExtra("mode", false);
+			activity.startActivity(i);
+		} else {
+			Intent i = new Intent(activity, LoginActivity.class);
+			activity.startActivityForResult(i, ACTIONBAR_LOGIN_ACTIVITY_CODE);
+		}
 	}
 }

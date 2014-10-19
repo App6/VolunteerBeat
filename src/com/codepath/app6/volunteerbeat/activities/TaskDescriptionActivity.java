@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -63,7 +63,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private double gpsLatitude;
 	private double gpsLongitude;
 
-	private TaskItem task;
+	private Task task;
 	private ShareActionProvider miShareAction;
 
 	/*
@@ -78,11 +78,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_description);
 
-		getActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.rgb(0XEF, 0X43, 0X1C)));
-		getActionBar().setTitle(
-				Html.fromHtml("<font color='#ffffff'>VB </font>"));
-
 		setupReferences();
 
 		task = getIntent().getParcelableExtra("taskInfo");
@@ -96,7 +91,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvTaskDueTime.setText(task.getDueTime());
 			tvTaskDescription.setText(task.getTaskShortDesc());
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
-			boolean volunteered = UserProfile.getProfile(getApplicationContext()).isVolunteerdTask(task.getTaskId());
+			boolean volunteered = UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId());
 			if(volunteered) {
 				Button b = (Button)findViewById(R.id.bVolunteer);
 				b.setText("Thanks for Volunteering");
@@ -222,7 +217,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		shareIntent.putExtra(
 				Intent.EXTRA_TEXT,
 				task.getOrganization().getOrgName()
-						+ " Need Volunteer for task:-" + "\n\n"
+						+ "\n\nNeed Volunteer for task:-" + "\n\n"
 						+ task.getTaskShortDesc() + "\n\n"
 						+ "Due date for this task is: " + task.getDueDate());
 
@@ -314,7 +309,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		if (mShowApplyTaskDialog) {
 			mShowApplyTaskDialog = false;
 			showApplyTaskDialog();
-		} else if(UserProfile.getProfile(getApplicationContext()).isVolunteerdTask(task.getTaskId())) {
+		} else if(UserProfile.getInstance(getApplicationContext()).isVolunteerdTask(task.getTaskId())) {
 				Button b = (Button)findViewById(R.id.bVolunteer);
 				b.setClickable(false);
 		}		
@@ -456,7 +451,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	}
 
 	public void onClickVolunteer(View view) {
-		if (VolunteerBeatClient.hasDoneLogin()) {
+		UserProfile profile = UserProfile.getInstance(this);
+		if (profile.isLoggedIn()) {
 			showApplyTaskDialog();
 		} else {
 			Intent i = new Intent(this, LoginActivity.class);

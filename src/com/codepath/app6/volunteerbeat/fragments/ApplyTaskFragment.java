@@ -27,8 +27,9 @@ import com.loopj.android.http.RequestParams;
 
 public class ApplyTaskFragment extends DialogFragment {
 	private static String	APPLY_TASK_URL = "tasks/<TASK_ID>/apply";
+
 	private String taskId;
-	private UserProfile profile = new UserProfile();
+	private UserProfile profile = null;
 	private TextView tvMessage;
 	
 	
@@ -44,7 +45,7 @@ public class ApplyTaskFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         taskId = getArguments().getString("taskId");
     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
-		profile.readFromPreference(PreferenceManager.getDefaultSharedPreferences(getActivity()));
+		profile = UserProfile.getInstance(getActivity());
     	
 		setTextView(view, R.id.tvName, profile.getName());
 		tvMessage = (TextView) view.findViewById(R.id.tvMessage);

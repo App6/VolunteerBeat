@@ -4,6 +4,7 @@ import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.R.layout;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,7 +32,7 @@ import android.widget.Toast;
 import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
 import com.codepath.app6.volunteerbeat.activities.TaskDescriptionActivity;
 import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
-import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.utils.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -40,7 +41,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 public class HomeScreenActivity extends ActionBarActivity {
-	private ArrayList<TaskItem> tasks;
+	private ArrayList<Task> tasks;
 	private TasksAdapter aTasks;
 	private ListView lvTasks;
 
@@ -80,7 +81,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 	}
 
 	private void setUpRefrences() {
-		tasks = new ArrayList<TaskItem>();
+		tasks = new ArrayList<Task>();
 
 		aTasks = new TasksAdapter(this, tasks);
 
@@ -97,7 +98,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 				Intent i = new Intent(HomeScreenActivity.this,
 						TaskDescriptionActivity.class);
 				Log.d("OnItemClickListner", "Task count : " + tasks.size());
-				TaskItem task = aTasks.getItem(position);
+				Task task = aTasks.getItem(position);
 
 				Bundle bundle = new Bundle();
 				bundle.putParcelable("taskInfo", task);
@@ -123,7 +124,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 					JSONObject response) {
 				Log.d("onSuccess", "Success");
 				try {
-					aTasks.addAll(TaskItem.fromJsonArray(response
+					aTasks.addAll(Task.fromJsonArray(response
 							.getJSONArray("items")));
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -168,6 +169,29 @@ public class HomeScreenActivity extends ActionBarActivity {
 */
 		});
 
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// Decide what to do based on the original request code
+		switch (requestCode) {
+
+		case ProfileActionBar.ACTIONBAR_LOGIN_ACTIVITY_CODE:
+			switch (resultCode) {
+			case Activity.RESULT_OK:
+				ProfileActionBar aBar = new ProfileActionBar(this);
+				aBar.showProfile();
+				break;
+			}
+			break;
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		ProfileActionBar aBar = new ProfileActionBar(this);
+		aBar.show();
 	}
 
 }

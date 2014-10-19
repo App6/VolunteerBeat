@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#b0e0e6"
     tools:context="${relativePackage}.${activityClass}" >
 
     <EditText
@@ -54,23 +53,20 @@
         android:id="@+id/bRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etPassword"
-        android:layout_alignRight="@+id/etPassword"
+        android:layout_alignLeft="@+id/tvAlreadyHaveAccount"
+        android:layout_alignRight="@+id/tvAlreadyHaveAccount"
         android:layout_below="@+id/etPassword"
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/b_signin_gradient"
-        android:text="@string/b_create_acnt"
-        android:textColor="#FFFFFF" />
+        android:text="@string/b_create_acnt" />
 
     <TextView
         android:id="@+id/tvAlreadyHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bRegister"
-        android:layout_alignRight="@+id/bRegister"
         android:layout_below="@+id/bRegister"
-        android:layout_marginTop="82dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp"
         android:gravity="center_horizontal"
         android:text="@string/tv_already_has_account"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -79,13 +75,10 @@
         android:id="@+id/bGotoSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvAlreadyHaveAccount"
-        android:layout_alignRight="@+id/tvAlreadyHaveAccount"
         android:layout_below="@+id/tvAlreadyHaveAccount"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_create_account_gradient"
-        android:text="@string/b_sign_in"
-        android:textColor="#FFFFFF" />
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/b_sign_in" />
 
     <ImageView
         android:id="@+id/imageView1"

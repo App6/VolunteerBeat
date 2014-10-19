@@ -2,6 +2,7 @@ package com.codepath.app6.volunteerbeat.fragments;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,10 +16,11 @@ import android.widget.TextView;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
+import com.codepath.app6.volunteerbeat.utils.UserProfileHelper;
 
 public class ProfileReadonlyFragment extends Fragment {
 
-	private UserProfile profile = new UserProfile();
+	private UserProfile profile = null;
 	private View view;
 
 	@Override
@@ -40,8 +42,11 @@ public class ProfileReadonlyFragment extends Fragment {
 	}
 
 	private void setTextView(View view, int id, String text) {
+		TextView tv = (TextView) view.findViewById(id);
 		if (text != null && !text.isEmpty()) {
-			((TextView) view.findViewById(id)).setText(text);
+			tv.setText(text);
+		} else {
+			tv.setTextColor(Color.LTGRAY);
 		}
 	}
 
@@ -64,8 +69,7 @@ public class ProfileReadonlyFragment extends Fragment {
 	}
 
 	public void updateAll() {
-		profile.readFromPreference(PreferenceManager
-				.getDefaultSharedPreferences(getActivity()));
+		profile = UserProfile.getInstance(getActivity());
 
 		setTextView(view, R.id.tvName, profile.getName());
 		setTextView(view, R.id.tvAddr, profile.getAddress());
@@ -76,7 +80,7 @@ public class ProfileReadonlyFragment extends Fragment {
 
 		ImageView ivProfileImage = (ImageView) view
 				.findViewById(R.id.ivProfileImage);
-		ProfileReadonlyFragment.setProfileImage(ivProfileImage,
-				profile.getPhotoUri(), getActivity().getContentResolver());
+
+		UserProfileHelper.setProfileImage(ivProfileImage, getActivity());
 	}
 }

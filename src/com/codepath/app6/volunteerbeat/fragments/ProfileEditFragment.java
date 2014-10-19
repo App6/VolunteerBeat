@@ -12,12 +12,13 @@ import android.widget.ImageView;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
+import com.codepath.app6.volunteerbeat.utils.UserProfileHelper;
 
 public class ProfileEditFragment extends Fragment {
 
 	public final static int PICK_PHOTO_CODE = 1046;
 
-	private UserProfile profile = new UserProfile();
+	private UserProfile profile = null;
 
 	private EditText etName;
 	private EditText etAddr;
@@ -78,13 +79,11 @@ public class ProfileEditFragment extends Fragment {
 
 	public void updateProfileImage(Uri photoUri) {
 		profile.setPhotoUri(photoUri.toString());
-		ProfileReadonlyFragment.setProfileImage(ivProfileImage,
-				photoUri.toString(), getActivity().getContentResolver());
+		UserProfileHelper.setProfileImage(ivProfileImage, getActivity());
 	}
 
 	public void initViews() {
-		profile.readFromPreference(PreferenceManager
-				.getDefaultSharedPreferences(getActivity()));
+		profile = UserProfile.getInstance(getActivity());
 
 		etName = initTextView(view, R.id.tvName, profile.getName());
 		etAddr = initTextView(view, R.id.tvAddr, profile.getAddress());
@@ -94,8 +93,7 @@ public class ProfileEditFragment extends Fragment {
 		etHobbies = initTextView(view, R.id.tvHobbies, profile.getHobbies());
 
 		ivProfileImage = (ImageView) view.findViewById(R.id.ivProfileImage);
-		ProfileReadonlyFragment.setProfileImage(ivProfileImage,
-				profile.getPhotoUri(), getActivity().getContentResolver());
+		UserProfileHelper.setProfileImage(ivProfileImage, getActivity());
 	}
 
 }

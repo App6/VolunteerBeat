@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -12,6 +14,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class UserProfile {
+	private static UserProfile instance;
+	private int id;
 	private String name;
 	private String address;
 	private String email;
@@ -19,8 +23,22 @@ public class UserProfile {
 	private String aboutMe;
 	private String hobbies;
 	private String photoUri;
-	private int id;
+	private boolean isLoggedIn;
 	private Set<String> volunteeredTasks;
+
+	private UserProfile() {
+
+	}
+
+	public static synchronized UserProfile getInstance(Context context) {
+		if (instance == null) {
+			instance = new UserProfile();
+			instance.readFromPreference(PreferenceManager
+					.getDefaultSharedPreferences(context));
+		}
+
+		return instance;
+	}
 
 	public int getId() {
 		return id;
@@ -112,13 +130,16 @@ public class UserProfile {
 		return isVolunteeredTask(String.valueOf(taskId));
 	}
 
-	public static UserProfile getProfile(Context c) {
-		UserProfile p = new UserProfile();
-		p.readFromPreference(PreferenceManager.getDefaultSharedPreferences(c));
-		return p;
+	public boolean isLoggedIn() {
+		return isLoggedIn && VolunteerBeatClient.isClientLoggedIn();
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
 	}
 
 	public void readFromPreference(SharedPreferences preference) {
+		this.id = preference.getInt("id", -1);
 		this.name = preference.getString("name", "");
 		this.address = preference.getString("address", "");
 		this.phone = preference.getString("phone", "");
@@ -131,10 +152,12 @@ public class UserProfile {
 			Log.d("Read shread preference, volunteered tasks",
 					volunteeredTasks.toString());
 		}
+		this.isLoggedIn = preference.getBoolean("isloggedin", false);
 	}
 
 	public void writeToPreference(SharedPreferences preference) {
 		Editor editor = preference.edit();
+		editor.putInt("id", this.id);
 		editor.putString("name", this.name);
 		editor.putString("address", this.address);
 		editor.putString("phone", this.phone);
@@ -147,6 +170,7 @@ public class UserProfile {
 					volunteeredTasks.toString());
 		}
 		editor.putStringSet("volunteeredTasks", volunteeredTasks);
+		editor.putBoolean("isloggedin", this.isLoggedIn);
 		editor.commit();
 	}
 }
