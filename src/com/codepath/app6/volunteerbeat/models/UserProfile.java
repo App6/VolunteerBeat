@@ -1,5 +1,8 @@
 package com.codepath.app6.volunteerbeat.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 
 import android.content.Context;
@@ -8,7 +11,9 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 public class UserProfile {
-	private static 	UserProfile 	instance;
+	private static 	String	CURR_USER_ID_PROP_NAME = "CURR_USER_ID";
+	private static	String	USER_PROFILE_PROP_NAME_PREFIX = "USER_PROFILE_";
+	private static 	UserProfile 	currUser;
 	private int 	id;
 	private	String	name;
 	private String	address;
@@ -23,13 +28,17 @@ public class UserProfile {
 		
 	}
 	
-	public static synchronized UserProfile getInstance(Context context) {
-		if (instance == null) {
-			instance = new UserProfile();
-			instance.readFromPreference(PreferenceManager.getDefaultSharedPreferences(context));
+	public static synchronized UserProfile getCurrentUser(Context context) {
+		if (currUser == null) {
+			currUser = new UserProfile();
+			readFromPreference(currUser, PreferenceManager.getDefaultSharedPreferences(context));
+
 		}
-		
-		return instance;
+		return currUser;
+	}
+	
+	public synchronized void resetCurrentUser(Context context) {
+		readFromPreference(currUser, PreferenceManager.getDefaultSharedPreferences(context));
 	}
 	
 	public int getId() {
@@ -85,36 +94,61 @@ public class UserProfile {
 	
 	
 	public boolean isLoggedIn() {
-		return isLoggedIn && VolunteerBeatClient.isClientLoggedIn();
+		//return isLoggedIn && VolunteerBeatClient.isClientLoggedIn();
+		return isLoggedIn;
 	}
 	
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
 	
-	public void readFromPreference(SharedPreferences preference) {
-		this.id = preference.getInt("id", -1);
-		this.name = preference.getString("name", "");
-		this.address = preference.getString("address", "");
-		this.phone = preference.getString("phone", "");
-		this.email = preference.getString("email", "");
-		this.aboutMe = preference.getString("aboutme", "");
-		this.hobbies = preference.getString("hobbies", "");		
-		this.photoUri = preference.getString("photouri", "");
-		this.isLoggedIn = preference.getBoolean("isloggedin", false);
+	public static void readFromPreference(UserProfile user, SharedPreferences preference) {
+		int userId = user.getId();
+		if (userId <=0 ) {
+			userId = preference.getInt(CURR_USER_ID_PROP_NAME, -1);
+			user.id = userId;
+		}
+		
+		String jsonStr = preference.getString(getUserProfileKey(userId), "");
+        try {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            user.name =  jsonObject.isNull("name")?null:jsonObject.getString("name");
+            user.address = jsonObject.isNull("address")?null:jsonObject.getString("address");
+            user.phone = jsonObject.isNull("phone")?null:jsonObject.getString("phone");
+            user.email = jsonObject.isNull("email")?null:jsonObject.getString("email");
+            user.aboutMe =jsonObject.isNull("aboutme")?null: jsonObject.getString("aboutme");
+            user.hobbies = jsonObject.isNull("hobbies")?null:jsonObject.getString("hobbies");
+            user.photoUri = jsonObject.isNull("photouri")?null:jsonObject.getString("photouri");
+            user.isLoggedIn = jsonObject.isNull("isloggedin")?false:jsonObject.getBoolean("isloggedin");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 	}
 	
+
 	public void writeToPreference(SharedPreferences preference) {
 		Editor editor = preference.edit();
-		editor.putInt("id", this.id);
-		editor.putString("name", this.name);
-		editor.putString("address", this.address);
-		editor.putString("phone", this.phone);
-		editor.putString("email", this.email);
-		editor.putString("aboutme", this.aboutMe);
-		editor.putString("hobbies", this.hobbies);
-		editor.putString("photouri", this.photoUri);
-		editor.putBoolean("isloggedin", this.isLoggedIn);
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("id", this.id);
+			obj.put("name", this.name);
+			obj.put("address", this.address);
+			obj.put("phone", this.phone);
+			obj.put("email", this.email);
+			obj.put("aboutme", this.aboutMe);
+			obj.put("hobbies", this.hobbies);
+			obj.put("photouri", this.photoUri);
+			obj.put("isloggedin", this.isLoggedIn);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		editor.putString(getUserProfileKey(this.id), obj.toString());
+		editor.putInt(CURR_USER_ID_PROP_NAME, this.id);
 		editor.commit();
+	}
+	
+	private static String getUserProfileKey(int userId) {
+		return USER_PROFILE_PROP_NAME_PREFIX+userId;
 	}
 }

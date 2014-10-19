@@ -439,7 +439,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	}
 
 	public void onClickVolunteer(View view) {
-		UserProfile profile = UserProfile.getInstance(this);
+		UserProfile profile = UserProfile.getCurrentUser(this);
 		if (profile.isLoggedIn()) {
 			showApplyTaskDialog();
 		} else {

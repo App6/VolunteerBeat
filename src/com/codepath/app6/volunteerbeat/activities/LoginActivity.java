@@ -41,6 +41,12 @@ public class LoginActivity extends Activity {
 
 	private void setupReferences() {
 		etEmailAddress = (EditText) findViewById(R.id.etEmailAddress);
+		
+		UserProfile user = UserProfile.getCurrentUser(this);
+		if (user.getEmail() != null) {
+			etEmailAddress.setText(user.getEmail());
+		}
+		
 		etPassword = (EditText) findViewById(R.id.etPassword);
 		bSignIn = (Button) findViewById(R.id.bSignIn);
 		bGotoCreateAccount = (Button) findViewById(R.id.bGotoCreateAccount);
@@ -84,8 +90,8 @@ public class LoginActivity extends Activity {
 		RequestParams params = new RequestParams();
 		params.put("email", etEmailAddress.getText().toString());
 		params.put("password", etPassword.getText().toString());
-          
-		VolunteerBeatClient.post(SESSION_URL, params,
+         
+		VolunteerBeatClient.post(this, SESSION_URL, params,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(int arg0, JSONObject arg1) {
@@ -130,8 +136,10 @@ public class LoginActivity extends Activity {
 	}
 
 	private void saveCurrentUser(int id) {
-		UserProfile profile = UserProfile.getInstance(this);
-
+		UserProfile profile = UserProfile.getCurrentUser(this);
+		profile.setId(id);
+		profile.resetCurrentUser(this);
+		
 		// How to get data from server?
 
 		// This check is needed if the user has entered his name in registration

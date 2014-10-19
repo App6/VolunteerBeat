@@ -42,7 +42,7 @@ public class ApplyTaskFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         
     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
-		profile = UserProfile.getInstance(getActivity());
+		profile = UserProfile.getCurrentUser(getActivity());
     	
 		setTextView(view, R.id.tvName, profile.getName());
 
@@ -105,7 +105,8 @@ public class ApplyTaskFragment extends DialogFragment {
 		}
 		
 		String url = APPLY_TASK_URL.replace("<TASK_ID>", taskId);
-		VolunteerBeatClient.post(url, params,
+		final UserProfile user = UserProfile.getCurrentUser(getActivity());
+		VolunteerBeatClient.post(getActivity(), url, params,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(int arg0, JSONObject arg1) {
@@ -120,6 +121,8 @@ public class ApplyTaskFragment extends DialogFragment {
 						Toast.makeText(getActivity(),
 								"login failed - " + arg1 + "try again",
 								Toast.LENGTH_SHORT).show();
+						user.setLoggedIn(false);
+						getDialog().dismiss();
 					}
 
 					@Override
@@ -129,6 +132,8 @@ public class ApplyTaskFragment extends DialogFragment {
 						Toast.makeText(getActivity(),
 								"login failed - try again", Toast.LENGTH_SHORT)
 								.show();
+						user.setLoggedIn(false);
+						getDialog().dismiss();
 					}
 				});
 	}

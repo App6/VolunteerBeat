@@ -67,7 +67,7 @@ public class RegisterActivity extends Activity {
 		params.put("email", etEmailAddress.getText().toString());
 		params.put("password", etPassword.getText().toString());
 
-		VolunteerBeatClient.post(REGISTER_URL, params,
+		VolunteerBeatClient.post(this, REGISTER_URL, params,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(int arg0, JSONObject arg1) {
@@ -111,7 +111,7 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void saveCurrentUser(int id) {
-		UserProfile profile = UserProfile.getInstance(this);;
+		UserProfile profile = UserProfile.getCurrentUser(this);;
 
 		// Prompt user to enter all data at register? or let user edit later
 		// For now use some dummy data
