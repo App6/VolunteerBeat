@@ -76,11 +76,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_description);
 
-		getActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.rgb(0XEF, 0X43, 0X1C)));
-		getActionBar().setTitle(
-				Html.fromHtml("<font color='#ffffff'>VB </font>"));
-
 		setupReferences();
 
 		task = getIntent().getParcelableExtra("taskInfo");

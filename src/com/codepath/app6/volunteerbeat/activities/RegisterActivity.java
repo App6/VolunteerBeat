@@ -72,19 +72,20 @@ public class RegisterActivity extends Activity {
 					@Override
 					public void onSuccess(int arg0, JSONObject arg1) {
 						try {
-							Log.e("RegisterActivity", "Registered - id = "
-									+ arg1.getInt("id"));
-							Toast.makeText(getApplicationContext(),
-									"Successfull registration",
-									Toast.LENGTH_SHORT).show();
+//							Log.e("RegisterActivity", "Registered - id = "
+//									+ arg1.getInt("id"));
+//							Toast.makeText(getApplicationContext(),
+//									"Successfull registration",
+//									Toast.LENGTH_SHORT).show();
 							saveCurrentUser(arg1.getInt("id"));
 						} catch (JSONException e) {
 							e.printStackTrace();
 						} finally {
-							Toast.makeText(getApplicationContext(), "welcome",
-									Toast.LENGTH_SHORT).show();
+//							Toast.makeText(getApplicationContext(), "welcome",
+//									Toast.LENGTH_SHORT).show();
 						}
 						Intent i = new Intent();
+						i.putExtra("email", etEmailAddress.getText().toString());
 						setResult(RESULT_OK, i);
 						finish();
 

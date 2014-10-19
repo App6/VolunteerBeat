@@ -55,12 +55,12 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 					.findViewById(R.id.tvTaskName);
 			viewHolder.tvTaskDesc = (TextView) convertView
 					.findViewById(R.id.tvTaskDesc);
-			viewHolder.tvDistance = (TextView) convertView
-					.findViewById(R.id.tvDistance);
+//			viewHolder.tvDistance = (TextView) convertView
+//					.findViewById(R.id.tvDistance);
 			viewHolder.tvDueDate = (TextView) convertView
 					.findViewById(R.id.tvDueDate);
-			viewHolder.ivSave = (ImageView) convertView
-					.findViewById(R.id.ivSave);
+//			viewHolder.ivSave = (ImageView) convertView
+//					.findViewById(R.id.ivSave);
 
 			convertView.setTag(viewHolder);
 		} else {
@@ -71,8 +71,8 @@ public class TasksAdapter extends ArrayAdapter<TaskItem> {
 		viewHolder.tvNonProfitName.setText(task.getOrganization().getOrgName());
 		viewHolder.tvTaskName.setText(task.getTaskName());
 		viewHolder.tvTaskDesc.setText(task.getTaskShortDesc());
-		viewHolder.tvDistance.setText(task.getDistance());
-		viewHolder.tvDueDate.setText(task.getDueDate());
+		//viewHolder.tvDistance.setText(task.getDistance());
+		viewHolder.tvDueDate.setText("Due: " + task.getDueDate());
 		
 		Picasso.with(getContext()).load(task.getOrganization().getOrgLogoUri()).error(R.drawable.ic_launcher_vb_white).resize(75, 75).into(viewHolder.ivOrgImage);	
 
