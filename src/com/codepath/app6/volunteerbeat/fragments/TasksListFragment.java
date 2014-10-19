@@ -19,7 +19,10 @@ import com.codepath.app6.volunteerbeat.activities.TaskDescriptionActivity;
 import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
 import com.codepath.app6.volunteerbeat.models.Task;
 
-public class TasksListFragment extends Fragment {
+public abstract class TasksListFragment extends Fragment {
+
+	public abstract void refreshTasks();
+
 	private ArrayList<Task> tasks;
 	private TasksAdapter aTasks;
 	private ListView lvTasks;
@@ -43,6 +46,8 @@ public class TasksListFragment extends Fragment {
 		lvTasks = (ListView) v.findViewById(R.id.lvTasks);
 
 		lvTasks.setAdapter(aTasks);
+
+		refreshTasks();
 
 		lvTasks.setOnItemClickListener(new OnItemClickListener() {
 
@@ -70,5 +75,10 @@ public class TasksListFragment extends Fragment {
 	// Delegate the adding to the internal adapter
 	public void addAll(ArrayList<Task> tasks) {
 		aTasks.addAll(tasks);
+	}
+
+	// Delegate the adding to the internal adapter
+	public void deleteAll() {
+		aTasks.clear();
 	}
 }
