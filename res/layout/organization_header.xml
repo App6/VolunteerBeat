@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlOrgActDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivOrgActOrgLogo"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="17dp"
+        android:src="@drawable/ic_launcher" />
+
+
+    <TextView
+        android:id="@+id/tvOrgActOrgName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivOrgActOrgLogo"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@+id/ivOrgActOrgLogo"
+        android:text="@string/non_profit_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RatingBar
+        android:id="@+id/rbOrgActNonProfitOrgRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvOrgActOrgName"
+        android:layout_below="@+id/tvOrgActOrgName"
+        android:layout_marginTop="18dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:indeterminate="false"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="4.5"
+        android:stepSize="0.5" />
+   
+    
+    <TextView
+        android:id="@+id/tvOrgActOrgDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="4sp"
+        android:layout_marginRight="4sp"
+        android:layout_below="@+id/ivOrgActOrgLogo"
+        android:text="@string/non_profit_desc" />
+    
+
+      <com.codepath.app6.volunteerbeat.utils.HorizontialListView
+
+        android:id="@+id/hlvImages"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tvOrgActOrgDescription"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true" >
+
+    </com.codepath.app6.volunteerbeat.utils.HorizontialListView>
+
+    <TextView
+        android:id="@+id/tvOrgActReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/lbl_reviews"
+        android:textStyle="bold"
+        android:layout_below="@+id/hlvImages"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

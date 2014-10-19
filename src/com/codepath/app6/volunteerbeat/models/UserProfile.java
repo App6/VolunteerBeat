@@ -107,10 +107,8 @@ public class UserProfile {
 	public void addVolunteeredTasks(String taskId) {
 		if (volunteeredTasks == null) {
 			volunteeredTasks = new HashSet<String>();
-			volunteeredTasks.add(taskId);
-		} else {
-			volunteeredTasks.add(taskId);
 		}
+		volunteeredTasks.add(taskId);
 	}
 
 	public boolean isVolunteeredTask(String taskId) {
@@ -127,6 +125,7 @@ public class UserProfile {
 		}
 		return found;
 	}
+
 
 	public boolean isVolunteeredTask(long taskId) {
 		return isVolunteeredTask(String.valueOf(taskId));

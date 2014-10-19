@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -35,30 +36,36 @@ public class OrganizationActivity extends ActionBarActivity {
 	        setContentView(R.layout.activity_organization_details);
 			ProfileActionBar aBar = new ProfileActionBar(this);
 			aBar.show();
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			
+	        ListView lvReviews = (ListView) findViewById(R.id.lvOrgActReviews);
+	        View v = getLayoutInflater().inflate(R.layout.organization_header, lvReviews, false);
+	        lvReviews.addHeaderView(v);
+	        
+	        prepareOrgHeader(v);
+	        
+	        ReviewListAdapter rAdapter = new ReviewListAdapter(this, org.getOrgReviews());
+	        lvReviews.setAdapter(rAdapter);
+	        
+	    }
+	   	private void prepareOrgHeader(View v) {
 			// Replace this with real organization passed to you.
 			org = (Organization)getIntent().getParcelableExtra("organization");
 			
-			TextView tvOrgName = (TextView) findViewById(R.id.tvOrgActOrgName);
-			TextView tvOrgDesc = (TextView) findViewById(R.id.tvOrgActOrgDescription);
-			RatingBar rbOrgRating = (RatingBar) findViewById(R.id.rbOrgActNonProfitOrgRating);
-			ImageView ivOrgLogo = (ImageView) findViewById(R.id.ivOrgActOrgLogo);
+			TextView tvOrgName = (TextView) v.findViewById(R.id.tvOrgActOrgName);
+			TextView tvOrgDesc = (TextView) v.findViewById(R.id.tvOrgActOrgDescription);
+			RatingBar rbOrgRating = (RatingBar) v.findViewById(R.id.rbOrgActNonProfitOrgRating);
+			ImageView ivOrgLogo = (ImageView) v.findViewById(R.id.ivOrgActOrgLogo);
 			Picasso.with(getApplicationContext()).load(org.getOrgLogoUri()).into(ivOrgLogo);
 			tvOrgName.setText(org.getOrgName());
 			tvOrgDesc.setText(org.getOrgDescription());
 			rbOrgRating.setRating(org.getOrgRating());
 
-	        HorizontialListView listview = (HorizontialListView) findViewById(R.id.hlvImages);
+	        HorizontialListView listview = (HorizontialListView) v.findViewById(R.id.hlvImages);
 
 	        mAdapter = new ImageListAdapter(this, org.getOrgPicUris());
 	        listview.setAdapter(mAdapter);
-	        
-	        ListView lvReviews = (ListView) findViewById(R.id.lvOrgActReviews);
-	        ReviewListAdapter rAdapter = new ReviewListAdapter(this, org.getOrgReviews());
-	        lvReviews.setAdapter(rAdapter);
-	        
-	    }
-	   
+	   	}
 		@Override
 		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 			// Decide what to do based on the original request code
