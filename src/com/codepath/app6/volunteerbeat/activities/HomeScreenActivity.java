@@ -115,10 +115,11 @@ public class HomeScreenActivity extends ActionBarActivity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
 		client.addHeader("Content-Type", "application/json");
+		
 		client.get(tasksUrl, new JsonHttpResponseHandler() {
 
 			@Override
-			public void onSuccess(int statusCode, Header[] headers,
+			public void onSuccess(int statusCode, 
 					JSONObject response) {
 				Log.d("onSuccess", "Success");
 				try {
@@ -127,11 +128,11 @@ public class HomeScreenActivity extends ActionBarActivity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				super.onSuccess(statusCode, headers, response);
+				super.onSuccess(statusCode, response);
 			}
-
+/*
 			@Override
-			public void onFailure(int statusCode, Header[] headers,
+			public void onFailure(
 					String responseString, Throwable throwable) {
 				Log.d("onFailure", "Failed");
 				throwable.printStackTrace();
@@ -164,6 +165,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 
 				super.onFailure(statusCode, headers, throwable, errorResponse);
 			}
+*/
 		});
 
 	}
