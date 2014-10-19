@@ -107,8 +107,8 @@ public class UserProfile {
 	public void addVolunteeredTasks(String taskId) {
 		if (volunteeredTasks == null) {
 			volunteeredTasks = new HashSet<String>();
-			volunteeredTasks.add(taskId);
 		}
+		volunteeredTasks.add(taskId);
 	}
 
 	public boolean isVolunteeredTask(String taskId) {
@@ -126,8 +126,8 @@ public class UserProfile {
 		return found;
 	}
 
-	public boolean isVolunteerdTask(int taskId) {
-		return isVolunteeredTask(String.valueOf(taskId));
+	public boolean isVolunteerdTask(long l) {
+		return isVolunteeredTask(String.valueOf(l));
 	}
 
 	public boolean isLoggedIn() {
