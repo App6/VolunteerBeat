@@ -27,25 +27,28 @@ import com.loopj.android.http.RequestParams;
 
 public class ApplyTaskFragment extends DialogFragment {
 	private static String	APPLY_TASK_URL = "tasks/<TASK_ID>/apply";
-	
+	private String taskId;
 	private UserProfile profile = new UserProfile();
+	private TextView tvMessage;
 	
 	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        
+        taskId = getArguments().getString("taskId");
     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
 		profile.readFromPreference(PreferenceManager.getDefaultSharedPreferences(getActivity()));
     	
 		setTextView(view, R.id.tvName, profile.getName());
-
+		tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+		
 	    ImageView ivProfileImage = (ImageView)view.findViewById(R.id.ivProfileImage);
     	ApplyTaskFragment.setProfileImage(ivProfileImage, profile.getPhotoUri(), getActivity().getContentResolver());
 
@@ -94,14 +97,13 @@ public class ApplyTaskFragment extends DialogFragment {
 	}
 	
 	public void onSend(View v) {
-		String taskId="2";
-		String message=null;
+
+		String message= tvMessage.getText().toString();
 		
 		RequestParams params = new RequestParams();
 		params.put("task_id", taskId);
 		if (message != null && !message.isEmpty()) {
 			params.put("text", message);
-
 		}
 		
 		String url = APPLY_TASK_URL.replace("<TASK_ID>", taskId);
@@ -112,6 +114,8 @@ public class ApplyTaskFragment extends DialogFragment {
 						Toast.makeText(getActivity(),
 								"Successfully applied", Toast.LENGTH_SHORT)
 								.show();
+						profile.addVolunteeredTasks(taskId);
+						profile.writeToPreference(PreferenceManager.getDefaultSharedPreferences(getActivity()));
 						getDialog().dismiss();
 					}
 
