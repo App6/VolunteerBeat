@@ -1,5 +1,8 @@
 package com.codepath.app6.volunteerbeat.activities;
 
+import java.util.List;
+
+import org.apache.http.cookie.Cookie;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +20,7 @@ import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 public class LoginActivity extends Activity {
@@ -80,7 +84,7 @@ public class LoginActivity extends Activity {
 		RequestParams params = new RequestParams();
 		params.put("email", etEmailAddress.getText().toString());
 		params.put("password", etPassword.getText().toString());
-
+          
 		VolunteerBeatClient.post(SESSION_URL, params,
 				new JsonHttpResponseHandler() {
 					@Override
@@ -92,6 +96,7 @@ public class LoginActivity extends Activity {
 							// Toast.makeText(getApplicationContext(),
 							// "Successfull login", Toast.LENGTH_SHORT)
 							// .show();
+					          
 							saveCurrentUser(arg1.getInt("id"));
 						} catch (JSONException e) {
 							e.printStackTrace();

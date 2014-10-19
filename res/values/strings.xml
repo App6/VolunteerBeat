@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="profile_default_name">Your Name</string>
     <string name="profile_default_email">xxx@youremail.xxx</string>
-    <string name="profile_default_phone">650-123-4567</string>
+    <string name="profile_default_phone">000-000-0000</string>
     <string name="profile_default_address">your address</string>
     <string name="profile_default_aboutme">Write a brief biography to introduce yourself...</string>
     <string name="profile_default_hobbies">What are your hobbies and interests?</string>

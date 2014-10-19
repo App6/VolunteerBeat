@@ -151,7 +151,7 @@
         android:layout_alignLeft="@id/tvAboutMeLabel"
         android:layout_below="@id/tvHobbiesLabel"
         android:hint="@string/profile_default_hobbies" />
-
+<!-- 
         <Button
             android:id="@+id/bRegister"
             android:layout_width="wrap_content"
@@ -178,5 +178,5 @@
             android:layout_alignBottom="@+id/bLogin"
             android:layout_centerHorizontal="true"
             android:text="@string/registered_login_label" />
-    
+   -->  
 </RelativeLayout>

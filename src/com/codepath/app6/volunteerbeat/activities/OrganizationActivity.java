@@ -74,4 +74,11 @@ public class OrganizationActivity extends ActionBarActivity {
 				break;
 			}
 		}
+		
+		@Override
+		protected void onResume() {
+			super.onResume();
+			ProfileActionBar aBar = new ProfileActionBar(this);
+			aBar.show();
+		}
 }

@@ -1,5 +1,7 @@
 package com.codepath.app6.volunteerbeat.models;
 
+import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -83,7 +85,7 @@ public class UserProfile {
 	
 	
 	public boolean isLoggedIn() {
-		return isLoggedIn;
+		return isLoggedIn && VolunteerBeatClient.isClientLoggedIn();
 	}
 	
 	public void setLoggedIn(boolean isLoggedIn) {

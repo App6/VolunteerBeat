@@ -2,6 +2,7 @@ package com.codepath.app6.volunteerbeat.fragments;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -41,8 +42,11 @@ public class ProfileReadonlyFragment extends Fragment {
 	}
 
 	private void setTextView(View view, int id, String text) {
+		TextView tv = (TextView) view.findViewById(id);
 		if (text != null && !text.isEmpty()) {
-			((TextView) view.findViewById(id)).setText(text);
+			tv.setText(text);
+		} else {
+			tv.setTextColor(Color.LTGRAY);
 		}
 	}
 

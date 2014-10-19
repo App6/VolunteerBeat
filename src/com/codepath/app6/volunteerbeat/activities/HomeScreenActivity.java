@@ -187,5 +187,11 @@ public class HomeScreenActivity extends ActionBarActivity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		ProfileActionBar aBar = new ProfileActionBar(this);
+		aBar.show();
+	}
 
 }

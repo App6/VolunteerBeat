@@ -1,5 +1,10 @@
 package com.codepath.app6.volunteerbeat.clients;
 
+import java.util.List;
+
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -21,4 +26,12 @@ public class VolunteerBeatClient {
 		return VB_BASE_URL + relativeUrl;
 	}
 
+	public static boolean isClientLoggedIn() {
+		DefaultHttpClient httpClient = (DefaultHttpClient)(client.getHttpClient());		
+		List<Cookie> cookies = httpClient.getCookieStore().getCookies();
+		if (cookies == null || cookies.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
 }
