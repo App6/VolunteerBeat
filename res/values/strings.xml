@@ -31,6 +31,7 @@
     <string name="volunteer_button_label">I can Volunteer</string>
     <string name="lbl_reviews">Reviews</string>
     <string name="review_text">Years ago I attended an exhibit here and was blown away by the quality of artwork. The museum is small, but the exhibit I saw was truly breath-taking. The people who run this museum are very passionate about what they do, progressive minded and committed to community involvment. </string>
+	<string name="default_message">I can help.</string>
     <string name="review_date">April 1, 2010</string>
     <string name="registered_login_label">"Already registered? "</string>
     <string name="login_button_label">sign-in</string>
@@ -55,5 +56,4 @@
     <string name="b_create_acnt">Create Account</string>
     <string name="tv_already_has_account">Already has account?</string>
     <string name="b_sign_in">Sign In</string>
-
 </resources>

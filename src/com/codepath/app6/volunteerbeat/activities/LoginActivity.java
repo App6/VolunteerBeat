@@ -76,12 +76,15 @@ public class LoginActivity extends Activity {
 									"Successfull login", Toast.LENGTH_SHORT)
 									.show();
 							saveCurrentUser(arg1.getInt("id"));
+							VolunteerBeatClient.doneLogin();
 						} catch (JSONException e) {
 							e.printStackTrace();
 						} finally {
 							Toast.makeText(getApplicationContext(), "welcome",
 									Toast.LENGTH_SHORT).show();
 						}
+						Intent i = new Intent();
+						setResult(RESULT_OK, i);
 						finish();
 					}
 
