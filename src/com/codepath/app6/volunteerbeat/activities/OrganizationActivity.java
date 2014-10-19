@@ -36,9 +36,8 @@ public class OrganizationActivity extends ActionBarActivity {
 	        setContentView(R.layout.activity_organization_details);
 			ProfileActionBar aBar = new ProfileActionBar(this);
 			aBar.show();
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			
-
-	        
 	        ListView lvReviews = (ListView) findViewById(R.id.lvOrgActReviews);
 	        View v = getLayoutInflater().inflate(R.layout.organization_header, lvReviews, false);
 	        lvReviews.addHeaderView(v);

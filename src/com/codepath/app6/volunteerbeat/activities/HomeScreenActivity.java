@@ -67,7 +67,8 @@ public class HomeScreenActivity extends ActionBarActivity {
 
 		ProfileActionBar aBar = new ProfileActionBar(this);
 		aBar.show();
-
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		
 		setUpRefrences();
 
 		populateData();
