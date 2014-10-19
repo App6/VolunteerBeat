@@ -10,8 +10,6 @@ public class VolunteerBeatClient {
 
 	private static AsyncHttpClient client = new AsyncHttpClient();;
 
-	private static boolean hasDoneLogin = false;
-	
 	public static void post(String url, RequestParams params,
 			AsyncHttpResponseHandler responseHandler) {
 		client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
@@ -21,16 +19,6 @@ public class VolunteerBeatClient {
 
 	private static String getAbsoluteUrl(String relativeUrl) {
 		return VB_BASE_URL + relativeUrl;
-	}
-
-	public static boolean hasDoneLogin() {
-		// TODO Auto-generated method stub
-		return hasDoneLogin;
-	}
-
-	public static void doneLogin() {
-		hasDoneLogin = true;
-		
 	}
 
 }

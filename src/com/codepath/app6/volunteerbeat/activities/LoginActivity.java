@@ -76,7 +76,6 @@ public class LoginActivity extends Activity {
 									"Successfull login", Toast.LENGTH_SHORT)
 									.show();
 							saveCurrentUser(arg1.getInt("id"));
-							VolunteerBeatClient.doneLogin();
 						} catch (JSONException e) {
 							e.printStackTrace();
 						} finally {
@@ -108,9 +107,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void saveCurrentUser(int id) {
-		UserProfile profile = new UserProfile();
-		profile.readFromPreference(PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext()));
+		UserProfile profile = UserProfile.getInstance(this);
 
 		// How to get data from server?
 		// For now use some dummt data
@@ -121,7 +118,7 @@ public class LoginActivity extends Activity {
 		profile.setId(id);
 		//profile.setAboutMe("About me");
 		//profile.setHobbies("My Hobbies");
-
+		profile.setLoggedIn(true);
 		profile.writeToPreference(PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext()));
 	}

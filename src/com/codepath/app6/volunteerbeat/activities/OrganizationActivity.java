@@ -12,6 +12,8 @@ import com.codepath.app6.volunteerbeat.utils.HorizontialListView;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 import com.squareup.picasso.Picasso;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -56,4 +58,20 @@ public class OrganizationActivity extends ActionBarActivity {
 	        lvReviews.setAdapter(rAdapter);
 	        
 	    }
+	   
+		@Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+			// Decide what to do based on the original request code
+			switch (requestCode) {
+
+			case ProfileActionBar.ACTIONBAR_LOGIN_ACTIVITY_CODE:
+				switch (resultCode) {
+				case Activity.RESULT_OK:
+					ProfileActionBar aBar = new ProfileActionBar(this);
+					aBar.showProfile();
+					break;
+				}
+				break;
+			}
+		}
 }

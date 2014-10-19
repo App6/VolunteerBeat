@@ -28,7 +28,7 @@ import com.loopj.android.http.RequestParams;
 public class ApplyTaskFragment extends DialogFragment {
 	private static String	APPLY_TASK_URL = "tasks/<TASK_ID>/apply";
 	
-	private UserProfile profile = new UserProfile();
+	private UserProfile profile = null;
 	
 	
     @Override
@@ -42,7 +42,7 @@ public class ApplyTaskFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         
     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
-		profile.readFromPreference(PreferenceManager.getDefaultSharedPreferences(getActivity()));
+		profile = UserProfile.getInstance(getActivity());
     	
 		setTextView(view, R.id.tvName, profile.getName());
 

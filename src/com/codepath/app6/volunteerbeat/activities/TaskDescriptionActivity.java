@@ -26,6 +26,7 @@ import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
 import com.codepath.app6.volunteerbeat.models.TaskItem;
+import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -443,7 +444,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	}
 
 	public void onClickVolunteer(View view) {
-		if (VolunteerBeatClient.hasDoneLogin()) {
+		UserProfile profile = UserProfile.getInstance(this);
+		if (profile.isLoggedIn()) {
 			showApplyTaskDialog();
 		} else {
 			Intent i = new Intent(this, LoginActivity.class);

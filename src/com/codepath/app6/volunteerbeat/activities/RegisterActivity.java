@@ -110,9 +110,7 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void saveCurrentUser(int id) {
-		UserProfile profile = new UserProfile();
-		profile.readFromPreference(PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext()));
+		UserProfile profile = UserProfile.getInstance(this);;
 
 		// Prompt user to enter all data at register? or let user edit later
 		// For now use some dummy data

@@ -4,6 +4,7 @@ import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.R.layout;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -169,5 +170,22 @@ public class HomeScreenActivity extends ActionBarActivity {
 		});
 
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// Decide what to do based on the original request code
+		switch (requestCode) {
+
+		case ProfileActionBar.ACTIONBAR_LOGIN_ACTIVITY_CODE:
+			switch (resultCode) {
+			case Activity.RESULT_OK:
+				ProfileActionBar aBar = new ProfileActionBar(this);
+				aBar.showProfile();
+				break;
+			}
+			break;
+		}
+	}
+
 
 }

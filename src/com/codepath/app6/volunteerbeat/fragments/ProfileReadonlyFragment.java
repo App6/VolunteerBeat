@@ -15,10 +15,11 @@ import android.widget.TextView;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
+import com.codepath.app6.volunteerbeat.utils.UserProfileHelper;
 
 public class ProfileReadonlyFragment extends Fragment {
 
-	private UserProfile profile = new UserProfile();
+	private UserProfile profile = null;
 	private View view;
 
 	@Override
@@ -64,8 +65,7 @@ public class ProfileReadonlyFragment extends Fragment {
 	}
 
 	public void updateAll() {
-		profile.readFromPreference(PreferenceManager
-				.getDefaultSharedPreferences(getActivity()));
+		profile = UserProfile.getInstance(getActivity());
 
 		setTextView(view, R.id.tvName, profile.getName());
 		setTextView(view, R.id.tvAddr, profile.getAddress());
@@ -76,7 +76,7 @@ public class ProfileReadonlyFragment extends Fragment {
 
 		ImageView ivProfileImage = (ImageView) view
 				.findViewById(R.id.ivProfileImage);
-		ProfileReadonlyFragment.setProfileImage(ivProfileImage,
-				profile.getPhotoUri(), getActivity().getContentResolver());
+
+		UserProfileHelper.setProfileImage(ivProfileImage, getActivity());
 	}
 }

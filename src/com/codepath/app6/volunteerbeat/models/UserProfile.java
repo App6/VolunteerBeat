@@ -1,9 +1,13 @@
 package com.codepath.app6.volunteerbeat.models;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 public class UserProfile {
+	private static 	UserProfile 	instance;
+	private int 	id;
 	private	String	name;
 	private String	address;
 	private String	email;
@@ -11,8 +15,20 @@ public class UserProfile {
 	private String	aboutMe;
 	private String	hobbies;
 	private String	photoUri;
-	private int id;
+	private boolean isLoggedIn;
 	
+	private UserProfile() {
+		
+	}
+	
+	public static synchronized UserProfile getInstance(Context context) {
+		if (instance == null) {
+			instance = new UserProfile();
+			instance.readFromPreference(PreferenceManager.getDefaultSharedPreferences(context));
+		}
+		
+		return instance;
+	}
 	
 	public int getId() {
 		return id;
@@ -65,7 +81,17 @@ public class UserProfile {
 		this.photoUri = photoUri;
 	}
 	
+	
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+	
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+	
 	public void readFromPreference(SharedPreferences preference) {
+		this.id = preference.getInt("id", -1);
 		this.name = preference.getString("name", "");
 		this.address = preference.getString("address", "");
 		this.phone = preference.getString("phone", "");
@@ -73,10 +99,12 @@ public class UserProfile {
 		this.aboutMe = preference.getString("aboutme", "");
 		this.hobbies = preference.getString("hobbies", "");		
 		this.photoUri = preference.getString("photouri", "");
+		this.isLoggedIn = preference.getBoolean("isloggedin", false);
 	}
 	
 	public void writeToPreference(SharedPreferences preference) {
 		Editor editor = preference.edit();
+		editor.putInt("id", this.id);
 		editor.putString("name", this.name);
 		editor.putString("address", this.address);
 		editor.putString("phone", this.phone);
@@ -84,6 +112,7 @@ public class UserProfile {
 		editor.putString("aboutme", this.aboutMe);
 		editor.putString("hobbies", this.hobbies);
 		editor.putString("photouri", this.photoUri);
+		editor.putBoolean("isloggedin", this.isLoggedIn);
 		editor.commit();
 	}
 }
