@@ -207,7 +207,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		shareIntent.putExtra(
 				Intent.EXTRA_TEXT,
 				task.getOrganization().getOrgName()
-						+ " Need Volunteer for task:-" + "\n\n"
+						+ "\n\nNeed Volunteer for task:-" + "\n\n"
 						+ task.getTaskShortDesc() + "\n\n"
 						+ "Due date for this task is: " + task.getDueDate());
 
