@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,9 +22,11 @@ import com.loopj.android.http.RequestParams;
 public class RegisterActivity extends Activity {
 	private static final String REGISTER_URL = "register";
 	private EditText etPassword;
-	private EditText etEmail;
+	private EditText etEmailAddress;
 	private EditText etUserName;
-
+	private Button bGotoSignIn;
+	private Button bRegister;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,14 +37,34 @@ public class RegisterActivity extends Activity {
 
 	private void setupReferences() {
 		etUserName = (EditText) findViewById(R.id.etUserName);
-		etEmail = (EditText) findViewById(R.id.etEmail);
+		etEmailAddress = (EditText) findViewById(R.id.etEmailAddress);
 		etPassword = (EditText) findViewById(R.id.etPassword);
+		bGotoSignIn = (Button) findViewById(R.id.bGotoSignIn);
+		bRegister = (Button) findViewById(R.id.bRegister);
+
+		// Listening to Register click
+		bRegister.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				onRegister(v);
+			}
+		});
+		
+		// Listening to Login Screen link
+		bGotoSignIn.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View arg0) {
+				// Closing registration screen
+				// Switching to Login Screen/closing register screen
+				finish();
+			}
+		});
 	}
 
-	public void onRegister(View v) {
+	private void onRegister(View v) {
 		RequestParams params = new RequestParams();
 		params.put("display_name", etUserName.getText().toString());
-		params.put("email", etEmail.getText().toString());
+		params.put("email", etEmailAddress.getText().toString());
 		params.put("password", etPassword.getText().toString());
 
 		VolunteerBeatClient.post(REGISTER_URL, params,
@@ -94,12 +117,12 @@ public class RegisterActivity extends Activity {
 		// Prompt user to enter all data at register? or let user edit later
 		// For now use some dummy data
 		profile.setName(etUserName.getText().toString());
-		profile.setAddress("Address");
-		profile.setPhone("000-000-000");
-		profile.setEmail(etEmail.getText().toString());
+		//profile.setAddress("Address");
+		//profile.setPhone("000-000-000");
+		profile.setEmail(etEmailAddress.getText().toString());
 		profile.setId(id);
-		profile.setAboutMe("About me");
-		profile.setHobbies("My Hobbies");
+		//profile.setAboutMe("About me");
+		//profile.setHobbies("My Hobbies");
 
 		profile.writeToPreference(PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext()));

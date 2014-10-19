@@ -4,10 +4,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,21 +21,48 @@ import com.loopj.android.http.RequestParams;
 
 public class LoginActivity extends Activity {
 	private static final String SESSION_URL = "session";
-	private EditText etUserName;
+	private EditText etEmailAddress;
 	private EditText etPassword;
+	private Button bSignIn;
+	private Button bGotoCreateAccount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		etUserName = (EditText) findViewById(R.id.etEmail);
-		etPassword = (EditText) findViewById(R.id.etPassword);
+		setupReferences();
 	}
 
-	public void onLoginGo(View v) {
+	private void setupReferences() {
+		etEmailAddress = (EditText) findViewById(R.id.etEmailAddress);
+		etPassword = (EditText) findViewById(R.id.etPassword);
+		bSignIn = (Button) findViewById(R.id.bSignIn);
+		bGotoCreateAccount = (Button) findViewById(R.id.bGotoCreateAccount);
+
+		// Listening to SignIn click
+		bSignIn.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				onLoginGo(v);
+			}
+		});
+
+		// Listening to register new account link
+		bGotoCreateAccount.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View arg0) {
+				// Switching to Register screen
+				Intent i = new Intent(getApplicationContext(),
+						RegisterActivity.class);
+				startActivity(i);
+			}
+		});
+	}
+
+	private void onLoginGo(View v) {
 		RequestParams params = new RequestParams();
-		params.put("email", etUserName.getText().toString());
+		params.put("email", etEmailAddress.getText().toString());
 		params.put("password", etPassword.getText().toString());
 
 		VolunteerBeatClient.post(SESSION_URL, params,
@@ -82,13 +111,13 @@ public class LoginActivity extends Activity {
 
 		// How to get data from server?
 		// For now use some dummt data
-		profile.setName("VB Test");
-		profile.setAddress("Sunnyvale, CA");
-		profile.setPhone("415-123-4567");
-		profile.setEmail(etUserName.getText().toString());
+		//profile.setName("VB Test");
+		//profile.setAddress("Sunnyvale, CA");
+		//profile.setPhone("415-123-4567");
+		profile.setEmail(etEmailAddress.getText().toString());
 		profile.setId(id);
-		profile.setAboutMe("About me");
-		profile.setHobbies("My Hobbies");
+		//profile.setAboutMe("About me");
+		//profile.setHobbies("My Hobbies");
 
 		profile.writeToPreference(PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext()));

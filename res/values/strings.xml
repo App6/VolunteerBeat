@@ -46,5 +46,14 @@
     <string name="user_first_last_name">First Last</string>
     <string name="register_button_label">Register</string>
     <string name="cancel_button_label">Cancel</string>
+    <string name="et_email_address_hint"> E-mail address</string>
+    <string name="et_password_hint"> Password</string>
+    <string name="b_signin_text">Sign In</string>
+    <string name="tv_new_to_vb">New to VolunteerBeat?</string>
+    <string name="b_create_account">Create an Account</string>
+    <string name="et_name_hint">FirstName LastName</string>
+    <string name="b_create_acnt">Create Account</string>
+    <string name="tv_already_has_account">Already has account?</string>
+    <string name="b_sign_in">Sign In</string>
 
 </resources>
