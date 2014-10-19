@@ -77,11 +77,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_description);
 
-		getActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.rgb(0XEF, 0X43, 0X1C)));
-		getActionBar().setTitle(
-				Html.fromHtml("<font color='#ffffff'>VB </font>"));
-
 		setupReferences();
 
 		task = getIntent().getParcelableExtra("taskInfo");
@@ -213,7 +208,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		shareIntent.putExtra(
 				Intent.EXTRA_TEXT,
 				task.getOrganization().getOrgName()
-						+ " Need Volunteer for task:-" + "\n\n"
+						+ "\n\nNeed Volunteer for task:-" + "\n\n"
 						+ task.getTaskShortDesc() + "\n\n"
 						+ "Due date for this task is: " + task.getDueDate());
 
