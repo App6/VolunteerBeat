@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:padding="3dp"
+    android:background="#FFFFFFFF" >
 
     <ImageView
         android:id="@+id/ivOrgImage"
@@ -28,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvNonProfitName"
         android:layout_below="@+id/tvNonProfitName"
-        android:textStyle="bold"
         android:layout_marginTop="6dp"
-        android:text="@string/task_name_label" />
+        android:text="@string/task_name_label"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvTaskDesc"
@@ -38,11 +42,11 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvTaskName"
         android:layout_below="@+id/tvTaskName"
-        android:maxLines="2"
-        android:ellipsize="end"
         android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="@string/task_short_desc" />
-<!-- 
+    <!--
     <TextView
         android:id="@+id/tvDistance"
         android:layout_width="wrap_content"
@@ -70,15 +74,15 @@
         android:layout_marginRight="23dp"
         android:contentDescription="@string/save_heart_label"
         android:src="@drawable/ic_save" />
--->
+    -->
 
     <TextView
         android:id="@+id/tvDueDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
         android:layout_below="@+id/tvTaskDesc"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:text="@string/due_date_label" />
 
