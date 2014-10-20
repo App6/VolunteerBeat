@@ -124,8 +124,7 @@ public class RegisterActivity extends Activity {
 		//profile.setAboutMe("About me");
 		//profile.setHobbies("My Hobbies");
 
-		profile.writeToPreference(PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext()));
+		profile.writeToPreference();
 	}
 
 }

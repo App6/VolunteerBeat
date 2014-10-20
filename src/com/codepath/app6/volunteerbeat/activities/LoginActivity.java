@@ -158,7 +158,6 @@ public class LoginActivity extends Activity {
 		// profile.setHobbies("My Hobbies");
 		profile.setLoggedIn(true);
 
-		profile.writeToPreference(PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext()));
+		profile.writeToPreference();
 	}
 }

@@ -31,10 +31,31 @@ public class Task implements Parcelable {
 	private double gpsLatitude;
 	private double gpsLongitude;
 	private Organization organization;
-
+	private boolean savedTask;
+	private boolean volunteeredTask;
+	
 	public Task() {
+		savedTask = false;
+		setVolunteeredTask(false);
 		organization = new Organization();
 	}
+
+	
+	/**
+	 * @return the savedTask
+	 */
+	public boolean isSavedTask() {
+		return savedTask;
+	}
+
+
+	/**
+	 * @param savedTask the savedTask to set
+	 */
+	public void setSavedTask(boolean savedTask) {
+		this.savedTask = savedTask;
+	}
+
 
 	public void setTaskId(long taskId) {
 		this.taskId = taskId;
@@ -252,5 +273,21 @@ public class Task implements Parcelable {
 			}
 		}
 		return atasks;
+	}
+
+
+	/**
+	 * @return the volunteeredTask
+	 */
+	public boolean isVolunteeredTask() {
+		return volunteeredTask;
+	}
+
+
+	/**
+	 * @param volunteeredTask the volunteeredTask to set
+	 */
+	public void setVolunteeredTask(boolean volunteeredTask) {
+		this.volunteeredTask = volunteeredTask;
 	}
 }

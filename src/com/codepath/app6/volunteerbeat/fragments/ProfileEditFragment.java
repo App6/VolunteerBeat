@@ -66,8 +66,7 @@ public class ProfileEditFragment extends Fragment {
 		// register if needed
 		// show whether registration went fine or not
 		// preserve the register response data if any needed
-		profile.writeToPreference(PreferenceManager
-				.getDefaultSharedPreferences(getActivity()));
+		profile.writeToPreference();
 	}
 
 	private String getEditText(EditText etView) {

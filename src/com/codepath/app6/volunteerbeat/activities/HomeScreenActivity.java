@@ -1,5 +1,7 @@
 package com.codepath.app6.volunteerbeat.activities;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -13,12 +15,12 @@ import com.codepath.app6.volunteerbeat.fragments.NewTasksFragment;
 import com.codepath.app6.volunteerbeat.fragments.SaveTasksFragment;
 import com.codepath.app6.volunteerbeat.fragments.TimelineTasksFragment;
 import com.codepath.app6.volunteerbeat.listeners.FragmentTabListener;
+import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 
 //import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
 
 public class HomeScreenActivity extends ActionBarActivity {
-
 	/*
 	 * private String[][] data = new String[][] { // url, orgName, taskName,
 	 * taskDesc, distance, dueDate, dueTime, // postedDate { "null",
@@ -43,7 +45,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 		aBar.show();
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
+		
 		setupTabs();
 
 	}
@@ -66,7 +68,7 @@ public class HomeScreenActivity extends ActionBarActivity {
 		actionBar.selectTab(tab1);
 
 		Tab tab2 = actionBar.newTab()
-				.setText("Save")
+				.setText("Saved")
 				// .setIcon(R.drawable.ic_mentions)
 				.setTag("SaveTasks")
 				.setTabListener(

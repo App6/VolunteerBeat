@@ -1,11 +1,13 @@
 package com.codepath.app6.volunteerbeat.models;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
+import com.codepath.app6.volunteerbeat.utils.StringSet;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,35 +16,37 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class UserProfile {
-	private static 	String	CURR_USER_ID_PROP_NAME = "CURR_USER_ID";
-	private static	String	USER_PROFILE_PROP_NAME_PREFIX = "USER_PROFILE_";
-	private static 	UserProfile 	currUser;
-	private int 	id;
-	private	String	name;
-	private String	address;
-	private String	email;
-	private String	phone;
-	private String	aboutMe;
-	private String	hobbies;
-	private String	photoUri;
+	private static String CURR_USER_ID_PROP_NAME = "CURR_USER_ID";
+	private static String USER_PROFILE_PROP_NAME_PREFIX = "USER_PROFILE_";
+	private static UserProfile currUser;
+	private int id;
+	private String name;
+	private String address;
+	private String email;
+	private String phone;
+	private String aboutMe;
+	private String hobbies;
+	private String photoUri;
 	private boolean isLoggedIn;
 	private Set<String> volunteeredTasks;
+	private StringSet savedTasks;
+	private SharedPreferences preference;
 
 	private UserProfile() {
-
 	}
-	
+
 	public static synchronized UserProfile getCurrentUser(Context context) {
 		if (currUser == null) {
 			currUser = new UserProfile();
-			readFromPreference(currUser, PreferenceManager.getDefaultSharedPreferences(context));
-
+			readFromPreference(currUser,
+					PreferenceManager.getDefaultSharedPreferences(context));
 		}
 		return currUser;
 	}
-	
+
 	public synchronized void resetCurrentUser(Context context) {
-		readFromPreference(currUser, PreferenceManager.getDefaultSharedPreferences(context));
+		readFromPreference(currUser,
+				PreferenceManager.getDefaultSharedPreferences(context));
 	}
 
 	public int getId() {
@@ -131,56 +135,78 @@ public class UserProfile {
 		return found;
 	}
 
-
 	public boolean isVolunteeredTask(long taskId) {
 		return isVolunteeredTask(String.valueOf(taskId));
 	}
 
 	public boolean isLoggedIn() {
-		//return isLoggedIn && VolunteerBeatClient.isClientLoggedIn();
+		// return isLoggedIn && VolunteerBeatClient.isClientLoggedIn();
 		return isLoggedIn;
 	}
 
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
-	
-	public static void readFromPreference(UserProfile user, SharedPreferences preference) {
+
+	public static void readFromPreference(UserProfile user,
+			SharedPreferences preference) {
 		int userId = user.getId();
-		if (userId <=0 ) {
+		if (userId <= 0) {
 			userId = preference.getInt(CURR_USER_ID_PROP_NAME, -1);
 			user.id = userId;
 		}
-		
-		String jsonStr = preference.getString(getUserProfileKey(userId), "");
-        try {
-            JSONObject jsonObject = new JSONObject(jsonStr);
-            user.name =  jsonObject.isNull("name")?null:jsonObject.getString("name");
-            user.address = jsonObject.isNull("address")?null:jsonObject.getString("address");
-            user.phone = jsonObject.isNull("phone")?null:jsonObject.getString("phone");
-            user.email = jsonObject.isNull("email")?null:jsonObject.getString("email");
-            user.aboutMe =jsonObject.isNull("aboutme")?null: jsonObject.getString("aboutme");
-            user.hobbies = jsonObject.isNull("hobbies")?null:jsonObject.getString("hobbies");
-            user.photoUri = jsonObject.isNull("photouri")?null:jsonObject.getString("photouri");
-            user.isLoggedIn = jsonObject.isNull("isloggedin")?false:jsonObject.getBoolean("isloggedin");
-            
-            if (!jsonObject.isNull("volunteeredtasks")) {
-            	String[] volunteeredtasks = jsonObject.getString("volunteeredtasks").split(",");
-            	user.volunteeredTasks = new HashSet<String>();
-            	for (String t : volunteeredtasks) {
-            		if (t != null && !t.isEmpty()) {
-            			user.volunteeredTasks.add(t);
-            		}
-            	}
-            	
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-	}
-	
 
-	public void writeToPreference(SharedPreferences preference) {
+		String jsonStr = preference.getString(getUserProfileKey(userId), "");
+		try {
+			JSONObject jsonObject = new JSONObject(jsonStr);
+			user.name = jsonObject.isNull("name") ? null : jsonObject
+					.getString("name");
+			user.address = jsonObject.isNull("address") ? null : jsonObject
+					.getString("address");
+			user.phone = jsonObject.isNull("phone") ? null : jsonObject
+					.getString("phone");
+			user.email = jsonObject.isNull("email") ? null : jsonObject
+					.getString("email");
+			user.aboutMe = jsonObject.isNull("aboutme") ? null : jsonObject
+					.getString("aboutme");
+			user.hobbies = jsonObject.isNull("hobbies") ? null : jsonObject
+					.getString("hobbies");
+			user.photoUri = jsonObject.isNull("photouri") ? null : jsonObject
+					.getString("photouri");
+			user.isLoggedIn = jsonObject.isNull("isloggedin") ? false
+					: jsonObject.getBoolean("isloggedin");
+
+			if (!jsonObject.isNull("volunteeredtasks")) {
+				String[] volunteeredtasks = jsonObject.getString(
+						"volunteeredtasks").split(",");
+				user.volunteeredTasks = new HashSet<String>();
+				for (String t : volunteeredtasks) {
+					if (t != null && !t.isEmpty()) {
+						user.volunteeredTasks.add(t);
+					}
+				}
+
+			}
+
+			if (!jsonObject.isNull("savedtasks")) {
+				user.savedTasks = StringSet.fromCommaSepString(jsonObject
+						.getString("savedtasks"));
+				Log.d("Read shread preference, saved tasks",
+						user.savedTasks.toString());
+			} else {
+				user.savedTasks = new StringSet();
+			}
+			user.preference = preference;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			user.volunteeredTasks = new HashSet<String>();
+			user.savedTasks = new StringSet();
+			user.preference = preference;
+		}
+		
+	}
+
+	public void writeToPreference() {
 		Editor editor = preference.edit();
 		JSONObject obj = new JSONObject();
 		try {
@@ -193,7 +219,6 @@ public class UserProfile {
 			obj.put("hobbies", this.hobbies);
 			obj.put("photouri", this.photoUri);
 			obj.put("isloggedin", this.isLoggedIn);
-			
 
 			if (volunteeredTasks != null && !volunteeredTasks.isEmpty()) {
 				Log.d("Write shread preference, volunteered tasks",
@@ -204,6 +229,10 @@ public class UserProfile {
 				}
 				obj.put("volunteeredtasks", strBld.toString());
 			}
+
+			obj.put("savedtasks", savedTasks.toCommaSepString());
+			Log.d("Write shread preference, saved tasks",
+					savedTasks.toCommaSepString());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -212,8 +241,36 @@ public class UserProfile {
 		editor.putInt(CURR_USER_ID_PROP_NAME, this.id);
 		editor.commit();
 	}
-	
+
 	private static String getUserProfileKey(int userId) {
-		return USER_PROFILE_PROP_NAME_PREFIX+userId;
+		return USER_PROFILE_PROP_NAME_PREFIX + userId;
+	}
+
+	/**
+	 * @return the savedTasks
+	 */
+	public Set<String> getSavedTasks() {
+		return savedTasks;
+	}
+
+	/**
+	 * @param savedTasks
+	 *            the savedTasks to set
+	 */
+	public void addSavedTask(String taskid) {
+		Log.d("addSavedTask", taskid);
+		this.savedTasks.add(taskid);
+	}
+
+	public void addSavedTask(long taskid) {
+		addSavedTask(String.valueOf(taskid));
+	}
+
+	public boolean isSavedTask(String taskId) {
+		return savedTasks.containsValue(taskId);
+	}
+
+	public boolean isSavedTask(long taskId) {
+		return isSavedTask(String.valueOf(taskId));
 	}
 }

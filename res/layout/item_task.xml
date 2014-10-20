@@ -64,17 +64,18 @@
         android:layout_alignBottom="@+id/tvDistance"
         android:layout_centerHorizontal="true"
         android:text="@string/due_date_label" />
-
+    -->
+    
     <ImageView
         android:id="@+id/ivSave"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/tvDueDate"
-        android:layout_marginRight="23dp"
         android:contentDescription="@string/save_heart_label"
-        android:src="@drawable/ic_save" />
-    -->
+        android:clickable = "true"
+        android:src="@drawable/ic_heart_outline_grey" />
+
 
     <TextView
         android:id="@+id/tvDueDate"

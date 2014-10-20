@@ -128,7 +128,7 @@ public class ApplyTaskFragment extends DialogFragment {
 								"Successfully applied", Toast.LENGTH_SHORT)
 								.show();
 						profile.addVolunteeredTasks(taskId);
-						profile.writeToPreference(PreferenceManager.getDefaultSharedPreferences(getActivity()));
+						profile.writeToPreference();
 						ApplyDialogListener listner = (ApplyDialogListener)getActivity();
 						listner.onFinishEditDialog(true);
 						getDialog().dismiss();

@@ -21,8 +21,18 @@ import com.squareup.picasso.Picasso;
 
 public class TasksAdapter extends ArrayAdapter<Task> {
 
-	public TasksAdapter(Context context, List<Task> tasks) {
+	public interface TasksAdapterListner {
+		public abstract void onOrgLogoClick(Task t);
+
+		public abstract void onItemSave(Task t);
+	}
+
+	private TasksAdapterListner mListner;
+
+	public TasksAdapter(Context context, List<Task> tasks,
+			TasksAdapterListner listner) {
 		super(context, android.R.layout.simple_list_item_1, tasks);
+		mListner = listner;
 	}
 
 	private static class ViewHolder {
@@ -55,12 +65,12 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 					.findViewById(R.id.tvTaskName);
 			viewHolder.tvTaskDesc = (TextView) convertView
 					.findViewById(R.id.tvTaskDesc);
-//			viewHolder.tvDistance = (TextView) convertView
-//					.findViewById(R.id.tvDistance);
+			// viewHolder.tvDistance = (TextView) convertView
+			// .findViewById(R.id.tvDistance);
 			viewHolder.tvDueDate = (TextView) convertView
 					.findViewById(R.id.tvDueDate);
-//			viewHolder.ivSave = (ImageView) convertView
-//					.findViewById(R.id.ivSave);
+			viewHolder.ivSave = (ImageView) convertView
+					.findViewById(R.id.ivSave);
 
 			convertView.setTag(viewHolder);
 		} else {
@@ -71,26 +81,37 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 		viewHolder.tvNonProfitName.setText(task.getOrganization().getOrgName());
 		viewHolder.tvTaskName.setText(task.getTaskName());
 		viewHolder.tvTaskDesc.setText(task.getTaskShortDesc());
-		//viewHolder.tvDistance.setText(task.getDistance());
+		// viewHolder.tvDistance.setText(task.getDistance());
 		viewHolder.tvDueDate.setText("Due: " + task.getDueDate());
-		
-		Picasso.with(getContext()).load(task.getOrganization().getOrgLogoUri()).error(R.drawable.ic_launcher_vb_white).resize(75, 75).into(viewHolder.ivOrgImage);	
 
+		Picasso.with(getContext()).load(task.getOrganization().getOrgLogoUri())
+				.error(R.drawable.ic_launcher_vb_white).resize(75, 75)
+				.into(viewHolder.ivOrgImage);
 
-		viewHolder.ivOrgImage.setTag(task);
-		viewHolder.ivOrgImage.setOnClickListener(new View.OnClickListener() {
-			
+		if (task.isSavedTask()) {
+			viewHolder.ivSave.setImageResource(R.drawable.ic_heart_filled_grey);
+		} else {
+			viewHolder.ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
+		}
+		viewHolder.ivSave.setTag(task);
+		viewHolder.ivSave.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				 Task task = (Task) v.getTag();
-				 Intent i = new Intent(getContext(), OrganizationActivity.class);
-				 i.putExtra("organization", task.getOrganization());
-				 getContext().startActivity(i);
+				Task task = (Task) v.getTag();
+				mListner.onItemSave(task);
+			}
+		});
+		viewHolder.ivOrgImage.setTag(task);
+		viewHolder.ivOrgImage.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Task task = (Task) v.getTag();
+				mListner.onOrgLogoClick(task);
 			}
 		});
 		// Return the view for that data item
 		return convertView;
 	}
-
 }
