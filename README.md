@@ -38,6 +38,6 @@ Wireframe Images:
 
 Walkthrough of user stories:
 
-![video walkthrough](VolunteerBeatDemo1.gif)
+![video walkthrough](VolunteerBeatDemo2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
