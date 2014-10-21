@@ -3,6 +3,8 @@ package com.codepath.app6.volunteerbeat.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.Assert;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,22 +33,29 @@ public class UserProfile {
 	private Set<String> volunteeredTasks;
 	private StringSet savedTasks;
 	private SharedPreferences preference;
-
+	private static Context applicationContext = null;
+	
 	private UserProfile() {
 	}
 
-	public static synchronized UserProfile getCurrentUser(Context context) {
+	public static void setApplicationContext(Context c) {
+		UserProfile.applicationContext = c;
+	}
+	
+	public static synchronized UserProfile getCurrentUser() {
+		Assert.assertTrue(applicationContext != null);
 		if (currUser == null) {
 			currUser = new UserProfile();
 			readFromPreference(currUser,
-					PreferenceManager.getDefaultSharedPreferences(context));
+					PreferenceManager.getDefaultSharedPreferences(applicationContext));
 		}
 		return currUser;
 	}
 
-	public synchronized void resetCurrentUser(Context context) {
+	public synchronized void resetCurrentUser() {
+		Assert.assertTrue(applicationContext != null);
 		readFromPreference(currUser,
-				PreferenceManager.getDefaultSharedPreferences(context));
+				PreferenceManager.getDefaultSharedPreferences(applicationContext));
 	}
 
 	public int getId() {
@@ -259,9 +268,17 @@ public class UserProfile {
 	 */
 	public void addSavedTask(String taskid) {
 		Log.d("addSavedTask", taskid);
-		this.savedTasks.add(taskid);
+		this.savedTasks.addValue(taskid);
 	}
 
+	public void removeSavedTask(String taskid){
+		this.savedTasks.removeValue(taskid);
+	}
+	
+	public void removeSavedTask(long taskid){
+		this.savedTasks.removeValue(String.valueOf(taskid));
+	}
+	
 	public void addSavedTask(long taskid) {
 		addSavedTask(String.valueOf(taskid));
 	}

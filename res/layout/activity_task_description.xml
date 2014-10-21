@@ -119,6 +119,8 @@
         android:layout_alignRight="@+id/tvTaskDescription"
         android:layout_below="@+id/bVolunteer"
         android:layout_marginTop="5dp"
+        android:textColor="#82858a"
+        android:textSize="10sp"
         android:text="@string/task_posted_date" />
 
     <View

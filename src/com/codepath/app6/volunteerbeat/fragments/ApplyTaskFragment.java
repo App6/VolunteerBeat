@@ -51,7 +51,7 @@ public class ApplyTaskFragment extends DialogFragment {
 		
         taskId = getArguments().getString("taskId");
     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
-		profile = UserProfile.getCurrentUser(getActivity());
+		profile = UserProfile.getCurrentUser();
     	
 		setTextView(view, R.id.tvName, profile.getName());
 		tvMessage = (TextView) view.findViewById(R.id.tvMessage);
@@ -119,7 +119,7 @@ public class ApplyTaskFragment extends DialogFragment {
 		}
 		
 		String url = APPLY_TASK_URL.replace("<TASK_ID>", taskId);
-		final UserProfile user = UserProfile.getCurrentUser(getActivity());
+		final UserProfile user = UserProfile.getCurrentUser();
 		VolunteerBeatClient.post(getActivity(), url, params,
 				new JsonHttpResponseHandler() {
 					@Override

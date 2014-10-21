@@ -30,7 +30,8 @@ public class LoginActivity extends Activity {
 	private EditText etPassword;
 	private Button bSignIn;
 	private Button bGotoCreateAccount;
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,7 +43,7 @@ public class LoginActivity extends Activity {
 	private void setupReferences() {
 		etEmailAddress = (EditText) findViewById(R.id.etEmailAddress);
 		
-		UserProfile user = UserProfile.getCurrentUser(this);
+		UserProfile user = UserProfile.getCurrentUser();
 		if (user.getEmail() != null) {
 			etEmailAddress.setText(user.getEmail());
 		}
@@ -136,9 +137,9 @@ public class LoginActivity extends Activity {
 	}
 
 	private void saveCurrentUser(int id) {
-		UserProfile profile = UserProfile.getCurrentUser(this);
+		UserProfile profile = UserProfile.getCurrentUser();
 		profile.setId(id);
-		profile.resetCurrentUser(this);
+		profile.resetCurrentUser();
 		
 		// How to get data from server?
 

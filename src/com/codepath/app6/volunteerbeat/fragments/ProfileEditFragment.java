@@ -82,7 +82,7 @@ public class ProfileEditFragment extends Fragment {
 	}
 
 	public void initViews() {
-		profile = UserProfile.getCurrentUser(getActivity());
+		profile = UserProfile.getCurrentUser();
 
 		etName = initTextView(view, R.id.tvName, profile.getName());
 		etAddr = initTextView(view, R.id.tvAddr, profile.getAddress());

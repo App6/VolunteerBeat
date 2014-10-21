@@ -16,6 +16,7 @@ import com.codepath.app6.volunteerbeat.fragments.SaveTasksFragment;
 import com.codepath.app6.volunteerbeat.fragments.TimelineTasksFragment;
 import com.codepath.app6.volunteerbeat.listeners.FragmentTabListener;
 import com.codepath.app6.volunteerbeat.models.Task;
+import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 
 //import com.codepath.app6.volunteerbeat.activities.ProfileActivity;
@@ -38,6 +39,8 @@ public class HomeScreenActivity extends ActionBarActivity {
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		UserProfile.setApplicationContext(getApplicationContext());
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_screen);
 
@@ -45,7 +48,6 @@ public class HomeScreenActivity extends ActionBarActivity {
 		aBar.show();
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-		
 		setupTabs();
 
 	}

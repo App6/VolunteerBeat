@@ -112,7 +112,7 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void saveCurrentUser(int id) {
-		UserProfile profile = UserProfile.getCurrentUser(this);;
+		UserProfile profile = UserProfile.getCurrentUser();;
 
 		// Prompt user to enter all data at register? or let user edit later
 		// For now use some dummy data

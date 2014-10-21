@@ -69,7 +69,7 @@ public class ProfileReadonlyFragment extends Fragment {
 	}
 
 	public void updateAll() {
-		profile = UserProfile.getCurrentUser(getActivity());
+		profile = UserProfile.getCurrentUser();
 
 		setTextView(view, R.id.tvName, profile.getName());
 		setTextView(view, R.id.tvAddr, profile.getAddress());

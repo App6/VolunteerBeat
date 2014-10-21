@@ -49,7 +49,7 @@ public class ProfileActionBar {
 	}
 
 	public void showProfile() {
-		UserProfile profile = UserProfile.getCurrentUser(activity);
+		UserProfile profile = UserProfile.getCurrentUser();
 		if (profile.isLoggedIn()) {
 			Intent i = new Intent(activity, ProfileActivity.class);
 			i.putExtra("mode", false);

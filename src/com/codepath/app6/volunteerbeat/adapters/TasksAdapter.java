@@ -88,18 +88,17 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 				.error(R.drawable.ic_launcher_vb_white).resize(75, 75)
 				.into(viewHolder.ivOrgImage);
 
-		if (task.isSavedTask()) {
-			viewHolder.ivSave.setImageResource(R.drawable.ic_heart_filled_grey);
-		} else {
-			viewHolder.ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
-		}
+		refreshSaveIcon(task, viewHolder.ivSave);
+
 		viewHolder.ivSave.setTag(task);
 		viewHolder.ivSave.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Task task = (Task) v.getTag();
+				Task task = (Task) v.getTag();				
 				mListner.onItemSave(task);
+				
+				refreshSaveIcon(task, viewHolder.ivSave);
 			}
 		});
 		viewHolder.ivOrgImage.setTag(task);
@@ -113,5 +112,13 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 		});
 		// Return the view for that data item
 		return convertView;
+	}
+	
+	private void refreshSaveIcon(Task task, ImageView ivSave){
+		if (task.isSavedTask()) {
+			ivSave.setImageResource(R.drawable.ic_heart_filled_grey);
+		} else {
+			ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
+		}
 	}
 }

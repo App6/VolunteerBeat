@@ -40,4 +40,21 @@ public class StringSet extends HashSet<String> {
 		}
 		return set;
 	}
+	
+	public void addValue(String val) {
+		if (! contains(val)) {
+			add(val);
+		}
+	}
+	
+	public void removeValue(String val){
+		String obj = null;
+		for (String s : this) {
+			if (s.equalsIgnoreCase(val)) {
+				obj = s;
+				break;
+			}
+		}
+		remove(obj);
+	}
 }

@@ -11,7 +11,7 @@ import com.codepath.app6.volunteerbeat.models.UserProfile;
 
 public class UserProfileHelper {
 	public static void setProfileImage(ImageView ivPhoto, Context context) {
-		UserProfile profile = UserProfile.getCurrentUser(context);
+		UserProfile profile = UserProfile.getCurrentUser();
 		
 		String uriStr = profile.getPhotoUri();
 		if (uriStr == null || uriStr.isEmpty()) {

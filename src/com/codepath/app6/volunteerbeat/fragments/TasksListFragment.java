@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.codepath.app6.volunteerbeat.R;
+import com.codepath.app6.volunteerbeat.activities.LoginActivity;
 import com.codepath.app6.volunteerbeat.activities.OrganizationActivity;
 import com.codepath.app6.volunteerbeat.activities.TaskDescriptionActivity;
 import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
@@ -43,9 +45,8 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 
 		tasks = new ArrayList<Task>();
 		aTasks = new TasksAdapter(getActivity(), tasks, this);
-		profile = UserProfile.getCurrentUser(getActivity());
+		profile = UserProfile.getCurrentUser();
 
-		populateData(false);
 	}
 
 	@Override
@@ -84,6 +85,12 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 		return v;
 	}
 
+	@Override
+	public void onResume() {
+		Toast.makeText(getActivity(), "onResume fragment", Toast.LENGTH_SHORT).show();
+		super.onResume();
+		populateData(true);
+	}
 	public ArrayList<Task> onAddTasks(ArrayList<Task> tasks) {
 		return tasks;
 	}
@@ -100,7 +107,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 			public void onSuccess(int statusCode, JSONObject response) {
 				Log.d("onSuccess", "Success");
 				try {
-					ArrayList<Task> tasks = Task.fromJsonArray(response
+					tasks = Task.fromJsonArray(response
 							.getJSONArray("items"));
 					for (Task task : tasks) {
 						if (profile.isSavedTask(task.getTaskId())) {
@@ -174,8 +181,25 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 
 	@Override
 	public void onItemSave(Task t) {
-		UserProfile p = UserProfile.getCurrentUser(getActivity());
-		p.addSavedTask(t.getTaskId());
-		p.writeToPreference();
+		// Don't allow save if User is not logged in
+		UserProfile p = UserProfile.getCurrentUser();
+		if (!p.isLoggedIn()) {
+			Intent i = new Intent(getActivity(), LoginActivity.class);
+			getActivity().startActivity(i);
+			return;
+		}
+		if (! t.isSavedTask()) {
+			p.addSavedTask(t.getTaskId());
+			t.setSavedTask(true);
+			p.writeToPreference();
+		} else {
+			p.removeSavedTask(t.getTaskId());
+			t.setSavedTask(false);
+			p.writeToPreference();
+		}
+		// Refresh current tab.
+		deleteAll();
+		tasks = onAddTasks(tasks);
+		addAll(tasks);
 	}
 }
