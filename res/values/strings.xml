@@ -56,4 +56,7 @@
     <string name="b_create_acnt">Create Account</string>
     <string name="tv_already_has_account">Already has account?</string>
     <string name="b_sign_in">Sign In</string>
+    <string name="iv_orgheader_desc">"Organization Logo "</string>
+    <string name="tvOrgHeaderName">At The CrossRoads</string>
+    <string name="tv_header_org_location">Sanfrancisco, CA</string>
 </resources>

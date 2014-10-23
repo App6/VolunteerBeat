@@ -1,6 +1,5 @@
 package com.codepath.app6.volunteerbeat.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -10,15 +9,22 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.codepath.app6.volunteerbeat.R;
-
 public class Organization implements Parcelable {
 	private String orgName;
 	private String orgLogoUri;
 	private float orgRating;
 	private String orgDescription;
+	private String orgLocation;
 	private ArrayList<String> orgPicUris;
 	private ArrayList<Review> orgReviews;
+
+	public String getOrgLocation() {
+		return orgLocation;
+	}
+
+	public void setOrgLocation(String orgLocation) {
+		this.orgLocation = orgLocation;
+	}
 
 	public String getOrgName() {
 		return orgName;
@@ -50,6 +56,7 @@ public class Organization implements Parcelable {
 		this.orgLogoUri = "";
 		this.orgRating = 3;
 		this.orgDescription = "The Museum supports the belief that textile art transcends cultural, ethnic, age and gender boundaries and encompasses traditional as well as contemporary forms. The Museum provides a serious venue for all artists working with textiles. Its exhibits and programs promote the appreciation of quilts and textiles as art and provide an understanding of their role in the lives of their makers, in cultural traditions, and as historical documents.";
+		this.orgLocation = "San Jose, CA";
 		this.orgPicUris = new ArrayList<String>();
 		for (int i = 0; i < 10; i++) {
 			orgPicUris
@@ -68,6 +75,7 @@ public class Organization implements Parcelable {
 		this.orgLogoUri = in.readString();
 		this.orgRating = in.readFloat();
 		this.orgDescription = in.readString();
+		this.orgLocation = in.readString();
 		orgPicUris = new ArrayList<String>();
 		in.readList(orgPicUris, null);
 		orgReviews = new ArrayList<Review>();
@@ -86,6 +94,11 @@ public class Organization implements Parcelable {
 					"reviewAverage");
 			this.orgDescription = json.getJSONObject("details").getString(
 					"mission");
+			this.orgLocation = json.getJSONObject("details")
+					.getJSONObject("location").getString("city")
+					+ ", "
+					+ json.getJSONObject("details").getJSONObject("location")
+							.getString("state");
 			orgPicUris = new ArrayList<String>();
 			JSONArray picsjson = json.getJSONObject("details")
 					.getJSONObject("media").getJSONArray("images");
@@ -115,6 +128,7 @@ public class Organization implements Parcelable {
 		dest.writeString(orgLogoUri);
 		dest.writeFloat(orgRating);
 		dest.writeString(orgDescription);
+		dest.writeString(orgLocation);
 		dest.writeList(orgPicUris);
 		dest.writeTypedList(orgReviews);
 

@@ -33,4 +33,9 @@
         <item name="android:textColor">@color/vbred</item>
     </style>
 -->
+    <style name="vbRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/vb_ratingbar_full</item>
+        <item name="android:minHeight">30dip</item>
+        <item name="android:maxHeight">30dip</item>
+    </style>
 </resources>

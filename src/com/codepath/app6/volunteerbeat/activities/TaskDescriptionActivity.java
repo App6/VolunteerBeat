@@ -5,13 +5,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.R;
-import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment;
 import com.codepath.app6.volunteerbeat.fragments.ApplyTaskFragment.ApplyDialogListener;
 import com.codepath.app6.volunteerbeat.models.Task;
@@ -45,7 +42,7 @@ import com.squareup.picasso.Picasso;
 public class TaskDescriptionActivity extends FragmentActivity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
-		ApplyDialogListener{
+		ApplyDialogListener {
 
 	private static final int LOGIN_ACTIVITY_CODE = 200;
 	private boolean mShowApplyTaskDialog = false;
@@ -53,12 +50,14 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	// private ImageView ivNonProfitOrgLogo;
 	private TextView tvNonProfiOrgName;
 	private RatingBar rbNonProfitOrgRating;
+	private TextView tvOrgLocation;
 	private TextView tvTaskName1;
 	private TextView tvTaskDueDate;
 	private TextView tvTaskDueTime;
 	private TextView tvTaskDescription;
 	private TextView tvTaskPostedDate;
 	private ImageView ivNonProfitOrgLogo;
+	private ImageView ivNonProfitOrgLogoBG;
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
 	private LocationClient mLocationClient;
@@ -89,15 +88,20 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			tvNonProfiOrgName.setText(task.getOrganization().getOrgName());
 			rbNonProfitOrgRating.setRating(task.getOrganization()
 					.getOrgRating());
+			tvOrgLocation.setText(task.getOrganization().getOrgLocation());
 			tvTaskName1.setText(task.getTaskName());
 			tvTaskDueDate.setText("Due: " + task.getDueDate());
 			tvTaskDueTime.setText(task.getDueTime());
 			tvTaskDescription.setText(task.getTaskShortDesc());
 			tvTaskPostedDate.setText("Posted: " + task.getPostedDate());
-			boolean volunteered = UserProfile.getCurrentUser().isVolunteeredTask(task.getTaskId());
-			if(volunteered) {
+			boolean volunteered = UserProfile.getCurrentUser()
+					.isVolunteeredTask(task.getTaskId());
+			if (volunteered) {
 				displayVolunteered();
 			}
+			Picasso.with(getApplicationContext())
+					.load(task.getOrganization().getOrgLogoUri())
+					.into(ivNonProfitOrgLogoBG);
 			Picasso.with(getApplicationContext())
 					.load(task.getOrganization().getOrgLogoUri())
 					.into(ivNonProfitOrgLogo);
@@ -108,24 +112,24 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	}
 
 	private void displayVolunteered() {
-		Button b = (Button)findViewById(R.id.bVolunteer);
+		Button b = (Button) findViewById(R.id.bVolunteer);
 		b.setText("Thanks for Volunteering");
 		b.setTextColor(Color.GREEN);
 		b.setTextSize(14);
 		b.setClickable(false);
 	}
-	
+
 	private void setupReferences() {
-		// ivNonProfitOrgLogo = (ImageView)
-		// findViewById(R.id.ivNonProfitOrgLogo);
-		tvNonProfiOrgName = (TextView) findViewById(R.id.tvNonProfiOrgName);
-		rbNonProfitOrgRating = (RatingBar) findViewById(R.id.rbNonProfitOrgRating);
+		tvNonProfiOrgName = (TextView) findViewById(R.id.tvHeaderOrgName);
+		rbNonProfitOrgRating = (RatingBar) findViewById(R.id.rbHeaderOrgRating);
+		tvOrgLocation = (TextView) findViewById(R.id.tvHeaderOrgLocation);
 		tvTaskName1 = (TextView) findViewById(R.id.tvTaskName1);
 		tvTaskDueDate = (TextView) findViewById(R.id.tvTaskDueDate);
 		tvTaskDueTime = (TextView) findViewById(R.id.tvTaskDueTime);
 		tvTaskDescription = (TextView) findViewById(R.id.tvTaskDescription);
 		tvTaskPostedDate = (TextView) findViewById(R.id.tvTaskPostedDate);
-		ivNonProfitOrgLogo = (ImageView) findViewById(R.id.ivNonProfitOrgLogo);
+		ivNonProfitOrgLogo = (ImageView) findViewById(R.id.ivHeaderOrgLogo);
+		ivNonProfitOrgLogoBG = (ImageView) findViewById(R.id.ivHeaderOrgLogoBG);
 		mapFragment = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.fgMap));
 
@@ -192,8 +196,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				// Zoom in, animating the camera.
 				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
-//				Toast.makeText(this, "Map Fragment was loaded properly!",
-//						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(this, "Map Fragment was loaded properly!",
+				// Toast.LENGTH_SHORT).show();
 				// map.setMyLocationEnabled(true);
 				// Marker sanJose = map.addMarker(new MarkerOptions().position(
 				// SANJOSE).title("San Jose"));
@@ -239,12 +243,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.task_description, menu);
 		// Locate MenuItem with ShareActionProvider
-		MenuItem item = menu.findItem(R.id.menu_item_share);
+		MenuItem item = menu.findItem(R.id.menu_item_share1);
+
 		// Fetch reference to the share action provider
 		miShareAction = (ShareActionProvider) item.getActionProvider();
-
 		setupShareIntent();
-
 		return true;
 	}
 
@@ -316,10 +319,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		if (mShowApplyTaskDialog) {
 			mShowApplyTaskDialog = false;
 			showApplyTaskDialog();
-		} else if(UserProfile.getCurrentUser().isVolunteeredTask(task.getTaskId())) {
-				Button b = (Button)findViewById(R.id.bVolunteer);
-				b.setClickable(false);
-		}		
+		} else if (UserProfile.getCurrentUser().isVolunteeredTask(
+				task.getTaskId())) {
+			Button b = (Button) findViewById(R.id.bVolunteer);
+			b.setClickable(false);
+		}
 	}
 
 	private boolean isGooglePlayServicesAvailable() {
@@ -484,7 +488,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 			displayVolunteered();
 		}
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
