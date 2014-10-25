@@ -1,9 +1,8 @@
 package com.codepath.app6.volunteerbeat.fragments;
 
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +60,6 @@ public class ProfileEditFragment extends Fragment {
 		profile.setPhone(getEditText(etPhone));
 		profile.setEmail(getEditText(etEmail));
 		profile.setAboutMe(getEditText(etAboutme));
-		profile.setHobbies(getEditText(etHobbies));
 		// Check if any register related configuration changed?
 		// register if needed
 		// show whether registration went fine or not
@@ -89,7 +87,6 @@ public class ProfileEditFragment extends Fragment {
 		etEmail = initTextView(view, R.id.tvEmail, profile.getEmail());
 		etPhone = initTextView(view, R.id.tvPhone, profile.getPhone());
 		etAboutme = initTextView(view, R.id.tvAboutMe, profile.getAboutMe());
-		etHobbies = initTextView(view, R.id.tvHobbies, profile.getHobbies());
 
 		ivProfileImage = (ImageView) view.findViewById(R.id.ivProfileImage);
 		UserProfileHelper.setProfileImage(ivProfileImage, getActivity());

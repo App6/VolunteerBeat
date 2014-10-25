@@ -1,68 +1,92 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context="${relativePackage}.${activityClass}" >
 
     <ImageView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:scaleType="centerCrop"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/default_photo" />
+        android:id="@+id/ivBackgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:scaleType="centerCrop" >
+    </ImageView>
 
-    <TextView
-       	android:id="@+id/tvName"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignBottom="@id/ivProfileImage"
-        android:layout_toRightOf="@id/ivProfileImage"
-        android:gravity="center_vertical|center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/profile_default_name" />        
-
-    <TextView
-        android:id="@+id/tvOrgName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_below="@id/ivProfileImage"
-        android:text="To: non profit org" />
-    
-    <EditText
-        android:id="@+id/tvMessage"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tvOrgName"
-        android:layout_below="@id/tvOrgName"
-        android:layout_marginRight="20dp"
-        android:hint="@string/default_message" />
-        
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tvMessage"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Cancel" />
+        android:layout_margin="12dp" >
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/btnCancel"
-        android:layout_alignBottom="@id/btnCancel"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="32dp"
-        android:text="Send" />
-    
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@drawable/section_vb_normal" >
+
+            <TextView
+                android:id="@+id/tvOrgName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="To: non profit org"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/tvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tvOrgName"
+                android:layout_below="@id/tvOrgName"
+                android:layout_marginTop="12dp"
+                android:hint="@string/default_message" />
+
+            <com.codepath.app6.volunteerbeat.utils.CircularImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignRight="@id/tvMessage"
+                android:layout_below="@id/tvMessage"
+                android:alpha="0.3"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_photo" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_alignBottom="@id/ivProfileImage"
+                android:layout_alignRight="@id/tvMessage"
+                android:text="@string/profile_default_name"
+                android:textStyle="bold" />
+        </RelativeLayout>
+        
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/button_grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/rlMessage"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@android:color/white"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/btnSend"
+            style="@style/button_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/btnCancel"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/btnCancel"
+            android:layout_marginRight="12dp"            
+            android:textColor="@android:color/white"
+            android:text="Send" />
+    </RelativeLayout>
+
+</FrameLayout>

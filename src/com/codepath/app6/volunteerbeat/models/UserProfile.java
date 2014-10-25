@@ -164,8 +164,14 @@ public class UserProfile {
 			userId = preference.getInt(CURR_USER_ID_PROP_NAME, -1);
 			user.id = userId;
 		}
-
+		user.volunteeredTasks = new HashSet<String>();
+		user.savedTasks = new StringSet();
+		user.preference = preference;
+		
 		String jsonStr = preference.getString(getUserProfileKey(userId), "");
+		if (jsonStr == null || jsonStr.isEmpty()) {
+			return;
+		}
 		try {
 			JSONObject jsonObject = new JSONObject(jsonStr);
 			user.name = jsonObject.isNull("name") ? null : jsonObject
@@ -208,9 +214,6 @@ public class UserProfile {
 			user.preference = preference;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			user.volunteeredTasks = new HashSet<String>();
-			user.savedTasks = new StringSet();
-			user.preference = preference;
 		}
 		
 	}
