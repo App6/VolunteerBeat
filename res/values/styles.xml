@@ -33,4 +33,8 @@
         <item name="android:textColor">@color/vbred</item>
     </style>
 -->
+
+    <style name="button_vb">
+        <item name="android:background">@drawable/button_vb</item>
+    </style>
 </resources>

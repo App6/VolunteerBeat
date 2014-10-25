@@ -58,6 +58,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private TextView tvTaskDueTime;
 	private TextView tvTaskDescription;
 	private TextView tvTaskPostedDate;
+	private Button	bVolunteer;
 	private ImageView ivNonProfitOrgLogo;
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
@@ -126,6 +127,16 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		tvTaskDescription = (TextView) findViewById(R.id.tvTaskDescription);
 		tvTaskPostedDate = (TextView) findViewById(R.id.tvTaskPostedDate);
 		ivNonProfitOrgLogo = (ImageView) findViewById(R.id.ivNonProfitOrgLogo);
+		
+		bVolunteer = (Button)findViewById(R.id.bVolunteer);
+		bVolunteer.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					onClickVolunteer(v);
+				}
+				
+			}
+		);
+		
 		mapFragment = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.fgMap));
 
@@ -473,6 +484,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		Bundle args = new Bundle();
 		args.putString("taskId", String.valueOf(task.getTaskId()));
 		args.putString("orgName", task.getOrganization().getOrgName());
+		args.putString("orgLogoUri", task.getOrganization().getOrgLogoUri());
 		applyTaskFragment.setArguments(args);
 		applyTaskFragment.show((FragmentManager) getSupportFragmentManager(),
 				"Advanced Filters Dialog Fragment");

@@ -1,8 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context="${relativePackage}.${activityClass}">
+    
+<ImageView android:id="@+id/ivBackgroundImage" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop">
+    
+</ImageView>
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8FFFFFF">
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -45,7 +56,8 @@
         android:hint="@string/default_message" />
         
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnCancel"        
+    	style="@style/button_vb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -57,6 +69,7 @@
 
     <Button
         android:id="@+id/btnSend"
+        style="@style/button_vb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/btnCancel"
@@ -66,3 +79,5 @@
         android:text="Send" />
     
 </RelativeLayout>
+    
+</FrameLayout>

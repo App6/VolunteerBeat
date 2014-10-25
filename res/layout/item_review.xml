@@ -43,7 +43,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/rbReviewRating"
         android:text="@string/review_date"
-        android:textColor="@color/vbLighGrey" />
+        android:textColor="@color/vbLightGrey" />
 
     <TextView
         android:id="@+id/tvReviewUserName"
