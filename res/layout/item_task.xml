@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
-    android:padding="3dp"
-    android:background="#FFFFFFFF" >
+    android:background="@color/vbWhite"
+    android:padding="3dp" >
 
     <ImageView
         android:id="@+id/ivOrgImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
@@ -22,9 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ivOrgImage"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="12dp"
         android:layout_toRightOf="@+id/ivOrgImage"
-        android:text="@string/non_profit_name" />
+        android:text="@string/non_profit_name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/tvTaskName"
@@ -34,7 +37,8 @@
         android:layout_below="@+id/tvNonProfitName"
         android:layout_marginTop="6dp"
         android:text="@string/task_name_label"
-        android:textStyle="bold" />
+        android:textStyle="italic"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/tvTaskDesc"
@@ -45,7 +49,9 @@
         android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="@string/task_short_desc" />
+        android:text="@string/task_short_desc"
+        android:textSize="14sp"
+        android:typeface="sans" />
     <!--
     <TextView
         android:id="@+id/tvDistance"
@@ -65,17 +71,6 @@
         android:layout_centerHorizontal="true"
         android:text="@string/due_date_label" />
     -->
-    
-    <ImageView
-        android:id="@+id/ivSave"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/tvDueDate"
-        android:contentDescription="@string/save_heart_label"
-        android:clickable = "true"
-        android:src="@drawable/ic_heart_outline_grey" />
-
 
     <TextView
         android:id="@+id/tvDueDate"
@@ -85,6 +80,17 @@
         android:layout_below="@+id/tvTaskDesc"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:text="@string/due_date_label" />
+        android:text="@string/due_date_label"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/ivSave"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignLeft="@+id/tvTaskDesc"
+        android:layout_alignTop="@+id/tvDueDate"
+        android:clickable="true"
+        android:contentDescription="@string/save_heart_label"
+        android:src="@drawable/ic_heart_outline_grey" />
 
 </RelativeLayout>
