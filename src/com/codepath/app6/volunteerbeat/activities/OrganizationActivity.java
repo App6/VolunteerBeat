@@ -1,8 +1,15 @@
 package com.codepath.app6.volunteerbeat.activities;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.adapters.ImageListAdapter;
@@ -11,18 +18,6 @@ import com.codepath.app6.volunteerbeat.models.Organization;
 import com.codepath.app6.volunteerbeat.utils.HorizontialListView;
 import com.codepath.app6.volunteerbeat.utils.ProfileActionBar;
 import com.squareup.picasso.Picasso;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 public class OrganizationActivity extends ActionBarActivity {
 		
@@ -52,13 +47,17 @@ public class OrganizationActivity extends ActionBarActivity {
 			// Replace this with real organization passed to you.
 			org = (Organization)getIntent().getParcelableExtra("organization");
 			
-			TextView tvOrgName = (TextView) v.findViewById(R.id.tvOrgActOrgName);
+			TextView tvOrgName = (TextView) v.findViewById(R.id.tvHeaderOrgName);
 			TextView tvOrgDesc = (TextView) v.findViewById(R.id.tvOrgActOrgDescription);
-			RatingBar rbOrgRating = (RatingBar) v.findViewById(R.id.rbOrgActNonProfitOrgRating);
-			ImageView ivOrgLogo = (ImageView) v.findViewById(R.id.ivOrgActOrgLogo);
+			TextView tvOrgLocation = (TextView) v.findViewById(R.id.tvHeaderOrgLocation);
+			RatingBar rbOrgRating = (RatingBar) v.findViewById(R.id.rbHeaderOrgRating);
+			ImageView ivOrgLogoBG = (ImageView) v.findViewById(R.id.ivHeaderOrgLogoBG);
+			ImageView ivOrgLogo = (ImageView) v.findViewById(R.id.ivHeaderOrgLogo);
+			Picasso.with(getApplicationContext()).load(org.getOrgLogoUri()).into(ivOrgLogoBG);
 			Picasso.with(getApplicationContext()).load(org.getOrgLogoUri()).into(ivOrgLogo);
 			tvOrgName.setText(org.getOrgName());
 			tvOrgDesc.setText(org.getOrgDescription());
+			tvOrgLocation.setText(org.getOrgLocation());
 			rbOrgRating.setRating(org.getOrgRating());
 
 	        HorizontialListView listview = (HorizontialListView) v.findViewById(R.id.hlvImages);

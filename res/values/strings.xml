@@ -7,8 +7,7 @@
     <string name="profile_default_email">xxx@youremail.xxx</string>
     <string name="profile_default_phone">000-000-0000</string>
     <string name="profile_default_address">your address</string>
-    <string name="profile_default_aboutme">Write a brief biography to introduce yourself...</string>
-    <string name="profile_default_hobbies">What are your hobbies and interests?</string>
+    <string name="profile_default_aboutme">Write a brief biography to introduce yourself \n... \nWhat are your hobbies and interests?\n...\n...</string>
     <string name="title_activity_profile">Profile</string>
     <string name="profile">Profile</string>
     <string name="title_activity_main">MainActivity</string>
@@ -56,4 +55,8 @@
     <string name="b_create_acnt">Create Account</string>
     <string name="tv_already_has_account">Already has account?</string>
     <string name="b_sign_in">Sign In</string>
+    <string name="iv_orgheader_desc">"Organization Logo "</string>
+    <string name="tvOrgHeaderName">At The CrossRoads</string>
+    <string name="tv_header_org_location">Sanfrancisco, CA</string>
+    <string name="tv_user_sign_out">Sign out?</string>
 </resources>

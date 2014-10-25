@@ -26,7 +26,7 @@ public class ReviewListAdapter extends ArrayAdapter {
 	}
 	public ReviewListAdapter(Context context, ArrayList<Review> reviews) {
 		super(context, 0, reviews);
-		Toast.makeText(getContext(), "Review count : "+ reviews.size(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getContext(), "Review count : "+ reviews.size(), Toast.LENGTH_SHORT).show();
 
 		// TODO Auto-generated constructor stub
 	}

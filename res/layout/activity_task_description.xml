@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mbkandra16.apps.volunteerbeattaskdesc.activities.TaskDescriptionActivity" >
 
+    <!-- 
     <ImageView
         android:id="@+id/ivNonProfitOrgLogo"
         android:layout_width="75dp"
@@ -57,13 +58,19 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="2dp"
         android:background="@android:color/darker_gray" />
-
+ -->
+ 
+     <include
+        android:id="@+id/top_header"
+        layout="@layout/layout_header" />
+     
     <TextView
         android:id="@+id/tvTaskName1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ivNonProfitOrgLogo"
-        android:layout_below="@+id/vDivider1"
+        android:layout_below="@+id/top_header"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="3dp"
         android:text="@string/task_name_label"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -101,15 +108,16 @@
 	<Button
 		android:id="@+id/bVolunteer"
 		android:layout_width="wrap_content"
-		android:layout_height="30dp"
+		android:layout_height="wrap_content"
 		android:layout_below="@+id/tvTaskDescription"
+		android:layout_marginTop="6dp"
 		android:layout_centerHorizontal="true"
-		android:background="?android:selectableItemBackground"
-		android:text="@string/volunteer_button_label"
-		android:textColor="@android:color/holo_red_light"
+		android:text="@string/volunteer_button_label"		
+        style="@style/button_green"
+		android:textColor="@android:color/white"
 		android:textColorHighlight="@android:color/holo_green_light"
 		android:textSize="24sp"
-		android:textStyle="italic" 
+		android:textStyle="italic|bold" 
         android:onClick="onClickVolunteer"/>
 
     <TextView

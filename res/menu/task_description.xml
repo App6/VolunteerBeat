@@ -11,7 +11,7 @@
         android:title="Save"/>
     -->
     <item
-        android:id="@+id/menu_item_share"
+        android:id="@+id/menu_item_share1"
         android:actionProviderClass="android.widget.ShareActionProvider"
         android:showAsAction="ifRoom"
         android:title="Share"/>

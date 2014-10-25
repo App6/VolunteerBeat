@@ -4,4 +4,5 @@
     <color name="vbLightGrey">#FF82858A</color>
     <color name="vbBackgroundGrey">#cccccc</color>
     <color name="vbWhite">#FFFFFFFF</color>
+    <color name="vbPgBackGround">#FFFFFF</color>
 </resources>

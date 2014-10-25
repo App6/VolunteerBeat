@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!--
     <ImageView
         android:id="@+id/ivOrgActOrgLogo"
         android:layout_width="125dp"
@@ -41,38 +42,41 @@
         android:numStars="5"
         android:rating="4.5"
         android:stepSize="0.5" />
-   
-    
+    -->
+
+    <include
+        android:id="@+id/top_header"
+        layout="@layout/layout_header" />
+
     <TextView
         android:id="@+id/tvOrgActOrgDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="4sp"
-        android:layout_marginRight="4sp"
-        android:layout_below="@+id/ivOrgActOrgLogo"
+        android:layout_below="@+id/top_header"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="fill_horizontal"
         android:text="@string/non_profit_desc" />
-    
 
-      <com.codepath.app6.volunteerbeat.utils.HorizontialListView
-
+    <com.codepath.app6.volunteerbeat.utils.HorizontialListView
         android:id="@+id/hlvImages"
         android:layout_width="match_parent"
-        android:layout_below="@+id/tvOrgActOrgDescription"
         android:layout_height="100dp"
-        android:layout_alignParentLeft="true" >
-
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvOrgActOrgDescription" >
     </com.codepath.app6.volunteerbeat.utils.HorizontialListView>
 
     <TextView
         android:id="@+id/tvOrgActReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/hlvImages"
         android:layout_marginTop="24dp"
         android:text="@string/lbl_reviews"
-        android:textStyle="bold"
-        android:layout_below="@+id/hlvImages"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
 </RelativeLayout>

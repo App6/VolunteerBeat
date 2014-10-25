@@ -2,12 +2,15 @@ package com.codepath.app6.volunteerbeat.fragments;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +28,7 @@ import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 public class ApplyTaskFragment extends DialogFragment {
 	private static String	APPLY_TASK_URL = "tasks/<TASK_ID>/apply";
@@ -44,15 +48,41 @@ public class ApplyTaskFragment extends DialogFragment {
 
 	}
 
+    
+   /*
+	@Override
+	@NonNull
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		//return super.onCreateDialog(savedInstanceState);
+	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.VolunteerBeatTheme_Dialog);
+	    LayoutInflater inflater = getActivity().getLayoutInflater();
+
+	    builder.setView(inflater.inflate(R.layout.fragment_task_apply, null));
+	    return builder.create();
+	}
+*/
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+		//getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(R.color.vbred));
+        
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
 		
         taskId = getArguments().getString("taskId");
-    	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
+     	View view = inflater.inflate(R.layout.fragment_task_apply, container, false);
 		profile = UserProfile.getCurrentUser();
     	
+		
+		int targetHeight = getDialog().getWindow().getDecorView().getHeight();
+		int targetWidth = getDialog().getWindow().getDecorView().getWidth();
+		Picasso.with(getActivity()).load(getArguments().getString("orgLogoUri"))
+		.error(R.drawable.ic_launcher_vb_white)
+		.into((ImageView)view.findViewById(R.id.ivBackgroundImage));
+		
 		setTextView(view, R.id.tvName, profile.getName());
 		tvMessage = (TextView) view.findViewById(R.id.tvMessage);
 		

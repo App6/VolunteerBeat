@@ -87,7 +87,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 
 	@Override
 	public void onResume() {
-		Toast.makeText(getActivity(), "onResume fragment", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getActivity(), "onResume fragment", Toast.LENGTH_SHORT).show();
 		super.onResume();
 		populateData(true);
 	}

@@ -4,8 +4,8 @@
     <!-- the theme applied to the application or activity -->
     <style name="CustomActionBarTheme" parent="@style/Theme.Base.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-         <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
-        
+        <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
+         <item name="android:buttonStyle">@style/button_grey</item>
     </style>
 
     <!-- ActionBar styles -->
