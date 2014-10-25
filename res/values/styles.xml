@@ -34,7 +34,7 @@
     </style>
 -->
 
-    <style name="button_vb">
-        <item name="android:background">@drawable/button_vb</item>
+    <style name="button_grey">
+        <item name="android:background">@drawable/button_grey</item>
     </style>
 </resources>
