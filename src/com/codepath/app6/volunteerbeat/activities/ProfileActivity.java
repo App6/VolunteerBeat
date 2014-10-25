@@ -1,18 +1,20 @@
 package com.codepath.app6.volunteerbeat.activities;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.fragments.ProfileEditFragment;
 import com.codepath.app6.volunteerbeat.fragments.ProfileReadonlyFragment;
+import com.codepath.app6.volunteerbeat.models.UserProfile;
 
 public class ProfileActivity extends Activity {
 
@@ -112,4 +114,9 @@ public class ProfileActivity extends Activity {
 		}
 	}
 
+	public void onUserSignOut(View v) {
+		UserProfile.SignOutCurrentUser();
+		readonlyFragment.updateAll();
+		Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
+	}
 }

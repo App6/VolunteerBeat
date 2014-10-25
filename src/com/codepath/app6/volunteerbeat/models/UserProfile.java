@@ -8,14 +8,13 @@ import junit.framework.Assert;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.codepath.app6.volunteerbeat.clients.VolunteerBeatClient;
-import com.codepath.app6.volunteerbeat.utils.StringSet;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.codepath.app6.volunteerbeat.utils.StringSet;
 
 public class UserProfile {
 	private static String CURR_USER_ID_PROP_NAME = "CURR_USER_ID";
@@ -34,20 +33,21 @@ public class UserProfile {
 	private StringSet savedTasks;
 	private SharedPreferences preference;
 	private static Context applicationContext = null;
-	
+
 	private UserProfile() {
 	}
 
 	public static void setApplicationContext(Context c) {
 		UserProfile.applicationContext = c;
 	}
-	
+
 	public static synchronized UserProfile getCurrentUser() {
 		Assert.assertTrue(applicationContext != null);
 		if (currUser == null) {
 			currUser = new UserProfile();
 			readFromPreference(currUser,
-					PreferenceManager.getDefaultSharedPreferences(applicationContext));
+					PreferenceManager
+							.getDefaultSharedPreferences(applicationContext));
 		}
 		return currUser;
 	}
@@ -55,7 +55,20 @@ public class UserProfile {
 	public synchronized void resetCurrentUser() {
 		Assert.assertTrue(applicationContext != null);
 		readFromPreference(currUser,
-				PreferenceManager.getDefaultSharedPreferences(applicationContext));
+				PreferenceManager
+						.getDefaultSharedPreferences(applicationContext));
+	}
+
+	public static synchronized void SignOutCurrentUser() {
+		Assert.assertTrue(applicationContext != null);
+		if (currUser != null) {
+			SharedPreferences preference = PreferenceManager
+					.getDefaultSharedPreferences(applicationContext);
+			Editor editor = preference.edit();
+			editor.clear();
+			editor.commit();
+			currUser = null;
+		}
 	}
 
 	public int getId() {
@@ -167,7 +180,7 @@ public class UserProfile {
 		user.volunteeredTasks = new HashSet<String>();
 		user.savedTasks = new StringSet();
 		user.preference = preference;
-		
+
 		String jsonStr = preference.getString(getUserProfileKey(userId), "");
 		if (jsonStr == null || jsonStr.isEmpty()) {
 			return;
@@ -215,7 +228,7 @@ public class UserProfile {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void writeToPreference() {
@@ -274,14 +287,14 @@ public class UserProfile {
 		this.savedTasks.addValue(taskid);
 	}
 
-	public void removeSavedTask(String taskid){
+	public void removeSavedTask(String taskid) {
 		this.savedTasks.removeValue(taskid);
 	}
-	
-	public void removeSavedTask(long taskid){
+
+	public void removeSavedTask(long taskid) {
 		this.savedTasks.removeValue(String.valueOf(taskid));
 	}
-	
+
 	public void addSavedTask(long taskid) {
 		addSavedTask(String.valueOf(taskid));
 	}
