@@ -101,15 +101,16 @@
 	<Button
 		android:id="@+id/bVolunteer"
 		android:layout_width="wrap_content"
-		android:layout_height="30dp"
+		android:layout_height="wrap_content"
 		android:layout_below="@+id/tvTaskDescription"
+		android:layout_marginTop="6dp"
 		android:layout_centerHorizontal="true"
-		android:background="?android:selectableItemBackground"
-		android:text="@string/volunteer_button_label"
-		android:textColor="@android:color/holo_red_light"
+		android:text="@string/volunteer_button_label"		
+        style="@style/button_green"
+		android:textColor="@android:color/white"
 		android:textColorHighlight="@android:color/holo_green_light"
 		android:textSize="24sp"
-		android:textStyle="italic" 
+		android:textStyle="italic|bold" 
         android:onClick="onClickVolunteer"/>
 
     <TextView
