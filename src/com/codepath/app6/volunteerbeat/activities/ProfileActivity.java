@@ -1,11 +1,11 @@
 package com.codepath.app6.volunteerbeat.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.fragments.ProfileEditFragment;
 import com.codepath.app6.volunteerbeat.fragments.ProfileReadonlyFragment;
 
-public class ProfileActivity extends FragmentActivity {
+public class ProfileActivity extends Activity {
 
 	public final static int PICK_PHOTO_CODE = 1046;
 	private static final int REGISTER_ACTIVITY_CODE = 100;
@@ -35,7 +35,7 @@ public class ProfileActivity extends FragmentActivity {
 
 		editMode = getIntent().getBooleanExtra("mode", false);
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		if (editMode == false)
 			ft.replace(R.id.flContainer, readonlyFragment);
 		else
@@ -68,12 +68,16 @@ public class ProfileActivity extends FragmentActivity {
 	private void switchEditMode() {
 		editMode = !editMode;
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		if (editMode) {
-			ft.replace(R.id.flContainer, editFragment);
+			ft.setCustomAnimations(
+                    R.animator.profile_flip_right_in, R.animator.profile_flip_right_out,
+                    R.animator.profile_flip_left_in, R.animator.profile_flip_left_out).replace(R.id.flContainer, editFragment);
 		} else {
 			editFragment.saveUserProfile();
-			ft.replace(R.id.flContainer, readonlyFragment);
+			ft.setCustomAnimations(
+                    R.animator.profile_flip_left_in, R.animator.profile_flip_left_out,
+                    R.animator.profile_flip_right_in, R.animator.profile_flip_right_out).replace(R.id.flContainer, readonlyFragment);
 		}
 		ft.commit();
 
@@ -108,13 +112,4 @@ public class ProfileActivity extends FragmentActivity {
 		}
 	}
 
-	public void onLoginClick(View v) {
-		Intent i = new Intent(this, LoginActivity.class);
-		startActivity(i);
-	}
-
-	public void onRegisterClick(View v) {
-		Intent i = new Intent(this, RegisterActivity.class);
-		startActivityForResult(i, REGISTER_ACTIVITY_CODE);
-	}
 }
