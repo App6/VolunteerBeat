@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
-    android:background="@color/vbWhite"
+    android:background="@drawable/list_item_card"
     android:padding="3dp" >
 
     <ImageView
