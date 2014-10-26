@@ -59,7 +59,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:gravity="fill_horizontal"
-        android:text="@string/non_profit_desc" />
+        android:text="@string/non_profit_desc" 
+        android:typeface="sans"/>
 
     <com.codepath.app6.volunteerbeat.utils.HorizontialListView
         android:id="@+id/hlvImages"

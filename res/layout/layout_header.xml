@@ -6,56 +6,66 @@
     <ImageView
         android:id="@+id/ivHeaderOrgLogoBG"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/rlHdrContent"
+        android:layout_alignLeft="@+id/rlHdrContent"
+        android:layout_alignRight="@+id/rlHdrContent"
+        android:layout_alignTop="@+id/rlHdrContent"
         android:alpha="0.2"
         android:contentDescription="@string/iv_orgheader_desc"
         android:scaleType="centerCrop"
         android:src="@drawable/crossroads_logo" />
 
-    <TextView
-        android:id="@+id/tvHeaderOrgName"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@id/rlHdrContent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivHeaderOrgLogo"
-        android:layout_marginLeft="5dp"
-        android:text="@string/tvOrgHeaderName"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:paddingLeft="5dp" 
+        android:paddingTop="10dp">
 
-    <RatingBar
-        android:id="@+id/rbHeaderOrgRating"
-        style="@style/vbRatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvHeaderOrgName"
-        android:layout_below="@+id/tvHeaderOrgName"
-        android:clickable="false"
-        android:focusable="false"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:rating="3.5"
-        android:stepSize="0.5" />
+        <TextView
+            android:id="@+id/tvHeaderOrgName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/ivHeaderOrgLogo"
+            android:text="@string/tvOrgHeaderName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="22sp"
+            android:textStyle="bold" 
+            android:typeface="serif"/>
 
-    <TextView
-        android:id="@+id/tvHeaderOrgLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rbHeaderOrgRating"
-        android:layout_below="@+id/rbHeaderOrgRating"
-        android:text="@string/tv_header_org_location" />
+        <RatingBar
+            android:id="@+id/rbHeaderOrgRating"
+            style="@style/vbRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvHeaderOrgName"
+            android:layout_below="@+id/tvHeaderOrgLocation"
+            android:clickable="false"
+            android:focusable="false"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.25" />
 
-    <ImageView
-        android:id="@+id/ivHeaderOrgLogo"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="5dp"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/crossroads_logo" />
+        <TextView
+            android:id="@+id/tvHeaderOrgLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rbHeaderOrgRating"
+            android:layout_below="@+id/tvHeaderOrgName"
+            android:text="@string/tv_header_org_location" />
+
+        <ImageView
+            android:id="@+id/ivHeaderOrgLogo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/crossroads_logo" />
+    </RelativeLayout>
 
 </RelativeLayout>
