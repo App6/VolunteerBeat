@@ -1,6 +1,7 @@
 package com.codepath.app6.volunteerbeat.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,9 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.R;
 import com.codepath.app6.volunteerbeat.activities.LoginActivity;
@@ -27,10 +28,13 @@ import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
 import com.codepath.app6.volunteerbeat.adapters.TasksAdapter.TasksAdapterListner;
 import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
+import com.codepath.app6.volunteerbeat.utils.MySQLiteHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public abstract class TasksListFragment extends Fragment implements TasksAdapterListner {
+public abstract class TasksListFragment extends Fragment implements
+		TasksAdapterListner {
+	private static final int TASK_DESCRIPTION_ACTIVITY_CODE = 100;
 
 	public abstract void refreshTasks();
 
@@ -38,6 +42,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 	private TasksAdapter aTasks;
 	private ListView lvTasks;
 	private UserProfile profile;
+	private MySQLiteHelper dbHelper;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 		tasks = new ArrayList<Task>();
 		aTasks = new TasksAdapter(getActivity(), tasks, this);
 		profile = UserProfile.getCurrentUser();
+		dbHelper = new MySQLiteHelper(getActivity());
 
 	}
 
@@ -77,7 +83,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 				bundle.putParcelable("taskInfo", task);
 				i.putExtras(bundle);
 
-				startActivity(i);
+				startActivityForResult(i, TASK_DESCRIPTION_ACTIVITY_CODE);
 			}
 
 		});
@@ -86,16 +92,34 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 	}
 
 	@Override
-	public void onResume() {
-		//Toast.makeText(getActivity(), "onResume fragment", Toast.LENGTH_SHORT).show();
-		super.onResume();
-		populateData(true);
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == TASK_DESCRIPTION_ACTIVITY_CODE) {
+			if (resultCode == Activity.RESULT_OK) {
+				if (data != null) {
+					long id = data.getLongExtra("taskId", -1);
+					boolean volunteered = data.getBooleanExtra("volunteered", false);
+					dbHelper.updateVolunteeredState(id, volunteered);
+					populateData();
+				}
+			}
+		}
 	}
+
+	public abstract void populateData();
+
+	@Override
+	public void onResume() {
+		// Toast.makeText(getActivity(), "onResume fragment",
+		// Toast.LENGTH_SHORT).show();
+		super.onResume();
+		populateData();
+	}
+
 	public ArrayList<Task> onAddTasks(ArrayList<Task> tasks) {
 		return tasks;
 	}
-	
-	private void populateData(final boolean refresh) {
+
+	public void populateDataByAPI(final boolean refresh) {
 		String tasksUrl = "http://api.volunteerbeat.com/tasks";
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
@@ -107,8 +131,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 			public void onSuccess(int statusCode, JSONObject response) {
 				Log.d("onSuccess", "Success");
 				try {
-					tasks = Task.fromJsonArray(response
-							.getJSONArray("items"));
+					tasks = Task.fromJsonArray(response.getJSONArray("items"));
 					for (Task task : tasks) {
 						if (profile.isSavedTask(task.getTaskId())) {
 							task.setSavedTask(true);
@@ -119,8 +142,15 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 					}
 					tasks = onAddTasks(tasks);
 
-					if (refresh == true)
+					if (refresh == true) {
+						dbHelper.deleteAllTasks();
 						deleteAll();
+					}
+
+					for (Task task : tasks) {
+						dbHelper.createOrganizationEntry(task.getOrganization());
+						dbHelper.createTaskEntry(task);
+					}
 
 					addAll(tasks);
 				} catch (JSONException e) {
@@ -138,32 +168,38 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 
 				super.onFailure(throwable, errorResponse);
 			}
-			
+
 			@Override
-			 public void onFailure(Throwable throwable, org.json.JSONArray errorResponse){
+			public void onFailure(Throwable throwable,
+					org.json.JSONArray errorResponse) {
 				throwable.printStackTrace();
 				Toast.makeText(getActivity(),
 						"Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT)
 						.show();
 
-				super.onFailure(throwable, errorResponse);				
+				super.onFailure(throwable, errorResponse);
 			}
-			
+
 			@Override
-			 public void onFailure(Throwable throwable, String errorResponse){
+			public void onFailure(Throwable throwable, String errorResponse) {
 				throwable.printStackTrace();
 				Toast.makeText(getActivity(),
 						"Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT)
 						.show();
 
-				super.onFailure(throwable, errorResponse);				
+				super.onFailure(throwable, errorResponse);
 			}
 
 		});
 
 	}
+
 	// Delegate the adding to the internal adapter
 	public void addAll(ArrayList<Task> tasks) {
+		aTasks.addAll(tasks);
+	}
+
+	public void addAll(List<Task> tasks) {
 		aTasks.addAll(tasks);
 	}
 
@@ -171,12 +207,20 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 	public void deleteAll() {
 		aTasks.clear();
 	}
-	
+
+	public List<Task> getAllSavedTasksFromDB() {
+		return dbHelper.getAllSavedTasks();
+	}
+
+	public List<Task> getAllTimelineTasksFromDB() {
+		return dbHelper.getAllTimelineTasks();
+	}
+
 	@Override
 	public void onOrgLogoClick(Task task) {
-		 Intent i = new Intent(getActivity(), OrganizationActivity.class);
-		 i.putExtra("organization", task.getOrganization());
-		 getActivity().startActivity(i);
+		Intent i = new Intent(getActivity(), OrganizationActivity.class);
+		i.putExtra("organization", task.getOrganization());
+		getActivity().startActivity(i);
 	}
 
 	@Override
@@ -188,7 +232,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 			getActivity().startActivity(i);
 			return;
 		}
-		if (! t.isSavedTask()) {
+		if (!t.isSavedTask()) {
 			p.addSavedTask(t.getTaskId());
 			t.setSavedTask(true);
 			p.writeToPreference();
@@ -197,9 +241,12 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 			t.setSavedTask(false);
 			p.writeToPreference();
 		}
+		dbHelper.updateSavedState(t.getTaskId(), t.isSavedTask());
+		populateData();
+
 		// Refresh current tab.
-		deleteAll();
-		tasks = onAddTasks(tasks);
-		addAll(tasks);
+		// deleteAll();
+		// tasks = onAddTasks(tasks);
+		// addAll(tasks);
 	}
 }

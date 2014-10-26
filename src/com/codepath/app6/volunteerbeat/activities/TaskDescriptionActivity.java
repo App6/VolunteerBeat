@@ -51,7 +51,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 	private static final int LOGIN_ACTIVITY_CODE = 200;
 	private boolean mShowApplyTaskDialog = false;
-
+	private boolean hasVolunteered;
+	
 	// private ImageView ivNonProfitOrgLogo;
 	private TextView tvNonProfiOrgName;
 	private RatingBar rbNonProfitOrgRating;
@@ -87,7 +88,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_task_description);
 
 		setupReferences();
-
+		hasVolunteered = false;
+		
 		task = getIntent().getParcelableExtra("taskInfo");
 
 		if (task != null) {
@@ -429,11 +431,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		}
 	}
 
-	public void onTaskSave(MenuItem item) {
-		Toast.makeText(getApplicationContext(), "Store the task for later ...",
-				Toast.LENGTH_LONG).show();
-	}
-
 	// Define a DialogFragment that displays the error dialog
 	public static class ErrorDialogFragment extends DialogFragment {
 
@@ -489,10 +486,17 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	@Override
 	public void onFinishEditDialog(boolean applied) {
 		if (applied) {
+			hasVolunteered = true;
 			displayVolunteered();
 		}
-		// TODO Auto-generated method stub
-
 	}
 
+	@Override
+	public void finish() {
+		Intent i = new Intent();
+		i.putExtra("taskId", task.getTaskId());
+		i.putExtra("volunteered", hasVolunteered);
+		setResult(RESULT_OK, i);
+		super.finish();
+	}
 }

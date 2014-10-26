@@ -33,14 +33,13 @@ public class Task implements Parcelable {
 	private Organization organization;
 	private boolean savedTask;
 	private boolean volunteeredTask;
-	
+
 	public Task() {
 		savedTask = false;
 		setVolunteeredTask(false);
 		organization = new Organization();
 	}
 
-	
 	/**
 	 * @return the savedTask
 	 */
@@ -48,14 +47,13 @@ public class Task implements Parcelable {
 		return savedTask;
 	}
 
-
 	/**
-	 * @param savedTask the savedTask to set
+	 * @param savedTask
+	 *            the savedTask to set
 	 */
 	public void setSavedTask(boolean savedTask) {
 		this.savedTask = savedTask;
 	}
-
 
 	public void setTaskId(long taskId) {
 		this.taskId = taskId;
@@ -275,7 +273,6 @@ public class Task implements Parcelable {
 		return atasks;
 	}
 
-
 	/**
 	 * @return the volunteeredTask
 	 */
@@ -283,9 +280,9 @@ public class Task implements Parcelable {
 		return volunteeredTask;
 	}
 
-
 	/**
-	 * @param volunteeredTask the volunteeredTask to set
+	 * @param volunteeredTask
+	 *            the volunteeredTask to set
 	 */
 	public void setVolunteeredTask(boolean volunteeredTask) {
 		this.volunteeredTask = volunteeredTask;
