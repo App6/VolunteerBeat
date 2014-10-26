@@ -7,6 +7,7 @@ import android.content.IntentSender;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -35,7 +37,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
@@ -56,7 +61,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private TextView tvTaskDueTime;
 	private TextView tvTaskDescription;
 	private TextView tvTaskPostedDate;
-	private Button	bVolunteer;
+	private Button bVolunteer;
 	private ImageView ivNonProfitOrgLogo;
 	private ImageView ivNonProfitOrgLogoBG;
 	private SupportMapFragment mapFragment;
@@ -131,16 +136,15 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		tvTaskPostedDate = (TextView) findViewById(R.id.tvTaskPostedDate);
 		ivNonProfitOrgLogo = (ImageView) findViewById(R.id.ivHeaderOrgLogo);
 		ivNonProfitOrgLogoBG = (ImageView) findViewById(R.id.ivHeaderOrgLogoBG);
-		
-		bVolunteer = (Button)findViewById(R.id.bVolunteer);
+
+		bVolunteer = (Button) findViewById(R.id.bVolunteer);
 		bVolunteer.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					onClickVolunteer(v);
-				}
-				
+			public void onClick(View v) {
+				onClickVolunteer(v);
 			}
-		);
-		
+
+		});
+
 		mapFragment = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.fgMap));
 
@@ -174,50 +178,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 					}
 
 				});
-
-				map.setOnMapClickListener(new OnMapClickListener() {
-
-					@Override
-					public void onMapClick(LatLng arg0) {
-						// String label = task.getOrgName();
-						// String uriBegin = "geo:" + arg0.latitude + ","
-						// + arg0.longitude;
-						// String query = arg0.latitude + "," + arg0.longitude +
-						// "("
-						// + label + ")";
-						// String encodedQuery = Uri.encode(query);
-						// String uriString = uriBegin + "?q=" + encodedQuery
-						// + "&z=16";
-						// Uri uri = Uri.parse(uriString);
-						//
-						// startActivity(new Intent(
-						// android.content.Intent.ACTION_VIEW, uri));
-
-						Intent intent = new Intent(
-								android.content.Intent.ACTION_VIEW,
-								Uri.parse("http://maps.google.com/maps?daddr="
-										+ arg0.latitude + "," + arg0.longitude));
-						startActivity(intent);
-					}
-
-				});
-				// Move the camera instantly to hamburg with a zoom of 15.
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
-
-				// Zoom in, animating the camera.
-				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
-				// Toast.makeText(this, "Map Fragment was loaded properly!",
-				// Toast.LENGTH_SHORT).show();
-				// map.setMyLocationEnabled(true);
-				// Marker sanJose = map.addMarker(new MarkerOptions().position(
-				// SANJOSE).title("San Jose"));
-
-				// Move the camera instantly to hamburg with a zoom of 15.
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
-
-				// Zoom in, animating the camera.
-				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 			} else {
 				Toast.makeText(this, "Error - Map was null!!",
 						Toast.LENGTH_SHORT).show();
@@ -371,29 +331,61 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	 */
 	@Override
 	public void onConnected(Bundle dataBundle) {
+
+		map.clear();
+
+		// Define color of marker icon
+		BitmapDescriptor defaultMarker = BitmapDescriptorFactory
+				.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+
 		// Display the connection status
 		// LatLng latLng = new LatLng(SANJOSE.latitude, SANJOSE.longitude);
 		LatLng latLng = new LatLng(gpsLatitude, gpsLongitude);
-		map.addMarker(new MarkerOptions().position(latLng).title(
-				task.getOrganization().getOrgName()));
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,
-				17);
-		map.animateCamera(cameraUpdate);
+		Marker marker = map
+				.addMarker(new MarkerOptions().position(latLng)
+						.title(task.getOrganization().getOrgName())
+						.icon(defaultMarker));
 
-		// Location location = mLocationClient.getLastLocation();
-		// if (location != null) {
-		// Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT)
-		// .show();
-		// LatLng latLng = new LatLng(location.getLatitude(),
-		// location.getLongitude());
-		// CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-		// latLng, 17);
-		// map.animateCamera(cameraUpdate);
-		// } else {
-		// Toast.makeText(this,
-		// "Current location was null, enable GPS on emulator!",
-		// Toast.LENGTH_SHORT).show();
-		// }
+		dropPinEffect(marker);
+
+		// Move the camera instantly to hamburg with a zoom of 15.
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,
+				15);
+
+		// Zoom in, animating the camera.
+		map.animateCamera(cameraUpdate, 1500, null);
+
+	}
+
+	private void dropPinEffect(final Marker marker) {
+		// Handler allows us to repeat a code block after a specified delay
+		final android.os.Handler handler = new android.os.Handler();
+		final long start = SystemClock.uptimeMillis();
+		final long duration = 1500;
+
+		// Use the bounce interpolator
+		final android.view.animation.Interpolator interpolator = new BounceInterpolator();
+
+		// Animate marker with a bounce updating its position every 15ms
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				long elapsed = SystemClock.uptimeMillis() - start;
+				// Calculate t for bounce based on elapsed time
+				float t = Math.max(
+						1 - interpolator.getInterpolation((float) elapsed
+								/ duration), 0);
+				// Set the anchor
+				marker.setAnchor(0.5f, 1.0f + 4 * t);
+
+				if (t > 0.0) {
+					// Post this event again 15ms from now.
+					handler.postDelayed(this, 15);
+				} else { // done elapsing, show window
+					marker.showInfoWindow();
+				}
+			}
+		});
 	}
 
 	/*

@@ -54,28 +54,39 @@
         android:layout_alignRight="@+id/bGotoCreateAccount"
         android:layout_below="@+id/etPassword"
         android:layout_marginTop="5dp"
+        android:gravity="center"
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:text="@string/b_signin_text"/>
 
-    <Button
-        android:id="@+id/bGotoCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAlreadyHaveAccount"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/b_create_account" />
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/pagefooter" />
 
     <TextView
         android:id="@+id/tvAlreadyHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bSignIn"
+        android:layout_above="@+id/bGotoCreateAccount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp"
         android:gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
         android:text="@string/tv_new_to_vb"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bGotoCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/b_create_account" />
 
 </RelativeLayout>
