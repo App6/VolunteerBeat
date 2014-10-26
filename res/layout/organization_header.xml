@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlOrgActDetails"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/vbPgBackGround" >
 
     <!--
     <ImageView
@@ -48,36 +49,76 @@
         android:id="@+id/top_header"
         layout="@layout/layout_header" />
 
-    <TextView
-        android:id="@+id/tvOrgActOrgDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/top_header"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="fill_horizontal"
-        android:text="@string/non_profit_desc" 
-        android:typeface="sans"/>
-
-    <com.codepath.app6.volunteerbeat.utils.HorizontialListView
-        android:id="@+id/hlvImages"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvOrgActOrgDescription" >
-    </com.codepath.app6.volunteerbeat.utils.HorizontialListView>
-
-    <TextView
-        android:id="@+id/tvOrgActReviews"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/hlvImages"
-        android:layout_marginTop="24dp"
-        android:text="@string/lbl_reviews"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold" />
+        android:layout_below="@+id/top_header"
+        android:layout_marginTop="@dimen/section_gap" >
+
+        <TextView
+            android:id="@+id/tvOrgActOrgMission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/section_hdr"
+            android:padding="@dimen/section_content_padding"
+            android:text="Mission"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/tvOrgActOrgDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvOrgActOrgMission"
+            android:background="@drawable/section_details"
+            android:gravity="fill_horizontal"
+            android:padding="@dimen/section_content_padding"
+            android:text="@string/non_profit_desc"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/tvOrgActImages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvOrgActOrgDescription"
+            android:layout_marginTop="@dimen/section_gap"
+            android:background="@drawable/section_hdr"
+            android:padding="@dimen/section_content_padding"
+            android:text="Images"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <com.codepath.app6.volunteerbeat.utils.HorizontialListView
+            android:id="@+id/hlvImages"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvOrgActImages"
+            android:background="@drawable/section_details"
+            android:padding="@dimen/section_content_padding" >
+        </com.codepath.app6.volunteerbeat.utils.HorizontialListView>
+
+        <TextView
+            android:id="@+id/tvOrgActReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hlvImages"
+            android:layout_marginTop="@dimen/section_gap"
+            android:background="@drawable/section_hdr"
+            android:padding="@dimen/section_content_padding"
+            android:text="@string/lbl_reviews"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+    </RelativeLayout>
 
 </RelativeLayout>
