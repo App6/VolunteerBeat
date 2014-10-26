@@ -175,32 +175,6 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 				});
 
-				map.setOnMapClickListener(new OnMapClickListener() {
-
-					@Override
-					public void onMapClick(LatLng arg0) {
-						// String label = task.getOrgName();
-						// String uriBegin = "geo:" + arg0.latitude + ","
-						// + arg0.longitude;
-						// String query = arg0.latitude + "," + arg0.longitude +
-						// "("
-						// + label + ")";
-						// String encodedQuery = Uri.encode(query);
-						// String uriString = uriBegin + "?q=" + encodedQuery
-						// + "&z=16";
-						// Uri uri = Uri.parse(uriString);
-						//
-						// startActivity(new Intent(
-						// android.content.Intent.ACTION_VIEW, uri));
-
-						Intent intent = new Intent(
-								android.content.Intent.ACTION_VIEW,
-								Uri.parse("http://maps.google.com/maps?daddr="
-										+ arg0.latitude + "," + arg0.longitude));
-						startActivity(intent);
-					}
-
-				});
 				// Move the camera instantly to hamburg with a zoom of 15.
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(SANJOSE, 15));
 
