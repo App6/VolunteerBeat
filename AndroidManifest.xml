@@ -71,7 +71,6 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_login"
             android:parentActivityName=".activities.HomeScreenActivity" >
 
             <!-- Parent activity meta-data to support API level 7+ -->
@@ -81,8 +80,7 @@
         </activity>
         <activity
             android:name="com.codepath.app6.volunteerbeat.activities.RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:parentActivityName=".activities.HomeScreenActivity" >
+             android:parentActivityName=".activities.HomeScreenActivity" >
 
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
