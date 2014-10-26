@@ -57,28 +57,9 @@
         android:layout_alignRight="@+id/tvAlreadyHaveAccount"
         android:layout_below="@+id/etPassword"
         android:layout_centerVertical="true"
+        android:gravity="center"
         android:layout_marginTop="10dp"
         android:text="@string/b_create_acnt" />
-
-    <TextView
-        android:id="@+id/tvAlreadyHaveAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bRegister"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp"
-        android:gravity="center_horizontal"
-        android:text="@string/tv_already_has_account"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Button
-        android:id="@+id/bGotoSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAlreadyHaveAccount"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/b_sign_in" />
 
     <ImageView
         android:id="@+id/ivHeaderOrgLogoBG"
@@ -89,5 +70,35 @@
         android:layout_marginTop="25dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/pagefooter" />
+
+    <Button
+        android:id="@+id/bGotoSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="@string/b_sign_in" />
+
+    <TextView
+        android:id="@+id/tvAlreadyHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:text="@string/tv_already_has_account"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

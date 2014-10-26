@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
 		bSignIn.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				onLoginGo(v);
+				onLoginGo();
 			}
 		});
 
@@ -78,16 +78,18 @@ public class LoginActivity extends Activity {
 			if (resultCode == RESULT_OK) {
 				if (data != null) {
 					String email = data.getStringExtra("email");
-					if (email != null) {
+					String password = data.getStringExtra("password");
+					if (email != null && password != null) {
 						etEmailAddress.setText(email);
-						etPassword.requestFocus();
+						etPassword.setText(password);
+						onLoginGo();
 					}
 				}
 			}
 		}
 	}
 
-	private void onLoginGo(View v) {
+	private void onLoginGo() {
 		RequestParams params = new RequestParams();
 		params.put("email", etEmailAddress.getText().toString());
 		params.put("password", etPassword.getText().toString());

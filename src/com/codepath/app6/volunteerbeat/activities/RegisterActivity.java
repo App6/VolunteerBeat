@@ -87,6 +87,7 @@ public class RegisterActivity extends Activity {
 						}
 						Intent i = new Intent();
 						i.putExtra("email", etEmailAddress.getText().toString());
+						i.putExtra("password", etPassword.getText().toString());
 						setResult(RESULT_OK, i);
 						finish();
 
