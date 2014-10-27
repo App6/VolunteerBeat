@@ -165,7 +165,7 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 
 	private void refreshSaveIcon(Task task, ImageView ivSave) {
 		if (task.isSavedTask()) {
-			ivSave.setImageResource(R.drawable.ic_heart_filled_grey);
+			ivSave.setImageResource(R.drawable.ic_heart_fill_red);
 		} else {
 			ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
 		}
