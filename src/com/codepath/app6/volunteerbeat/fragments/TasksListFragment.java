@@ -84,6 +84,7 @@ public abstract class TasksListFragment extends Fragment implements
 				i.putExtras(bundle);
 
 				startActivityForResult(i, TASK_DESCRIPTION_ACTIVITY_CODE);
+				getActivity().overridePendingTransition (R.anim.open_next, R.anim.close_main);
 			}
 
 		});
@@ -221,6 +222,7 @@ public abstract class TasksListFragment extends Fragment implements
 		Intent i = new Intent(getActivity(), OrganizationActivity.class);
 		i.putExtra("organization", task.getOrganization());
 		getActivity().startActivity(i);
+		getActivity().overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
 	}
 
 	@Override

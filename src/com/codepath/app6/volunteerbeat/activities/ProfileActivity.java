@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ public class ProfileActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		setContentView(R.layout.activity_profile);
 
 		editFragment = new ProfileEditFragment();
@@ -61,7 +62,10 @@ public class ProfileActivity extends Activity {
 				item.setIcon(R.drawable.ic_action_edit_profile);
 			}
 			return true;
-
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -72,14 +76,18 @@ public class ProfileActivity extends Activity {
 
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		if (editMode) {
-			ft.setCustomAnimations(
-                    R.animator.profile_flip_right_in, R.animator.profile_flip_right_out,
-                    R.animator.profile_flip_left_in, R.animator.profile_flip_left_out).replace(R.id.flContainer, editFragment);
+			ft.setCustomAnimations(R.animator.profile_flip_right_in,
+					R.animator.profile_flip_right_out,
+					R.animator.profile_flip_left_in,
+					R.animator.profile_flip_left_out).replace(R.id.flContainer,
+					editFragment);
 		} else {
 			editFragment.saveUserProfile();
-			ft.setCustomAnimations(
-                    R.animator.profile_flip_left_in, R.animator.profile_flip_left_out,
-                    R.animator.profile_flip_right_in, R.animator.profile_flip_right_out).replace(R.id.flContainer, readonlyFragment);
+			ft.setCustomAnimations(R.animator.profile_flip_left_in,
+					R.animator.profile_flip_left_out,
+					R.animator.profile_flip_right_in,
+					R.animator.profile_flip_right_out).replace(
+					R.id.flContainer, readonlyFragment);
 		}
 		ft.commit();
 
@@ -119,4 +127,11 @@ public class ProfileActivity extends Activity {
 		readonlyFragment.updateAll();
 		Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
 	}
+
+	@Override
+	public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
+	}
+
 }

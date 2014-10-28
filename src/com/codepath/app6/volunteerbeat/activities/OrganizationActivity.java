@@ -4,7 +4,9 @@ package com.codepath.app6.volunteerbeat.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -87,4 +89,22 @@ public class OrganizationActivity extends ActionBarActivity {
 			ProfileActionBar aBar = new ProfileActionBar(this);
 			aBar.show();
 		}
+		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+			case android.R.id.home:
+				NavUtils.navigateUpFromSameTask(this);
+				overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+			}
+		}
+		
+	    @Override
+	    public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
+	    }
 }

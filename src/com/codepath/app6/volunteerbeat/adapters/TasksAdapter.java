@@ -61,6 +61,11 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 					defaultHeight = ivOrgImage.getHeight();
 					defaultWidth = ivOrgImage.getWidth();
 				}
+				
+				if (defaultHeight == 0) {
+					defaultHeight = 300;
+					defaultWidth = 300;
+				}
 		            float ratio = (float) bitmap.getWidth() / (float) bitmap.getHeight();
 //		            int targetHeight = ivOrgImage.getHeight();
 		            
@@ -165,7 +170,7 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 
 	private void refreshSaveIcon(Task task, ImageView ivSave) {
 		if (task.isSavedTask()) {
-			ivSave.setImageResource(R.drawable.ic_heart_filled_grey);
+			ivSave.setImageResource(R.drawable.heart_red_3);
 		} else {
 			ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
 		}

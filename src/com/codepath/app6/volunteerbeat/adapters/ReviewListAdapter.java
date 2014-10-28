@@ -39,7 +39,7 @@ public class ReviewListAdapter extends ArrayAdapter {
 			convertView = l.inflate(R.layout.item_review, parent, false);
 			vh = new ViewHolder();
 			vh.tvName = (TextView) convertView.findViewById(R.id.tvReviewUserName);
-			vh.tvReviewDate = (TextView) convertView.findViewById(R.id.tvReviewdate);
+//			vh.tvReviewDate = (TextView) convertView.findViewById(R.id.tvReviewdate);
 			vh.tvReviewText = (TextView) convertView.findViewById(R.id.tvReviewText);
 			vh.rbRating = (RatingBar) convertView.findViewById(R.id.rbReviewRating);
 			convertView.setTag(vh);
@@ -49,7 +49,7 @@ public class ReviewListAdapter extends ArrayAdapter {
 		Review r = (Review) getItem(position);
 		
 		vh.tvName.setText(r.getUserName());
-		vh.tvReviewDate.setText(r.getReviewDate());
+//		vh.tvReviewDate.setText(r.getReviewDate());
 		vh.tvReviewText.setText(r.getReviewText());
 		vh.rbRating.setRating(r.getRating());
 		return convertView;

@@ -11,6 +11,7 @@ import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -226,11 +227,14 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+	        overridePendingTransition (R.anim.open_main, R.anim.close_next);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/*
@@ -499,4 +503,12 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		setResult(RESULT_OK, i);
 		super.finish();
 	}
+	
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed();
+        overridePendingTransition (R.anim.open_main, R.anim.close_next);
+    }
+ 
 }

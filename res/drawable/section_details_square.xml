@@ -8,8 +8,4 @@
         android:width="1dp"
         android:color="@color/vbLightGrey" />
 
-    <corners
-        android:bottomLeftRadius="5dp"
-        android:bottomRightRadius="5dp" />
-
 </shape>
