@@ -8,6 +8,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -66,6 +68,20 @@ public class OrganizationActivity extends ActionBarActivity {
 
 	        mAdapter = new ImageListAdapter(this, org.getOrgPicUris());
 	        listview.setAdapter(mAdapter);
+	        listview.setTag(org);
+	        listview.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					Intent i = new Intent(getApplicationContext(), ImageViewPagerActivity.class);
+					i.putExtra("picUris", org.getOrgPicUris());
+					i.putExtra("currentPos", position);
+					startActivity(i);
+					
+				}
+			});
 	   	}
 		@Override
 		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
