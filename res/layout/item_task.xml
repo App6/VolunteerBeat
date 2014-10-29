@@ -90,7 +90,8 @@
         android:layout_alignLeft="@+id/tvTaskDesc"
         android:layout_alignTop="@+id/tvDueDate"
         android:clickable="true"
+        android:background="@color/vbPgBackGround"
         android:contentDescription="@string/save_heart_label"
-        android:src="@drawable/ic_heart_outline_grey" />
+        android:src="@drawable/heart_red_outline" />
 
 </RelativeLayout>

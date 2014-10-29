@@ -127,5 +127,11 @@ public class RegisterActivity extends Activity {
 
 		profile.writeToPreference();
 	}
+	
+    @Override
+    public void onBackPressed() {
+	finish();
+	overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
+    }
 
 }

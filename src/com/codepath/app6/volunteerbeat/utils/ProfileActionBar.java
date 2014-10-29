@@ -54,6 +54,7 @@ public class ProfileActionBar {
 			Intent i = new Intent(activity, ProfileActivity.class);
 			i.putExtra("mode", false);
 			activity.startActivity(i);
+			activity.overridePendingTransition(R.anim.slide_from_top, R.anim.slide_to_bottom);
 		} else {
 			Intent i = new Intent(activity, LoginActivity.class);
 			activity.startActivityForResult(i, ACTIONBAR_LOGIN_ACTIVITY_CODE);
