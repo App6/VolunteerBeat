@@ -20,6 +20,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private boolean mShowApplyTaskDialog = false;
 
 	// private ImageView ivNonProfitOrgLogo;
+	private RelativeLayout rlOrgHeader;
 	private TextView tvNonProfiOrgName;
 	private RatingBar rbNonProfitOrgRating;
 	private TextView tvOrgLocation;
@@ -87,9 +89,9 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_task_description);
 
-		setupReferences();
 
 		task = getIntent().getParcelableExtra("taskInfo");
+		setupReferences();
 
 		if (task != null) {
 			tvNonProfiOrgName.setText(task.getOrganization().getOrgName());
@@ -138,6 +140,22 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		ivNonProfitOrgLogo = (ImageView) findViewById(R.id.ivHeaderOrgLogo);
 		ivNonProfitOrgLogoBG = (ImageView) findViewById(R.id.ivHeaderOrgLogoBG);
 
+		rlOrgHeader = (RelativeLayout) findViewById(R.id.top_header);
+		if (task != null) {
+			rlOrgHeader.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent i = new Intent(TaskDescriptionActivity.this,
+							OrganizationActivity.class);
+					i.putExtra("organization", task.getOrganization());
+					TaskDescriptionActivity.this.startActivity(i);
+					TaskDescriptionActivity.this.overridePendingTransition(R.anim.from_middle,
+							R.anim.to_middle);
+				}
+			});
+		}
 		bVolunteer = (Button) findViewById(R.id.bVolunteer);
 		bVolunteer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -228,7 +246,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
-	        overridePendingTransition (R.anim.open_main, R.anim.close_next);
+			overridePendingTransition(R.anim.open_main, R.anim.close_next);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -499,11 +517,11 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 	}
 
-    @Override
-    public void onBackPressed() {
-        // TODO Auto-generated method stub
-        super.onBackPressed();
-        overridePendingTransition (R.anim.open_main, R.anim.close_next);
-    }
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		overridePendingTransition(R.anim.open_main, R.anim.close_next);
+	}
 
 }
