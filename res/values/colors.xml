@@ -2,6 +2,7 @@
 <resources>
     <color name="vbred">#FFEF431C</color>
     <color name="vbgreen">#FF99e35d</color>
+    <color name="vbbordergrey">#FFE0E0E0</color>
     <color name="vbLightGrey">#FF82858A</color>
     <color name="vbBackgroundGrey">#cccccc</color>
     <color name="vbPgBackGround">#FFFFFF</color>

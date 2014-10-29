@@ -1,17 +1,25 @@
 package com.codepath.app6.volunteerbeat.fragments;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.codepath.app6.volunteerbeat.models.Task;
+import com.codepath.app6.volunteerbeat.models.UserProfile;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class SaveTasksFragment extends TasksListFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 
 	}
 
@@ -29,14 +37,8 @@ public class SaveTasksFragment extends TasksListFragment {
 	@Override
 	public void refreshTasks() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
-	@Override
-	public void populateData() {
-		List<Task> savedTasks = getAllSavedTasksFromDB();
-		deleteAll();
-		addAll(savedTasks);
-	}
 
 }
