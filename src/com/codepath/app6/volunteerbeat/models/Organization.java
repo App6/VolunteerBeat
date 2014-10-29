@@ -10,7 +10,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Organization implements Parcelable {
-	private long orgId;
 	private String orgName;
 	private String orgLogoUri;
 	private float orgRating;
@@ -18,39 +17,6 @@ public class Organization implements Parcelable {
 	private String orgLocation;
 	private ArrayList<String> orgPicUris;
 	private ArrayList<Review> orgReviews;
-
-	
-	public long getOrgId() {
-		return orgId;
-	}
-
-	public void setOrgId(long orgId) {
-		this.orgId = orgId;
-	}
-
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
-	}
-
-	public void setOrgLogoUri(String orgLogoUri) {
-		this.orgLogoUri = orgLogoUri;
-	}
-
-	public void setOrgRating(float orgRating) {
-		this.orgRating = orgRating;
-	}
-
-	public void setOrgDescription(String orgDescription) {
-		this.orgDescription = orgDescription;
-	}
-
-	public void setOrgPicUris(ArrayList<String> orgPicUris) {
-		this.orgPicUris = orgPicUris;
-	}
-
-	public void setOrgReviews(ArrayList<Review> orgReviews) {
-		this.orgReviews = orgReviews;
-	}
 
 	public String getOrgLocation() {
 		return orgLocation;
@@ -86,7 +52,6 @@ public class Organization implements Parcelable {
 
 	public Organization() {
 		super();
-		this.orgId = 1;
 		this.orgName = "San Jose Museum of Quilts & Textiles";
 		this.orgLogoUri = "";
 		this.orgRating = 3;
@@ -106,7 +71,6 @@ public class Organization implements Parcelable {
 
 	public Organization(Parcel in) {
 		super();
-		this.orgId = in.readLong();
 		this.orgName = in.readString();
 		this.orgLogoUri = in.readString();
 		this.orgRating = in.readFloat();
@@ -122,7 +86,6 @@ public class Organization implements Parcelable {
 	public Organization(JSONObject json) {
 		super();
 		try {
-			this.orgId = json.getLong("id");
 			this.orgName = json.getString("title");
 
 			this.orgLogoUri = "http://cdn.greatnonprofits.org"
@@ -161,7 +124,6 @@ public class Organization implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
-		dest.writeLong(orgId);
 		dest.writeString(orgName);
 		dest.writeString(orgLogoUri);
 		dest.writeFloat(orgRating);
