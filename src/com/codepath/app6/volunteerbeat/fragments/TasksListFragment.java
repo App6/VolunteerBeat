@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -40,6 +41,7 @@ public abstract class TasksListFragment extends Fragment implements
 	private TasksAdapter aTasks;
 	private ListView lvTasks;
 	private UserProfile profile;
+	private ProgressBar pBar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public abstract class TasksListFragment extends Fragment implements
 		View v = inflater.inflate(R.layout.fragment_tasks_list, container,
 				false);
 
+		pBar = (ProgressBar) v.findViewById(R.id.pbTasks);
+		pBar.setVisibility(View.INVISIBLE);
 		lvTasks = (ListView) v.findViewById(R.id.lvTasks);
 
 		lvTasks.setAdapter(aTasks);
@@ -116,11 +120,14 @@ public abstract class TasksListFragment extends Fragment implements
 	}
 	private void populateData(final boolean refresh) {
 		if (staticTasks == null || staticTasks.size() == 0) {
+			// Need to fetch from server, show infinite progress bar
+			showProgressBar();
+			
 			String tasksUrl = "http://api.volunteerbeat.com/tasks";
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
 			client.addHeader("Content-Type", "application/json");
-
+			
 			client.get(tasksUrl, new JsonHttpResponseHandler() {
 
 				@Override
@@ -134,6 +141,7 @@ public abstract class TasksListFragment extends Fragment implements
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
+					hideProgressBar();
 					super.onSuccess(statusCode, response);
 				}
 
@@ -144,7 +152,7 @@ public abstract class TasksListFragment extends Fragment implements
 					Toast.makeText(getActivity(),
 							"Failed 2: " + throwable.toString(),
 							Toast.LENGTH_SHORT).show();
-
+					hideProgressBar();
 					super.onFailure(throwable, errorResponse);
 				}
 
@@ -155,7 +163,7 @@ public abstract class TasksListFragment extends Fragment implements
 					Toast.makeText(getActivity(),
 							"Failed 2: " + throwable.toString(),
 							Toast.LENGTH_SHORT).show();
-
+					hideProgressBar();
 					super.onFailure(throwable, errorResponse);
 				}
 
@@ -165,7 +173,7 @@ public abstract class TasksListFragment extends Fragment implements
 					Toast.makeText(getActivity(),
 							"Failed 2: " + throwable.toString(),
 							Toast.LENGTH_SHORT).show();
-
+					hideProgressBar();
 					super.onFailure(throwable, errorResponse);
 				}
 
@@ -217,5 +225,13 @@ public abstract class TasksListFragment extends Fragment implements
 		deleteAll();
 		tasks = onAddTasks(tasks);
 		addAll(tasks);
+	}
+	
+	private void showProgressBar() {
+		pBar.setVisibility(View.VISIBLE);
+	}
+	
+	private void hideProgressBar() {
+		pBar.setVisibility(View.INVISIBLE);
 	}
 }

@@ -175,4 +175,6 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 			ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
 		}
 	}
+	
+
 }
