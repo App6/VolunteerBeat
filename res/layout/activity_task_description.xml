@@ -177,6 +177,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="6dp"
             android:onClick="onClickVolunteer"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="@string/volunteer_button_label"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/holo_green_light"

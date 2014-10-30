@@ -1,5 +1,9 @@
 package com.codepath.app6.volunteerbeat.activities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -46,7 +50,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.plattysoft.leonids.ParticleSystem;
-import com.plattysoft.leonids.modifiers.ScaleModifier;
 import com.squareup.picasso.Picasso;
 
 public class TaskDescriptionActivity extends FragmentActivity implements
@@ -55,6 +58,8 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		ApplyDialogListener {
 
 	private static final int LOGIN_ACTIVITY_CODE = 200;
+	private static final int ADD_EVENT_ACTIVITY_CODE = 300;
+
 	private boolean mShowApplyTaskDialog = false;
 
 	// private ImageView ivNonProfitOrgLogo;
@@ -125,8 +130,9 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private void displayVolunteered() {
 		Button b = (Button) findViewById(R.id.bVolunteer);
 		b.setText("Thanks for Volunteering");
-		b.setTextColor(Color.GREEN);
-		b.setTextSize(14);
+		b.setTextColor(getResources().getColor(R.color.vbgreen));
+		b.setTextSize(18);
+		b.setBackgroundColor(Color.TRANSPARENT);
 		b.setClickable(false);
 	}
 
@@ -287,7 +293,16 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				break;
 			}
 			break;
+		case ADD_EVENT_ACTIVITY_CODE:
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				public void run() {
+					showFireworks();
+				}
+			}, 800);
+			break;
 		}
+
 	}
 
 	@Override
@@ -495,8 +510,48 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	}
 
 	public void onAnimButtonClick(View v) {
-		final ParticleSystem ps = new ParticleSystem(this, 200, R.drawable.star_pink,
-				650);
+
+	}
+
+	@Override
+	public void onFinishEditDialog(boolean applied) {
+		if (applied) {
+			displayVolunteered();
+			addCalendarEvent();
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		overridePendingTransition(R.anim.open_main, R.anim.close_next);
+	}
+
+	public void addCalendarEvent() {
+		try {
+			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm a").parse(task
+					.getDueDate() + " " + task.getDueTime());
+
+			Intent intent = new Intent(Intent.ACTION_EDIT);
+			intent.setType("vnd.android.cursor.item/event");
+			intent.putExtra("beginTime", date.getTime());
+			intent.putExtra("endTime", date.getTime() + 60 * 60 * 1000);
+			intent.putExtra("title", task.getOrganization().getOrgName().trim()
+					+ ": " + task.getTaskName());
+			intent.putExtra("description", task.getTaskShortDesc());
+			// startActivity(intent);
+			startActivityForResult(intent, ADD_EVENT_ACTIVITY_CODE);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void showFireworks() {
+		final ParticleSystem ps = new ParticleSystem(this, 200,
+				R.drawable.star_pink, 650);
 		ps.setScaleRange(0.7f, 1.3f);
 		ps.setSpeedRange(0.1f, 0.3f);
 		ps.setRotationSpeedRange(90, 180);
@@ -516,95 +571,20 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		ps3.setRotationSpeedRange(90, 180);
 		ps3.setFadeOut(100, new AccelerateInterpolator(0.2f));
 
-		ps2.oneShot(findViewById(R.id.button1), 80);
+		ps2.oneShot(findViewById(R.id.bVolunteer), 80);
 		Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			public void run() {
-				ps.oneShot(findViewById(R.id.button1), 120);
+				ps.oneShot(findViewById(R.id.bVolunteer), 120);
 			}
 		}, 300);
 
 		Handler handler2 = new Handler();
 		handler2.postDelayed(new Runnable() {
 			public void run() {
-				ps3.oneShot(findViewById(R.id.button1), 120);
+				ps3.oneShot(findViewById(R.id.bVolunteer), 120);
 			}
 		}, 600);
+
 	}
-
-	@Override
-	public void onFinishEditDialog(boolean applied) {
-		if (applied) {
-			displayVolunteered();
-			if (task.getTaskId() == 2) {
-				// new ParticleSystem(this, 100, R.drawable.star_pink, 800)
-				// .setSpeedRange(0.2f, 0.5f).oneShot(
-				// findViewById(R.id.bVolunteer), 100);
-				// new ParticleSystem(this, 4, R.drawable.dust, 3000)
-				// .setSpeedByComponentsRange(-0.07f, 0.07f, -0.18f, -0.24f)
-				// .setAcceleration(0.00003f, 30)
-				// .setInitialRotationRange(0, 360)
-				// .addModifier(new AlphaModifier(255, 0, 1000, 3000))
-				// .addModifier(new ScaleModifier(0.5f, 2f, 0, 1000))
-				// .oneShot(findViewById(R.id.emiter_bottom), 4);
-				new ParticleSystem(this, 100, R.drawable.animated_confetti,
-						5000).setSpeedRange(0.2f, 0.5f)
-						.setRotationSpeedRange(90, 180)
-						.setInitialRotationRange(0, 360)
-						.oneShot(findViewById(R.id.bVolunteer), 100);
-			} else if (task.getTaskId() == 1) {
-				ParticleSystem ps = new ParticleSystem(this, 100,
-						R.drawable.star_stars, 2000);
-				ps.setScaleRange(0.7f, 1.3f);
-				ps.setSpeedRange(0.2f, 0.5f);
-				ps.setAcceleration(0.0002f, 90);
-				ps.setRotationSpeedRange(90, 180);
-				ps.setFadeOut(200, new AccelerateInterpolator());
-				ps.oneShot(findViewById(R.id.bVolunteer), 100);
-			} else if (task.getTaskId() == 3) {
-				new ParticleSystem(this, 80, R.drawable.confeti3, 10000)
-						.setSpeedModuleAndAngleRange(0f, 0.3f, 180, 180)
-						.setRotationSpeed(144).setAcceleration(0.00005f, 90)
-						.emit(findViewById(R.id.emiter_top_right), 8);
-				new ParticleSystem(this, 80, R.drawable.confeti2, 10000)
-						.setSpeedModuleAndAngleRange(0f, 0.3f, 0, 0)
-						.setRotationSpeed(144).setAcceleration(0.00005f, 90)
-						.emit(findViewById(R.id.emiter_top_left), 8);
-			} else if (task.getTaskId() == 4) {
-				for (int i = 0; i < 10; i++) {
-					ParticleSystem ps = new ParticleSystem(this, 100,
-							R.drawable.star_stars, 1500);
-					ps.setScaleRange(0.7f, 1.3f);
-					ps.setSpeedRange(0.2f, 0.5f);
-					ps.setRotationSpeedRange(90, 180);
-					ps.setFadeOut(200, new AccelerateInterpolator());
-					ps.oneShot(findViewById(R.id.bVolunteer), 70);
-					ParticleSystem ps2 = new ParticleSystem(this, 100,
-							R.drawable.star_white, 1500);
-					ps2.setScaleRange(0.7f, 1.3f);
-					ps2.setSpeedRange(0.2f, 0.5f);
-					ps.setRotationSpeedRange(90, 180);
-					ps2.setFadeOut(200, new AccelerateInterpolator());
-					ps2.oneShot(findViewById(R.id.bVolunteer), 70);
-				}
-			} else if (task.getTaskId() == 5) {
-				new ParticleSystem(this, 10, R.drawable.star, 3000)
-						.setSpeedByComponentsRange(-0.3f, 0.3f, -0.3f, 0.1f)
-						.setAcceleration(0.00001f, 90)
-						.setInitialRotationRange(0, 360).setRotationSpeed(120)
-						.setFadeOut(2000)
-						.addModifier(new ScaleModifier(0f, 1.5f, 0, 1500))
-						.oneShot(findViewById(R.id.bVolunteer), 10);
-			}
-
-		}
-	}
-
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		overridePendingTransition(R.anim.open_main, R.anim.close_next);
-	}
-
 }
