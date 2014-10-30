@@ -513,7 +513,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				.setSpeedRange(0.2f, 0.5f)
 				.setRotationSpeedRange(90, 180)
 				.setInitialRotationRange(0, 360)
-				.oneShot(findViewById(R.id.emiter_bottom), 100);
+				.oneShot(findViewById(R.id.bVolunteer), 100);
 			} else if (task.getTaskId() == 1) {
 				ParticleSystem ps = new ParticleSystem(this, 100,
 						R.drawable.star_pink, 800);
