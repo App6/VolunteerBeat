@@ -340,7 +340,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 		// Define color of marker icon
 		BitmapDescriptor defaultMarker = BitmapDescriptorFactory
-				.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+				.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 
 		// Display the connection status
 		// LatLng latLng = new LatLng(SANJOSE.latitude, SANJOSE.longitude);
