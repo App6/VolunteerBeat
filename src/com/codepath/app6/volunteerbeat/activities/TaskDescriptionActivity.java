@@ -7,6 +7,7 @@ import android.content.IntentSender;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -45,7 +46,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.plattysoft.leonids.ParticleSystem;
-import com.plattysoft.leonids.modifiers.AlphaModifier;
 import com.plattysoft.leonids.modifiers.ScaleModifier;
 import com.squareup.picasso.Picasso;
 
@@ -494,26 +494,64 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				"Advanced Filters Dialog Fragment");
 	}
 
+	public void onAnimButtonClick(View v) {
+		final ParticleSystem ps = new ParticleSystem(this, 200, R.drawable.star_pink,
+				650);
+		ps.setScaleRange(0.7f, 1.3f);
+		ps.setSpeedRange(0.1f, 0.3f);
+		ps.setRotationSpeedRange(90, 180);
+		ps.setFadeOut(100, new AccelerateInterpolator(0.2f));
+
+		final ParticleSystem ps2 = new ParticleSystem(this, 200,
+				R.drawable.rate_star_big_on_vb, 650);
+		ps2.setScaleRange(0.7f, 1.3f);
+		ps2.setSpeedRange(0.1f, 0.3f);
+		ps2.setRotationSpeedRange(90, 180);
+		ps2.setFadeOut(100, new AccelerateInterpolator(0.2f));
+
+		final ParticleSystem ps3 = new ParticleSystem(this, 200,
+				R.drawable.star_stars, 650);
+		ps3.setScaleRange(0.7f, 1.3f);
+		ps3.setSpeedRange(0.1f, 0.3f);
+		ps3.setRotationSpeedRange(90, 180);
+		ps3.setFadeOut(100, new AccelerateInterpolator(0.2f));
+
+		ps2.oneShot(findViewById(R.id.button1), 80);
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				ps.oneShot(findViewById(R.id.button1), 120);
+			}
+		}, 300);
+
+		Handler handler2 = new Handler();
+		handler2.postDelayed(new Runnable() {
+			public void run() {
+				ps3.oneShot(findViewById(R.id.button1), 120);
+			}
+		}, 600);
+	}
+
 	@Override
 	public void onFinishEditDialog(boolean applied) {
 		if (applied) {
 			displayVolunteered();
 			if (task.getTaskId() == 2) {
-//				new ParticleSystem(this, 100, R.drawable.star_pink, 800)
-//						.setSpeedRange(0.2f, 0.5f).oneShot(
-//								findViewById(R.id.bVolunteer), 100);
-//				new ParticleSystem(this, 4, R.drawable.dust, 3000)
-//				.setSpeedByComponentsRange(-0.07f, 0.07f, -0.18f, -0.24f)		
-//				.setAcceleration(0.00003f, 30)
-//				.setInitialRotationRange(0, 360)
-//				.addModifier(new AlphaModifier(255, 0, 1000, 3000))
-//				.addModifier(new ScaleModifier(0.5f, 2f, 0, 1000))
-//				.oneShot(findViewById(R.id.emiter_bottom), 4);
-				new ParticleSystem(this, 100, R.drawable.animated_confetti, 5000)		
-				.setSpeedRange(0.2f, 0.5f)
-				.setRotationSpeedRange(90, 180)
-				.setInitialRotationRange(0, 360)
-				.oneShot(findViewById(R.id.bVolunteer), 100);
+				// new ParticleSystem(this, 100, R.drawable.star_pink, 800)
+				// .setSpeedRange(0.2f, 0.5f).oneShot(
+				// findViewById(R.id.bVolunteer), 100);
+				// new ParticleSystem(this, 4, R.drawable.dust, 3000)
+				// .setSpeedByComponentsRange(-0.07f, 0.07f, -0.18f, -0.24f)
+				// .setAcceleration(0.00003f, 30)
+				// .setInitialRotationRange(0, 360)
+				// .addModifier(new AlphaModifier(255, 0, 1000, 3000))
+				// .addModifier(new ScaleModifier(0.5f, 2f, 0, 1000))
+				// .oneShot(findViewById(R.id.emiter_bottom), 4);
+				new ParticleSystem(this, 100, R.drawable.animated_confetti,
+						5000).setSpeedRange(0.2f, 0.5f)
+						.setRotationSpeedRange(90, 180)
+						.setInitialRotationRange(0, 360)
+						.oneShot(findViewById(R.id.bVolunteer), 100);
 			} else if (task.getTaskId() == 1) {
 				ParticleSystem ps = new ParticleSystem(this, 100,
 						R.drawable.star_stars, 2000);
@@ -533,20 +571,22 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 						.setRotationSpeed(144).setAcceleration(0.00005f, 90)
 						.emit(findViewById(R.id.emiter_top_left), 8);
 			} else if (task.getTaskId() == 4) {
-				ParticleSystem ps = new ParticleSystem(this, 100,
-						R.drawable.star_pink, 800);
-				ps.setScaleRange(0.7f, 1.3f);
-				ps.setSpeedRange(0.2f, 0.5f);
-				ps.setRotationSpeedRange(90, 180);
-				ps.setFadeOut(200, new AccelerateInterpolator());
-				ps.oneShot(findViewById(R.id.bVolunteer), 70);
-				ParticleSystem ps2 = new ParticleSystem(this, 100,
-						R.drawable.star_white, 800);
-				ps2.setScaleRange(0.7f, 1.3f);
-				ps2.setSpeedRange(0.2f, 0.5f);
-				ps.setRotationSpeedRange(90, 180);
-				ps2.setFadeOut(200, new AccelerateInterpolator());
-				ps2.oneShot(findViewById(R.id.bVolunteer), 70);
+				for (int i = 0; i < 10; i++) {
+					ParticleSystem ps = new ParticleSystem(this, 100,
+							R.drawable.star_stars, 1500);
+					ps.setScaleRange(0.7f, 1.3f);
+					ps.setSpeedRange(0.2f, 0.5f);
+					ps.setRotationSpeedRange(90, 180);
+					ps.setFadeOut(200, new AccelerateInterpolator());
+					ps.oneShot(findViewById(R.id.bVolunteer), 70);
+					ParticleSystem ps2 = new ParticleSystem(this, 100,
+							R.drawable.star_white, 1500);
+					ps2.setScaleRange(0.7f, 1.3f);
+					ps2.setSpeedRange(0.2f, 0.5f);
+					ps.setRotationSpeedRange(90, 180);
+					ps2.setFadeOut(200, new AccelerateInterpolator());
+					ps2.oneShot(findViewById(R.id.bVolunteer), 70);
+				}
 			} else if (task.getTaskId() == 5) {
 				new ParticleSystem(this, 10, R.drawable.star, 3000)
 						.setSpeedByComponentsRange(-0.3f, 0.3f, -0.3f, 0.1f)
