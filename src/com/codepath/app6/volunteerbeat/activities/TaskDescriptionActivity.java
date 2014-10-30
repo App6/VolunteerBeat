@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,6 +45,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.plattysoft.leonids.ParticleSystem;
+import com.plattysoft.leonids.modifiers.AlphaModifier;
+import com.plattysoft.leonids.modifiers.ScaleModifier;
 import com.squareup.picasso.Picasso;
 
 public class TaskDescriptionActivity extends FragmentActivity implements
@@ -358,7 +362,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 
 		// Define color of marker icon
 		BitmapDescriptor defaultMarker = BitmapDescriptorFactory
-				.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+				.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 
 		// Display the connection status
 		// LatLng latLng = new LatLng(SANJOSE.latitude, SANJOSE.longitude);
@@ -512,9 +516,66 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	public void onFinishEditDialog(boolean applied) {
 		if (applied) {
 			displayVolunteered();
-		}
-		// TODO Auto-generated method stub
+			if (task.getTaskId() == 2) {
+//				new ParticleSystem(this, 100, R.drawable.star_pink, 800)
+//						.setSpeedRange(0.2f, 0.5f).oneShot(
+//								findViewById(R.id.bVolunteer), 100);
+//				new ParticleSystem(this, 4, R.drawable.dust, 3000)
+//				.setSpeedByComponentsRange(-0.07f, 0.07f, -0.18f, -0.24f)		
+//				.setAcceleration(0.00003f, 30)
+//				.setInitialRotationRange(0, 360)
+//				.addModifier(new AlphaModifier(255, 0, 1000, 3000))
+//				.addModifier(new ScaleModifier(0.5f, 2f, 0, 1000))
+//				.oneShot(findViewById(R.id.emiter_bottom), 4);
+				new ParticleSystem(this, 100, R.drawable.animated_confetti, 5000)		
+				.setSpeedRange(0.2f, 0.5f)
+				.setRotationSpeedRange(90, 180)
+				.setInitialRotationRange(0, 360)
+				.oneShot(findViewById(R.id.bVolunteer), 100);
+			} else if (task.getTaskId() == 1) {
+				ParticleSystem ps = new ParticleSystem(this, 100,
+						R.drawable.star_stars, 2000);
+				ps.setScaleRange(0.7f, 1.3f);
+				ps.setSpeedRange(0.2f, 0.5f);
+				ps.setAcceleration(0.0002f, 90);
+				ps.setRotationSpeedRange(90, 180);
+				ps.setFadeOut(200, new AccelerateInterpolator());
+				ps.oneShot(findViewById(R.id.bVolunteer), 100);
+			} else if (task.getTaskId() == 3) {
+				new ParticleSystem(this, 80, R.drawable.confeti3, 10000)
+						.setSpeedModuleAndAngleRange(0f, 0.3f, 180, 180)
+						.setRotationSpeed(144).setAcceleration(0.00005f, 90)
+						.emit(findViewById(R.id.emiter_top_right), 8);
+				new ParticleSystem(this, 80, R.drawable.confeti2, 10000)
+						.setSpeedModuleAndAngleRange(0f, 0.3f, 0, 0)
+						.setRotationSpeed(144).setAcceleration(0.00005f, 90)
+						.emit(findViewById(R.id.emiter_top_left), 8);
+			} else if (task.getTaskId() == 4) {
+				ParticleSystem ps = new ParticleSystem(this, 100,
+						R.drawable.star_pink, 800);
+				ps.setScaleRange(0.7f, 1.3f);
+				ps.setSpeedRange(0.2f, 0.5f);
+				ps.setRotationSpeedRange(90, 180);
+				ps.setFadeOut(200, new AccelerateInterpolator());
+				ps.oneShot(findViewById(R.id.bVolunteer), 70);
+				ParticleSystem ps2 = new ParticleSystem(this, 100,
+						R.drawable.star_white, 800);
+				ps2.setScaleRange(0.7f, 1.3f);
+				ps2.setSpeedRange(0.2f, 0.5f);
+				ps.setRotationSpeedRange(90, 180);
+				ps2.setFadeOut(200, new AccelerateInterpolator());
+				ps2.oneShot(findViewById(R.id.bVolunteer), 70);
+			} else if (task.getTaskId() == 5) {
+				new ParticleSystem(this, 10, R.drawable.star, 3000)
+						.setSpeedByComponentsRange(-0.3f, 0.3f, -0.3f, 0.1f)
+						.setAcceleration(0.00001f, 90)
+						.setInitialRotationRange(0, 360).setRotationSpeed(120)
+						.setFadeOut(2000)
+						.addModifier(new ScaleModifier(0f, 1.5f, 0, 1500))
+						.oneShot(findViewById(R.id.bVolunteer), 10);
+			}
 
+		}
 	}
 
 	@Override
