@@ -150,13 +150,13 @@
         android:id="@+id/tvUserSignOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/rlAboutme"
-        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/rlAboutme"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
         android:clickable="true"
         android:onClick="onUserSignOut"
         android:text="@string/tv_user_sign_out"
-        android:textColor="#82858a"
+        android:textColor="#d2691e"
         android:textSize="12sp" />
 
 </RelativeLayout>
