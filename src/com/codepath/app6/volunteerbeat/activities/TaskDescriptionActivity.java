@@ -516,7 +516,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 				.oneShot(findViewById(R.id.bVolunteer), 100);
 			} else if (task.getTaskId() == 1) {
 				ParticleSystem ps = new ParticleSystem(this, 100,
-						R.drawable.star_pink, 800);
+						R.drawable.star_stars, 2000);
 				ps.setScaleRange(0.7f, 1.3f);
 				ps.setSpeedRange(0.2f, 0.5f);
 				ps.setAcceleration(0.0002f, 90);
