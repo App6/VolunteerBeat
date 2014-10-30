@@ -132,8 +132,9 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	private void displayVolunteered() {
 		Button b = (Button) findViewById(R.id.bVolunteer);
 		b.setText("Thanks for Volunteering");
-		b.setTextColor(Color.GREEN);
-		b.setTextSize(14);
+		b.setTextColor(getResources().getColor(R.color.vbgreen));
+		b.setTextSize(18);
+		b.setBackgroundColor(Color.TRANSPARENT);
 		b.setClickable(false);
 	}
 
