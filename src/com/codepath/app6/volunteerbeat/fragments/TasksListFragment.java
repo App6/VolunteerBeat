@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -30,14 +31,17 @@ import com.codepath.app6.volunteerbeat.models.UserProfile;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public abstract class TasksListFragment extends Fragment implements TasksAdapterListner {
+public abstract class TasksListFragment extends Fragment implements
+		TasksAdapterListner {
 
 	public abstract void refreshTasks();
 
+	static private ArrayList<Task> staticTasks = null;
 	private ArrayList<Task> tasks;
 	private TasksAdapter aTasks;
 	private ListView lvTasks;
 	private UserProfile profile;
+	private ProgressBar pBar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 		View v = inflater.inflate(R.layout.fragment_tasks_list, container,
 				false);
 
+		pBar = (ProgressBar) v.findViewById(R.id.pbTasks);
+		pBar.setVisibility(View.INVISIBLE);
 		lvTasks = (ListView) v.findViewById(R.id.lvTasks);
 
 		lvTasks.setAdapter(aTasks);
@@ -78,7 +84,8 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 				i.putExtras(bundle);
 
 				startActivity(i);
-				getActivity().overridePendingTransition (R.anim.open_next, R.anim.close_main);
+				getActivity().overridePendingTransition(R.anim.open_next,
+						R.anim.close_main);
 			}
 
 		});
@@ -88,81 +95,95 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 
 	@Override
 	public void onResume() {
-		//Toast.makeText(getActivity(), "onResume fragment", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getActivity(), "onResume fragment",
+		// Toast.LENGTH_SHORT).show();
 		super.onResume();
 		populateData(true);
 	}
+
 	public ArrayList<Task> onAddTasks(ArrayList<Task> tasks) {
 		return tasks;
 	}
 
-	private void populateData(final boolean refresh) {
-		String tasksUrl = "http://api.volunteerbeat.com/tasks";
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
-		client.addHeader("Content-Type", "application/json");
+	private void populateTasks(final boolean refresh) {
+		tasks = staticTasks;
+		for (Task task : staticTasks) {
+				task.setSavedTask(profile.isSavedTask(task.getTaskId()));
+				task.setVolunteeredTask(profile.isVolunteeredTask(task.getTaskId()));
+		}
+		tasks = onAddTasks(tasks);
 
-		client.get(tasksUrl, new JsonHttpResponseHandler() {
+		if (refresh == true)
+			deleteAll();
 
-			@Override
-			public void onSuccess(int statusCode, JSONObject response) {
-				Log.d("onSuccess", "Success");
-				try {
-					tasks = Task.fromJsonArray(response
-							.getJSONArray("items"));
-					for (Task task : tasks) {
-						if (profile.isSavedTask(task.getTaskId())) {
-							task.setSavedTask(true);
-						}
-						if (profile.isVolunteeredTask(task.getTaskId())) {
-							task.setVolunteeredTask(true);
-						}
-					}
-					tasks = onAddTasks(tasks);
-
-					if (refresh == true)
-						deleteAll();
-
-					addAll(tasks);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				super.onSuccess(statusCode, response);
-			}
-
-			@Override
-			public void onFailure(Throwable throwable, JSONObject errorResponse) {
-				throwable.printStackTrace();
-				Toast.makeText(getActivity(),
-						"Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT)
-						.show();
-
-				super.onFailure(throwable, errorResponse);
-			}
-
-			@Override
-			 public void onFailure(Throwable throwable, org.json.JSONArray errorResponse){
-				throwable.printStackTrace();
-				Toast.makeText(getActivity(),
-						"Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT)
-						.show();
-
-				super.onFailure(throwable, errorResponse);
-			}
-
-			@Override
-			 public void onFailure(Throwable throwable, String errorResponse){
-				throwable.printStackTrace();
-				Toast.makeText(getActivity(),
-						"Failed 2: " + throwable.toString(), Toast.LENGTH_SHORT)
-						.show();
-
-				super.onFailure(throwable, errorResponse);
-			}
-
-		});
-
+		addAll(tasks);
 	}
+	private void populateData(final boolean refresh) {
+		if (staticTasks == null || staticTasks.size() == 0) {
+			// Need to fetch from server, show infinite progress bar
+			showProgressBar();
+			
+			String tasksUrl = "http://api.volunteerbeat.com/tasks";
+			AsyncHttpClient client = new AsyncHttpClient();
+			client.addHeader("Accept", "application/vnd.volunteerbeat-v1+json");
+			client.addHeader("Content-Type", "application/json");
+			
+			client.get(tasksUrl, new JsonHttpResponseHandler() {
+
+				@Override
+				public void onSuccess(int statusCode, JSONObject response) {
+					Log.d("onSuccess", "Success");
+					try {
+						staticTasks = Task.fromJsonArray(response
+								.getJSONArray("items"));
+						populateTasks(refresh);
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					hideProgressBar();
+					super.onSuccess(statusCode, response);
+				}
+
+				@Override
+				public void onFailure(Throwable throwable,
+						JSONObject errorResponse) {
+					throwable.printStackTrace();
+					Toast.makeText(getActivity(),
+							"Failed 2: " + throwable.toString(),
+							Toast.LENGTH_SHORT).show();
+					hideProgressBar();
+					super.onFailure(throwable, errorResponse);
+				}
+
+				@Override
+				public void onFailure(Throwable throwable,
+						org.json.JSONArray errorResponse) {
+					throwable.printStackTrace();
+					Toast.makeText(getActivity(),
+							"Failed 2: " + throwable.toString(),
+							Toast.LENGTH_SHORT).show();
+					hideProgressBar();
+					super.onFailure(throwable, errorResponse);
+				}
+
+				@Override
+				public void onFailure(Throwable throwable, String errorResponse) {
+					throwable.printStackTrace();
+					Toast.makeText(getActivity(),
+							"Failed 2: " + throwable.toString(),
+							Toast.LENGTH_SHORT).show();
+					hideProgressBar();
+					super.onFailure(throwable, errorResponse);
+				}
+
+			});
+		} else {
+			// We already have tasks, load from them.
+			populateTasks(refresh);
+		}
+	}
+
 	// Delegate the adding to the internal adapter
 	public void addAll(ArrayList<Task> tasks) {
 		aTasks.addAll(tasks);
@@ -178,7 +199,8 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 		Intent i = new Intent(getActivity(), OrganizationActivity.class);
 		i.putExtra("organization", task.getOrganization());
 		getActivity().startActivity(i);
-		getActivity().overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
+		getActivity().overridePendingTransition(R.anim.from_middle,
+				R.anim.to_middle);
 	}
 
 	@Override
@@ -190,7 +212,7 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 			getActivity().startActivity(i);
 			return;
 		}
-		if (! t.isSavedTask()) {
+		if (!t.isSavedTask()) {
 			p.addSavedTask(t.getTaskId());
 			t.setSavedTask(true);
 			p.writeToPreference();
@@ -203,5 +225,13 @@ public abstract class TasksListFragment extends Fragment implements TasksAdapter
 		deleteAll();
 		tasks = onAddTasks(tasks);
 		addAll(tasks);
+	}
+	
+	private void showProgressBar() {
+		pBar.setVisibility(View.VISIBLE);
+	}
+	
+	private void hideProgressBar() {
+		pBar.setVisibility(View.INVISIBLE);
 	}
 }

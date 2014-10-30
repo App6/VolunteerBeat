@@ -170,9 +170,11 @@ public class TasksAdapter extends ArrayAdapter<Task> {
 
 	private void refreshSaveIcon(Task task, ImageView ivSave) {
 		if (task.isSavedTask()) {
-			ivSave.setImageResource(R.drawable.heart_red_3);
+			ivSave.setImageResource(R.drawable.ic_heart_fill_red);
 		} else {
 			ivSave.setImageResource(R.drawable.ic_heart_outline_grey);
 		}
 	}
+	
+
 }

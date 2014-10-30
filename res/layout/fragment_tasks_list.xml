@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vbBackgroundGrey"
     android:layout_marginBottom="5dp"
+    android:background="@color/vbBackgroundGrey"
     tools:context="${relativePackage}.${activityClass}" >
 
     <ListView
@@ -14,11 +14,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:divider="@null"
-        android:dividerHeight="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp"
+        android:divider="@null"
+        android:dividerHeight="10dp" >
     </ListView>
+
+    <ProgressBar
+        android:id="@+id/pbTasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
