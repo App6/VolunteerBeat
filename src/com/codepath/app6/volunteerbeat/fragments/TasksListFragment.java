@@ -28,6 +28,7 @@ import com.codepath.app6.volunteerbeat.adapters.TasksAdapter;
 import com.codepath.app6.volunteerbeat.adapters.TasksAdapter.TasksAdapterListner;
 import com.codepath.app6.volunteerbeat.models.Task;
 import com.codepath.app6.volunteerbeat.models.UserProfile;
+import com.codepath.app6.volunteerbeat.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -120,6 +121,10 @@ public abstract class TasksListFragment extends Fragment implements
 	}
 	private void populateData(final boolean refresh) {
 		if (staticTasks == null || staticTasks.size() == 0) {
+			
+			if (!Utils.isNetworkAvailable(getActivity())) {
+				NetworkUnavailableDialog.show(getActivity());
+			}
 			// Need to fetch from server, show infinite progress bar
 			showProgressBar();
 			
