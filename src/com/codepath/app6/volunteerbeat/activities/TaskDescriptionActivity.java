@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.plattysoft.leonids.ParticleSystem;
+import com.plattysoft.leonids.modifiers.AlphaModifier;
 import com.plattysoft.leonids.modifiers.ScaleModifier;
 import com.squareup.picasso.Picasso;
 
@@ -498,9 +499,21 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 		if (applied) {
 			displayVolunteered();
 			if (task.getTaskId() == 2) {
-				new ParticleSystem(this, 100, R.drawable.star_pink, 800)
-						.setSpeedRange(0.2f, 0.5f).oneShot(
-								findViewById(R.id.bVolunteer), 100);
+//				new ParticleSystem(this, 100, R.drawable.star_pink, 800)
+//						.setSpeedRange(0.2f, 0.5f).oneShot(
+//								findViewById(R.id.bVolunteer), 100);
+//				new ParticleSystem(this, 4, R.drawable.dust, 3000)
+//				.setSpeedByComponentsRange(-0.07f, 0.07f, -0.18f, -0.24f)		
+//				.setAcceleration(0.00003f, 30)
+//				.setInitialRotationRange(0, 360)
+//				.addModifier(new AlphaModifier(255, 0, 1000, 3000))
+//				.addModifier(new ScaleModifier(0.5f, 2f, 0, 1000))
+//				.oneShot(findViewById(R.id.emiter_bottom), 4);
+				new ParticleSystem(this, 100, R.drawable.animated_confetti, 5000)		
+				.setSpeedRange(0.2f, 0.5f)
+				.setRotationSpeedRange(90, 180)
+				.setInitialRotationRange(0, 360)
+				.oneShot(findViewById(R.id.emiter_bottom), 100);
 			} else if (task.getTaskId() == 1) {
 				ParticleSystem ps = new ParticleSystem(this, 100,
 						R.drawable.star_pink, 800);
