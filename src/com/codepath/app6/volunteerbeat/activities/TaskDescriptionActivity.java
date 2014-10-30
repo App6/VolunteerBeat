@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -32,6 +33,7 @@ public class TaskDescriptionActivity extends FragmentActivity  {
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
+
 
 	private ShareActionProvider miShareAction;
 
@@ -161,5 +163,8 @@ public class TaskDescriptionActivity extends FragmentActivity  {
             return tasks.size();
         }
     }
+
+
+
 
 }
