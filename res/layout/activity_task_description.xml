@@ -56,6 +56,10 @@
         android:background="@android:color/darker_gray" />
     -->
 
+<FrameLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
     <View android:id="@+id/emiter_top_left"
         android:layout_gravity="top|left"
         android:layout_marginTop="-20dp"
@@ -73,7 +77,27 @@
         android:layout_marginBottom="-10dp"
         android:layout_width="1dp"
         android:layout_height="1dp" />
-        
+
+</FrameLayout>
+<!--  
+    <View android:id="@+id/emiter_top_left"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="-20dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+    
+    <View android:id="@+id/emiter_top_right"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="-20dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+    
+        <View android:id="@+id/emiter_bottom"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="-10dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+        -->
     <include
         android:id="@+id/top_header"
         layout="@layout/layout_header" />
