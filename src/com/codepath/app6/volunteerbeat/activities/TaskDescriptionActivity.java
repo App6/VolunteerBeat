@@ -1,5 +1,10 @@
 package com.codepath.app6.volunteerbeat.activities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -494,6 +499,7 @@ public class TaskDescriptionActivity extends FragmentActivity implements
 	public void onFinishEditDialog(boolean applied) {
 		if (applied) {
 			displayVolunteered();
+			addCalendarEvent();
 		}
 		// TODO Auto-generated method stub
 
@@ -506,4 +512,23 @@ public class TaskDescriptionActivity extends FragmentActivity implements
         overridePendingTransition (R.anim.open_main, R.anim.close_next);
     }
 
+    public void addCalendarEvent(){
+		try {
+			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm a").parse(task.getDueDate()+" "+task.getDueTime());
+			
+	        Intent intent = new Intent(Intent.ACTION_EDIT);
+	        intent.setType("vnd.android.cursor.item/event");
+	        intent.putExtra("beginTime", date.getTime());
+	        intent.putExtra("endTime", date.getTime()+60*60*1000);
+	        intent.putExtra("title", task.getOrganization().getOrgName().trim()+": "+task.getTaskName());
+	        intent.putExtra("description", task.getTaskShortDesc());
+	        startActivity(intent);
+	        
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+    }
 }
