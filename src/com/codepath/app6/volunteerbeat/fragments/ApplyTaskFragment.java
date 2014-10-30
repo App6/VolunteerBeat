@@ -40,7 +40,10 @@ public class ApplyTaskFragment extends DialogFragment {
     public interface ApplyDialogListener {
         void onFinishEditDialog(boolean applied);
     }
-	
+	private ApplyDialogListener listner;
+    public void setListner(ApplyDialogListener l) {
+    	listner = l;
+    }
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -159,7 +162,6 @@ public class ApplyTaskFragment extends DialogFragment {
 								.show();
 						profile.addVolunteeredTasks(taskId);
 						profile.writeToPreference();
-						ApplyDialogListener listner = (ApplyDialogListener)getActivity();
 						listner.onFinishEditDialog(true);
 						getDialog().dismiss();
 					}

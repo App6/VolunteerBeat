@@ -81,7 +81,8 @@ public abstract class TasksListFragment extends Fragment implements
 				Task task = aTasks.getItem(position);
 
 				Bundle bundle = new Bundle();
-				bundle.putParcelable("taskInfo", task);
+				bundle.putParcelableArrayList("tasks", tasks);
+				bundle.putInt("position", position);
 				i.putExtras(bundle);
 
 				startActivity(i);
